@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#f7f9fb",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-fixed-variant": "#334f00",
+                    "surface-container": "#eceef0",
+                    "on-surface-variant": "#424936",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#ceceff",
+                    "surface": "#f7f9fb",
+                    "on-tertiary-container": "#4446d2",
+                    "outline-variant": "#c2cab0",
+                    "secondary-container": "#d5e0f8",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#d8e3fb",
+                    "on-secondary-container": "#586377",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-primary-container": "#416400",
+                    "on-primary-fixed": "#121f00",
+                    "tertiary": "#494bd6",
+                    "primary-container": "#a3e635",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#98da27",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#e1e0ff",
+                    "primary-fixed-dim": "#98da27",
+                    "outline": "#727a64",
+                    "surface-tint": "#446900",
+                    "on-background": "#191c1e",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "on-tertiary-fixed": "#07006c",
+                    "secondary": "#545f73",
+                    "background": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "inverse-surface": "#2d3133",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#111c2d",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#b2f746",
+                    "on-error-container": "#93000a",
+                    "primary": "#446900",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "32px",
+                    "sm": "16px",
+                    "2xl": "64px",
+                    "xl": "48px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "label-md": ["Manrope"],
+                    "label-sm": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "headline-sm": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        input:focus { outline: none; border-color: #446900; }
+        .transition-soft { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface-bright text-on-surface min-h-screen pb-24 md:pb-0">
+<!-- TopAppBar Shell -->
+<header class="sticky top-0 z-50 bg-surface flex justify-between items-center w-full px-md py-sm">
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-soft active:scale-95">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">VitalFlow</h1>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-soft active:scale-95">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-md py-lg">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-md text-on-surface-variant">
+<a class="font-label-md text-label-md hover:text-primary transition-soft" href="#">Início</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="font-label-md text-label-md hover:text-primary transition-soft" href="#">Perfil</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="font-label-md text-label-md text-primary">Meus Dados</span>
+</nav>
+<!-- Page Title -->
+<div class="mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Meus Dados</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">Gerencie suas informações pessoais e mantenha seu perfil atualizado.</p>
+</div>
+<!-- Form Section - Bento Grid Style Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<!-- Profile Preview Card -->
+<div class="md:col-span-1">
+<div class="bg-surface-container-lowest p-lg rounded-lg shadow-[0px_4px_20px_rgba(30,41,59,0.04)] text-center">
+<div class="relative inline-block mb-md">
+<div class="w-32 h-32 rounded-full bg-surface-variant overflow-hidden mx-auto border-4 border-surface-container">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional and clean portrait of a healthy adult individual looking confidently at the camera, set against a soft blurred background of a modern medical facility. The lighting is bright and high-key, emphasizing a clinical yet warm aesthetic. The color palette is composed of soft whites, cool grays, and subtle green accents, reflecting the brand identity of premium med-tech and wellness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE3i0Y3RA_dygq9j30JaEZEBSvLn6RZmcRLPtuICgJS9EQBt7j913vVBZEd7OIkhmnZlr2J6Pzma6V3ymhMfn-QG6kCGWfsGvoL_88-7sFCiD56CqmoWkctw_-fIg7zNVAebLWGomAKMyJw-NYpc3Zk1cVKsRmGPLq1McZAykWUA3Vz0hNEIItdfxRZOPBMxltT9I2BhASDOgxBp0JDol0VZpcfLnNKsfepXi2MF67t9HOpv6wdl8hwsIjAaP8UoqrqP97Re5Z-yAz"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary-container p-2 rounded-full text-on-primary-container shadow-md hover:scale-105 transition-soft">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Ana Silva</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Membro desde Jan 2024</p>
+</div>
+</div>
+<!-- Form Content -->
+<div class="md:col-span-2 space-y-md">
+<div class="bg-surface-container-lowest p-lg rounded-lg shadow-[0px_4px_20px_rgba(30,41,59,0.04)]">
+<form class="space-y-md" id="profileForm">
+<!-- Full Name -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs ml-base">Nome Completo</label>
+<input class="w-full px-md py-sm bg-surface-container-low border border-transparent rounded-md font-body-md text-body-md focus:bg-white focus:ring-0 transition-soft" placeholder="Digite seu nome completo" type="text" value="Ana Carolina Silva"/>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Email -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs ml-base">Email</label>
+<input class="w-full px-md py-sm bg-surface-container-low border border-transparent rounded-md font-body-md text-body-md focus:bg-white focus:ring-0 transition-soft" placeholder="seu@email.com" type="email" value="ana.silva@email.com"/>
+</div>
+<!-- Phone -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs ml-base">Telefone</label>
+<input class="w-full px-md py-sm bg-surface-container-low border border-transparent rounded-md font-body-md text-body-md focus:bg-white focus:ring-0 transition-soft" placeholder="(00) 00000-0000" type="tel" value="(11) 98765-4321"/>
+</div>
+</div>
+<!-- CPF Read Only -->
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-xs ml-base">CPF</label>
+<div class="relative">
+<input class="w-full px-md py-sm bg-surface-container border border-outline-variant/30 rounded-md font-body-md text-body-md text-on-surface-variant cursor-not-allowed" readonly="" type="text" value="456.***.***-89"/>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant/50">lock</span>
+</div>
+<p class="font-label-sm text-label-sm text-on-surface-variant/70 mt-xs ml-base">O CPF não pode ser alterado após a verificação.</p>
+</div>
+<!-- Actions -->
+<div class="pt-md flex flex-col sm:flex-row gap-sm justify-end">
+<button class="px-lg py-sm font-label-md text-label-md text-on-surface-variant hover:bg-surface-variant/20 rounded-full transition-soft" type="button">
+                                Descartar
+                            </button>
+<button class="px-lg py-sm bg-primary-container text-on-primary-container font-label-md text-label-md rounded-full shadow-lg hover:scale-105 active:scale-95 transition-soft" type="submit">
+                                Salvar Alterações
+                            </button>
+</div>
+</form>
+</div>
+<!-- Secondary Info Section -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-md">
+<div class="bg-surface-container-lowest p-md rounded-lg shadow-[0px_4px_20px_rgba(30,41,59,0.04)] flex items-center gap-md">
+<div class="bg-tertiary-container/30 p-sm rounded-md">
+<span class="material-symbols-outlined text-tertiary">shield_person</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Dados de Acesso</p>
+<p class="font-body-md text-body-md font-bold text-on-surface">Mudar Senha</p>
+</div>
+<button class="ml-auto text-primary p-2 hover:bg-primary-container/20 rounded-full">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest p-md rounded-lg shadow-[0px_4px_20px_rgba(30,41,59,0.04)] flex items-center gap-md">
+<div class="bg-primary-container/30 p-sm rounded-md">
+<span class="material-symbols-outlined text-primary">history</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Atividade</p>
+<p class="font-body-md text-body-md font-bold text-on-surface">Ver Logs</p>
+</div>
+<button class="ml-auto text-primary p-2 hover:bg-primary-container/20 rounded-full">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Shell (Mobile Only) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg py-sm pb-safe bg-surface-container-lowest shadow-[0_-4px_20px_rgba(30,41,59,0.04)] rounded-t-xl md:hidden">
+<button class="flex flex-col items-center justify-center text-on-secondary-container p-3 transition-soft active:scale-90">
+<span class="material-symbols-outlined">home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-secondary-container p-3 transition-soft active:scale-90">
+<span class="material-symbols-outlined">shopping_bag</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-secondary-container p-3 transition-soft active:scale-90">
+<span class="material-symbols-outlined">search</span>
+</button>
+<!-- ACTIVE: Account/Profile -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-3 transition-soft active:scale-90 shadow-md">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</nav>
+<script>
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            
+            btn.disabled = true;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin mr-2 text-sm">progress_activity</span> Salvando...';
+            
+            setTimeout(() => {
+                btn.innerHTML = 'Alterações Salvas!';
+                btn.classList.replace('bg-primary-container', 'bg-tertiary');
+                btn.classList.replace('text-on-primary-container', 'text-white');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.replace('bg-tertiary', 'bg-primary-container');
+                    btn.classList.replace('text-white', 'text-on-primary-container');
+                    btn.disabled = false;
+                }, 2000);
+            }, 1500);
+        });
+    </script>
+</body></html>

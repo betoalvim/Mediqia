@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>VitalFlow | Premium Supplements</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e6e8ea",
+                    "on-primary-container": "#416400",
+                    "error-container": "#ffdad6",
+                    "primary-fixed-dim": "#98da27",
+                    "on-surface-variant": "#424936",
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "surface-tint": "#446900",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f7f9fb",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "secondary-container": "#d5e0f8",
+                    "on-tertiary-container": "#4446d2",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "surface-container": "#eceef0",
+                    "outline": "#727a64",
+                    "secondary-fixed": "#d8e3fb",
+                    "inverse-on-surface": "#eff1f3",
+                    "inverse-primary": "#98da27",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#586377",
+                    "tertiary-container": "#ceceff",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "outline-variant": "#c2cab0",
+                    "on-error": "#ffffff",
+                    "tertiary": "#494bd6",
+                    "primary": "#446900",
+                    "on-primary-fixed": "#121f00",
+                    "on-primary-fixed-variant": "#334f00",
+                    "tertiary-fixed": "#e1e0ff",
+                    "secondary": "#545f73",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#111c2d",
+                    "background": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "primary-container": "#a3e635",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-variant": "#e0e3e5",
+                    "on-tertiary": "#ffffff",
+                    "surface-dim": "#d8dadc",
+                    "on-surface": "#191c1e",
+                    "on-tertiary-fixed": "#07006c",
+                    "surface-bright": "#f7f9fb",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "primary-fixed": "#b2f746"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "16px",
+                    "lg": "32px",
+                    "2xl": "64px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "48px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Manrope"],
+                    "headline-sm": ["Manrope"],
+                    "label-md": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "label-sm": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-filter {
+            background-color: #446900;
+            color: #ffffff;
+        }
+        .product-card-shadow {
+            box-shadow: 0px 4px 20px rgba(30, 41, 59, 0.04);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .product-card-shadow:hover {
+            box-shadow: 0px 10px 30px rgba(30, 41, 59, 0.08);
+            transform: translateY(-4px);
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f7f9fb;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen pb-32">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-surface flex justify-between items-center w-full px-md py-sm">
+<div class="flex items-center gap-sm">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-md text-[24px] font-bold text-primary">VitalFlow</h1>
+</div>
+<div class="flex items-center gap-xs">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 active:scale-95 transition-transform duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+</div>
+</header>
+<main class="max-w-[1280px] mx-auto px-md pt-md">
+<!-- Category Filters -->
+<section class="mb-lg overflow-x-auto">
+<div class="flex gap-sm pb-2 no-scrollbar">
+<button class="px-md py-sm rounded-full active-filter font-label-md text-label-md whitespace-nowrap transition-all">All Products</button>
+<button class="px-md py-sm rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-variant/50 transition-all">Immune</button>
+<button class="px-md py-sm rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-variant/50 transition-all">Sleep</button>
+<button class="px-md py-sm rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-variant/50 transition-all">Energy</button>
+<button class="px-md py-sm rounded-full bg-surface-container text-on-surface-variant font-label-md text-label-md whitespace-nowrap hover:bg-surface-variant/50 transition-all">Focus</button>
+</div>
+</section>
+<!-- Product Grid -->
+<section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-md">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest rounded-lg p-sm product-card-shadow flex flex-col relative group">
+<div class="aspect-square bg-surface-container-low rounded-md overflow-hidden mb-sm relative">
+<img class="w-full h-full object-cover" data-alt="A premium glass supplement bottle of Omega-3 Pure pills sitting on a clean white marble surface. The lighting is soft and clinical, highlighting the high-quality gold and navy labeling. The atmosphere is minimalist, sophisticated, and evokes medical-grade purity with a focus on healthy living and wellness." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXTzJLJxjrcMr7VPtc_Dpcfu7pcovj6XeVHz9Ev9VbBfKGk4P36mmmviWGLe3e6IjR1kI4o4m_pnffx__aNlfc3en_s3hViiuLBArQGoVFMBkKvnFkHwVLw18i7yL--sBBxi78MWMuOexhrbnTGpuqPk3xXRlGy2EShCa1uA9kqWsTSgfNcf1K1IWsH5Dt8pwvq0kdKC8lp8MlF_gBAcvR-EKtyxcXYHn8w7pUVgM9VRU2SyWplhu0_cPVHV15hO2AZPcYEd_ac3W3"/>
+<span class="absolute top-2 left-2 bg-primary-container text-on-primary-container text-[10px] font-bold px-2 py-1 rounded-full">DAILY</span>
+</div>
+<div class="flex flex-col flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Omega-3 Pure</h3>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4.9 (1.2k)</span>
+</div>
+<div class="mt-auto flex justify-between items-center">
+<p class="font-headline-md text-headline-md text-primary">$34.00</p>
+<button class="w-10 h-10 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center active:scale-90 transition-transform shadow-sm">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest rounded-lg p-sm product-card-shadow flex flex-col relative group">
+<div class="aspect-square bg-surface-container-low rounded-md overflow-hidden mb-sm relative">
+<img class="w-full h-full object-cover" data-alt="A sleek, modern white supplement jar labeled Magnesium Max placed in an airy, sunlit room next to a glass of water. The visual style is high-end med-tech with a focus on soft shadows and clean lines. The primary color is a calming deep navy with accents of bright lime green, reflecting a sense of vitality and scientific precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdDiFIP0AdzJR1XWwCNnQEZWNzu1FKLS6oggz3l5ld5RLZ-lU7dscvdcWd0mchtuD7pkTJ1MQRIOFypPUJyJHv66O3BQmv2ePABYFxEHK9lT_Z14GablnMHEvCpf-fqTyoKkrdmm7ST-864E-7Fk-ViV9ISxenfocYb0d6wNnXmdtL6IZWTlrruLCDFflZCEphdXP1VyLSktHU_hGM7CFuqAxvD29u5ndVIIwTkfIcOJSuYROWNzwomF0zMNNKH2qhstJc33HzHhMn"/>
+<span class="absolute top-2 left-2 bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-1 rounded-full">SLEEP</span>
+</div>
+<div class="flex flex-col flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Magnesium Max</h3>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4.8 (850)</span>
+</div>
+<div class="mt-auto flex justify-between items-center">
+<p class="font-headline-md text-headline-md text-primary">$28.00</p>
+<button class="w-10 h-10 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center active:scale-90 transition-transform shadow-sm">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest rounded-lg p-sm product-card-shadow flex flex-col relative group">
+<div class="aspect-square bg-surface-container-low rounded-md overflow-hidden mb-sm relative">
+<img class="w-full h-full object-cover" data-alt="Modern medical capsules with a vibrant orange and clear shell on a pristine clinical background. The image has a hyper-realistic, macro focus with high-key lighting to emphasize cleanliness and technological sophistication. Accents of lime green and deep navy maintain brand consistency within a premium med-tech aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHsTNcVrxaDOQ7T60a9ZnxL0Iss5EP5AX4FKUwJXcfRu3Q1P4mlYYeOpb4Jq9F9ycmAlnKG-5i9pf3nc-VgDirLpDFpdG2hT6PPGPgZkbdGHAEexO6PeXeSOHlBrpFDGTxw_ENYvGA2NPeHEktQjfVHupF4gINVVG00FmAeJ6x7LcHT4d-SOZmVHGQmLQy388ivvkbXdaqoLeZFp_nMRW2CNh9RaPeReiJpc9C-NQBcUBWMfMLt7gFwr06bT4JCfvn_Qhr1a2wobt2"/>
+<span class="absolute top-2 left-2 bg-tertiary-container text-on-tertiary-container text-[10px] font-bold px-2 py-1 rounded-full">ENERGY</span>
+</div>
+<div class="flex flex-col flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Vitality B12</h3>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4.9 (2.1k)</span>
+</div>
+<div class="mt-auto flex justify-between items-center">
+<p class="font-headline-md text-headline-md text-primary">$22.00</p>
+<button class="w-10 h-10 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center active:scale-90 transition-transform shadow-sm">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest rounded-lg p-sm product-card-shadow flex flex-col relative group">
+<div class="aspect-square bg-surface-container-low rounded-md overflow-hidden mb-sm relative">
+<img class="w-full h-full object-cover" data-alt="A minimalist composition of white powder being scooped into a premium frosted glass jar. The lighting is diffused and bright, creating a clean clinical atmosphere. The scene communicates high-trust pharmaceutical manufacturing and wellness purity, using a palette of white, light gray, and subtle brand-primary navy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDG6GBkY8ma67jSUcfKlETWKN2tB4812vDZdzj6wxsr5b1AgHT1EP8FUCM65kGhCt2X_NFnzeZKaRll4TFEx-lhuq8W9jQzqspMkpSd0JAK0Jg_e4YBTd0nEeDge2mB4TKEXaZ8HCpzzPP6FKh6yGRNxp1Xl6DddEssKAvWv__9ZfH0l4t6RmxxB1oQg7KV5a3w5mGnmrgQ3AR_sNnIG2XVyFq-EONP5x_2vQgxaazYHE8YWFQPCBBjb4toCaNjHnNZ0L-E7BCnLuQE"/>
+<span class="absolute top-2 left-2 bg-error-container text-on-error-container text-[10px] font-bold px-2 py-1 rounded-full">IMMUNE</span>
+</div>
+<div class="flex flex-col flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Zinc Defense</h3>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4.7 (540)</span>
+</div>
+<div class="mt-auto flex justify-between items-center">
+<p class="font-headline-md text-headline-md text-primary">$19.00</p>
+<button class="w-10 h-10 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center active:scale-90 transition-transform shadow-sm">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 5 -->
+<div class="bg-surface-container-lowest rounded-lg p-sm product-card-shadow flex flex-col relative group">
+<div class="aspect-square bg-surface-container-low rounded-md overflow-hidden mb-sm relative">
+<img class="w-full h-full object-cover" data-alt="A row of premium vitamin jars arranged symmetrically on a light oak shelf against a soft white background. The focus is on the clean, engineered design of the packaging. The mood is professional and reliable, with gentle morning light filtering through a window, emphasizing a high-radius structural aesthetic and airy medical feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC7E6XG0J35dMUIBqF4KQGH81PXk__bTEnXlbjEmIP_aj2oP40b13vdwcVj79N95ghHZjE1nKD39dRzFdOAUFr77WAiEpr1qtWWFyZfSUt71cS5a5pYloQvlWMtOmpYyKW0kEoHz1SHhB0YYoovCuFWHRsGs8njkZVeO9Ps5cxpOfGLm1rv5kFMIW-HRpzywwtcdnKTvjJSbDIOCmMPw4qx9aYuk7rKlrnKIf7i-AMSysINUCiD1ChuzAuHMqbn0Sdq8xCI1lym3ZBh"/>
+<span class="absolute top-2 left-2 bg-primary-container text-on-primary-container text-[10px] font-bold px-2 py-1 rounded-full">CORE</span>
+</div>
+<div class="flex flex-col flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Vitamin D3+K2</h3>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4.9 (3.4k)</span>
+</div>
+<div class="mt-auto flex justify-between items-center">
+<p class="font-headline-md text-headline-md text-primary">$26.00</p>
+<button class="w-10 h-10 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center active:scale-90 transition-transform shadow-sm">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 6 -->
+<div class="bg-surface-container-lowest rounded-lg p-sm product-card-shadow flex flex-col relative group">
+<div class="aspect-square bg-surface-container-low rounded-md overflow-hidden mb-sm relative">
+<img class="w-full h-full object-cover" data-alt="Close up of a blue glass bottle with a minimalist label for nighttime supplements. Soft bokeh lights in the background create a peaceful, sleep-focused mood. The imagery is premium and tranquil, utilizing deep blues and whites consistent with a modern med-tech brand identity that values both science and serenity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkbiwcu510luKTLOX84Bt1ZW7FQLKOqnRJ3ARRoMgoSI7R4xSrxGdd1WvssDMD86ke_K1iNqZlTqj52Ir1a31lxW8ACLt-lw6-qmxfswwHCLEdi-rPQKZajBGqECGVURtmDOiDnX4wxZ4ZbQ1aAJNj0WTC-9WJ7JWGczKzoSAX0JMyG0EBdsBBr5JmU5TxOYjxHR8BpPh4ALm_3rpECJuwK4H7UeBt0WdzBiUHGU6_K8HdoJLnpAezUSgl66TePJoxNyfzokGZL7c4"/>
+<span class="absolute top-2 left-2 bg-secondary-container text-on-secondary-container text-[10px] font-bold px-2 py-1 rounded-full">CALM</span>
+</div>
+<div class="flex flex-col flex-grow">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">L-Theanine 200</h3>
+<div class="flex items-center gap-1 mb-2">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">4.8 (610)</span>
+</div>
+<div class="mt-auto flex justify-between items-center">
+<p class="font-headline-md text-headline-md text-primary">$31.00</p>
+<button class="w-10 h-10 bg-primary-container text-on-primary-container rounded-full flex items-center justify-center active:scale-90 transition-transform shadow-sm">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter CTA / Bento Footer Section -->
+<section class="mt-2xl mb-xl">
+<div class="bg-tertiary-container rounded-lg p-xl flex flex-col md:flex-row items-center gap-xl">
+<div class="flex-1">
+<h2 class="font-headline-lg text-headline-lg text-on-tertiary-fixed mb-sm">Science-backed wellness, delivered monthly.</h2>
+<p class="font-body-md text-body-md text-on-tertiary-fixed-variant mb-md max-w-md">Join 50,000+ others receiving our clinical research updates and exclusive early access to new formulas.</p>
+<div class="flex flex-col sm:flex-row gap-sm max-w-lg">
+<input class="flex-grow bg-surface-container-lowest border-none rounded-md px-md py-sm focus:ring-2 focus:ring-tertiary transition-all" placeholder="Enter your email" type="email"/>
+<button class="bg-tertiary text-on-tertiary font-label-md text-label-md px-lg py-sm rounded-full active:scale-95 transition-all">Subscribe</button>
+</div>
+</div>
+<div class="w-full md:w-1/3 aspect-video bg-surface-container-highest rounded-lg overflow-hidden hidden md:block">
+<img class="w-full h-full object-cover" data-alt="A scientist working in a bright, modern laboratory with high-tech equipment. The aesthetic is extremely clean and professional, focusing on the brand's commitment to clinical clarity. The room features soft lighting, pristine glass surfaces, and a palette of whites and medical blues with subtle lime accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeWGIRmnNHvUAF6fqX0pSg_mO5lmndOfhMSs9u4ZQXdGpiekUpdU2WPepzvOD1sT_TYCacG_r-nB953wT0eBB74k3ceyCNxHZQDn8EqdU5A0S7Tf97LAMBpmx2Q7605jZYAPJwp9U-EBQ1i0QuemF8ccecla6UDoQqP-tr3sX1nT44VesYHYAaVwUvUvAe_7yBHygn7gKzDfCnclS_yFhieK4bYPf6E_etAtBcaU4bbkqRtnZo7X91U1beU_rVNyRLg8UlIjfuHKmT"/>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg py-sm pb-safe bg-surface-container-lowest shadow-[0_-4px_20px_rgba(30,41,59,0.04)] rounded-t-xl md:hidden">
+<a class="flex flex-col items-center justify-center text-on-secondary-container p-3 hover:bg-secondary-container/50 transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-3 scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container p-3 hover:bg-secondary-container/50 transition-all" href="#">
+<span class="material-symbols-outlined">search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container p-3 hover:bg-secondary-container/50 transition-all" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+</a>
+</nav>
+<!-- Desktop Navigation (Top Bar Expansion) -->
+<style>
+        @media (min-width: 768px) {
+            .desktop-nav {
+                display: flex;
+            }
+        }
+        .desktop-nav {
+            display: none;
+        }
+    </style>
+<script>
+        // Micro-interactions for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Filter Selection Logic
+        const filters = document.querySelectorAll('section:first-of-type button');
+        filters.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filters.forEach(f => {
+                    f.classList.remove('active-filter');
+                    f.classList.add('bg-surface-container', 'text-on-surface-variant');
+                });
+                btn.classList.add('active-filter');
+                btn.classList.remove('bg-surface-container', 'text-on-surface-variant');
+            });
+        });
+    </script>
+</body></html>

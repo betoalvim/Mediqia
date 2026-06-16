@@ -1,0 +1,220 @@
+{
+  "project_name": "App de Cotação de Farmácias",
+  "design_system": {
+    "colors": {
+      "primary": "#2D3455",
+      "secondary": "#31B8A4",
+      "background": "#148B7F",
+      "surface": "#FFFFFF",
+      "text_primary": "#2D3455",
+      "text_secondary": "#666666"
+    },
+    "typography": {
+      "headings": "Sans-serif (Bold/Medium)",
+      "body": "Sans-serif (Regular)"
+    }
+  },
+  "global_components": {
+    "header": {
+      "visible_on": ["all_screens_except_login_and_checkout"],
+      "elements": ["Logo", "Breadcrumbs_Container", "Notification_Icon"]
+    },
+    "bottom_navigation_bar": {
+      "visible_on": ["Home", "Cofre", "Perfil"],
+      "items": [
+        {"icon": "home", "label": "Início", "target": "screen_home"},
+        {"icon": "file-text", "label": "Cofre", "target": "screen_cofre_receitas"},
+        {"icon": "user", "label": "Perfil", "target": "screen_perfil"}
+      ]
+    }
+  },
+  "screens": [
+    {
+      "id": "screen_login",
+      "name": "Login & Autenticação",
+      "breadcrumbs": null,
+      "components": [
+        "Logo_Large",
+        "Input_CPF",
+        "Button_Continuar",
+        "Social_Login_Buttons",
+        "Ad_Banner_Space"
+      ]
+    },
+    {
+      "id": "screen_lgpd_consent",
+      "name": "Termos de Uso e LGPD",
+      "breadcrumbs": ["Login", "Termos"],
+      "components": [
+        "Text_LGPD_Explanation",
+        "Checkbox_Accept_Storage",
+        "Checkbox_Guest_Mode",
+        "Button_Aceitar_e_Continuar"
+      ]
+    },
+    {
+      "id": "screen_home",
+      "name": "Início (Dashboard)",
+      "breadcrumbs": ["Início"],
+      "components": [
+        "Greeting_User",
+        "Button_Large_Escanear_Receita",
+        "Card_Recent_Purchases",
+        "Ad_Banner_Space"
+      ]
+    },
+    {
+      "id": "screen_camera_ocr",
+      "name": "Captura de Receita",
+      "breadcrumbs": ["Início", "Escanear Receita"],
+      "components": [
+        "Camera_View",
+        "Overlay_Guide_Lines",
+        "Button_Capture",
+        "Button_Upload_Gallery",
+        "Text_Instruction"
+      ]
+    },
+    {
+      "id": "screen_ocr_processing",
+      "name": "Processamento OCR / Loading",
+      "breadcrumbs": ["Início", "Processando"],
+      "components": [
+        "Animation_Scanning",
+        "Text_Status_Reading",
+        "Ad_Banner_Interstitial"
+      ]
+    },
+    {
+      "id": "screen_ocr_error",
+      "name": "Erro de Leitura OCR",
+      "breadcrumbs": ["Início", "Erro na Receita"],
+      "components": [
+        "Icon_Error",
+        "Text_Explanation_Illegible",
+        "Button_Try_Again",
+        "Button_Contact_Support"
+      ]
+    },
+    {
+      "id": "screen_address_select",
+      "name": "Seleção de Endereço",
+      "breadcrumbs": ["Início", "Receita", "Endereço de Entrega"],
+      "components": [
+        "List_Saved_Addresses",
+        "Button_Add_New_Address",
+        "Button_Confirm_Address"
+      ]
+    },
+    {
+      "id": "screen_results_tabs",
+      "name": "Resultados da Cotação",
+      "breadcrumbs": ["Início", "Resultados"],
+      "components": [
+        "Tab_Bar_Top (Menor Cesta Única / Cesta Dividida)",
+        "View_Menor_Cesta_Unica",
+        "View_Cesta_Dividida",
+        "Bottom_Sheet_Checkout_Summary"
+      ]
+    },
+    {
+      "id": "view_menor_cesta_unica",
+      "name": "Aba: Melhor Compra Única",
+      "parent": "screen_results_tabs",
+      "components": [
+        "Pharmacy_Logo",
+        "List_Medicines_Found",
+        "Text_Subtotal",
+        "Text_Frete",
+        "Text_Total",
+        "Button_Prosseguir_Compra"
+      ]
+    },
+    {
+      "id": "view_cesta_dividida",
+      "name": "Aba: Cesta Dividida",
+      "parent": "screen_results_tabs",
+      "components": [
+        "Badge_Economia (ou Gasto Extra)",
+        "Card_Pharmacy_A (Itens + Frete)",
+        "Card_Pharmacy_B (Itens + Frete)",
+        "Text_Total_Sum",
+        "Button_Prosseguir_Compra_Multipla"
+      ]
+    },
+    {
+      "id": "screen_checkout_redirect",
+      "name": "Finalização / Redirecionamento",
+      "breadcrumbs": ["Resultados", "Finalizar"],
+      "components": [
+        "Text_Warning_Controlled_Meds",
+        "Loading_Spinner_Redirect",
+        "Button_Go_To_Pharmacy_Site",
+        "Button_Open_WhatsApp"
+      ]
+    },
+    {
+      "id": "screen_cofre_receitas",
+      "name": "Cofre de Receitas",
+      "breadcrumbs": ["Cofre"],
+      "components": [
+        "List_Saved_Prescriptions",
+        "Button_Nova_Cotacao_Recorrente",
+        "Filter_By_Date"
+      ]
+    },
+    {
+      "id": "screen_perfil",
+      "name": "Perfil do Usuário",
+      "breadcrumbs": ["Perfil"],
+      "components": [
+        "Avatar",
+        "User_Name_CPF",
+        "Menu_Item_Meus_Dados",
+        "Menu_Item_Enderecos",
+        "Menu_Item_Termos_Privacidade",
+        "Button_Logout"
+      ]
+    },
+    {
+      "id": "screen_meus_dados",
+      "name": "Meus Dados",
+      "breadcrumbs": ["Perfil", "Meus Dados"],
+      "components": [
+        "Input_Name",
+        "Input_Email",
+        "Input_Phone",
+        "Text_CPF_Readonly",
+        "Button_Save_Changes"
+      ]
+    },
+    {
+      "id": "screen_meus_enderecos",
+      "name": "Meus Endereços",
+      "breadcrumbs": ["Perfil", "Endereços"],
+      "components": [
+        "List_Addresses_Editable",
+        "Button_Add_New_Address"
+      ]
+    }
+  ],
+  "user_flows": {
+    "primary_purchase_flow": [
+      "screen_login",
+      "screen_lgpd_consent",
+      "screen_home",
+      "screen_camera_ocr",
+      "screen_ocr_processing",
+      "screen_address_select",
+      "screen_results_tabs",
+      "screen_checkout_redirect"
+    ],
+    "recurrent_purchase_flow": [
+      "screen_home",
+      "screen_cofre_receitas",
+      "screen_address_select",
+      "screen_results_tabs",
+      "screen_checkout_redirect"
+    ]
+  }
+}

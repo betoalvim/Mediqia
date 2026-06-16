@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            font-family: 'Manrope', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .cart-item-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .cart-item-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 10px 30px rgba(30, 41, 59, 0.08);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-high": "#e6e8ea",
+                        "on-primary-container": "#416400",
+                        "error-container": "#ffdad6",
+                        "primary-fixed-dim": "#98da27",
+                        "on-surface-variant": "#424936",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "surface-tint": "#446900",
+                        "inverse-surface": "#2d3133",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f7f9fb",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "secondary-container": "#d5e0f8",
+                        "on-tertiary-container": "#4446d2",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "surface-container": "#eceef0",
+                        "outline": "#727a64",
+                        "secondary-fixed": "#d8e3fb",
+                        "inverse-on-surface": "#eff1f3",
+                        "inverse-primary": "#98da27",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-container": "#586377",
+                        "tertiary-container": "#ceceff",
+                        "on-primary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "outline-variant": "#c2cab0",
+                        "on-error": "#ffffff",
+                        "tertiary": "#494bd6",
+                        "primary": "#446900",
+                        "on-primary-fixed": "#121f00",
+                        "on-primary-fixed-variant": "#334f00",
+                        "tertiary-fixed": "#e1e0ff",
+                        "secondary": "#545f73",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed": "#111c2d",
+                        "background": "#f7f9fb",
+                        "on-background": "#191c1e",
+                        "primary-container": "#a3e635",
+                        "surface-container-low": "#f2f4f6",
+                        "surface-variant": "#e0e3e5",
+                        "on-tertiary": "#ffffff",
+                        "surface-dim": "#d8dadc",
+                        "on-surface": "#191c1e",
+                        "on-tertiary-fixed": "#07006c",
+                        "surface-bright": "#f7f9fb",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "primary-fixed": "#b2f746"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "16px",
+                        "lg": "32px",
+                        "2xl": "64px",
+                        "xs": "8px",
+                        "md": "24px",
+                        "xl": "48px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "headline-sm": ["Manrope"],
+                        "label-md": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-sm": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface min-h-screen pb-32">
+<!-- Top App Bar -->
+<header class="sticky top-0 z-50 bg-surface flex justify-between items-center w-full px-md py-sm">
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined p-2 hover:bg-surface-variant/50 transition-transform duration-200 active:scale-95 rounded-full text-primary">menu</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary">VitalFlow</h1>
+</div>
+<div class="flex items-center gap-sm">
+<button class="material-symbols-outlined p-2 hover:bg-surface-variant/50 transition-transform duration-200 active:scale-95 rounded-full text-primary">notifications</button>
+</div>
+</header>
+<main class="max-w-screen-xl mx-auto px-md md:px-lg py-lg">
+<div class="flex flex-col lg:grid lg:grid-cols-12 gap-lg items-start">
+<!-- Cart Items Section -->
+<div class="w-full lg:col-span-8 flex flex-col gap-md">
+<div class="flex justify-between items-end mb-xs">
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Your Cart</h2>
+<span class="font-label-md text-label-md text-on-surface-variant">2 items</span>
+</div>
+<!-- Omega-3 Pure -->
+<div class="cart-item-card bg-surface-container-lowest p-md rounded-lg shadow-[0_4px_20px_rgba(30,41,59,0.04)] flex gap-md items-center group">
+<div class="w-24 h-24 md:w-32 md:h-32 bg-surface-container-low rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Omega-3 Pure Supplement" class="w-full h-full object-cover" data-alt="A premium pharmaceutical bottle of Omega-3 Pure capsules, placed on a clean marble surface with soft, high-key medical lighting. The aesthetic is modern med-tech with a clear focus on the product's high-quality glass packaging. Background is bright and airy with subtle lime accents reflecting the VitalFlow brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9Xixg60kuedpnt-gwiE2ZKI8rdFF3Jttjc-UYj8VusnJ8XY0Qg3Tst6O2Osv94fAdO2yyU63Z9dLH3CTcDqT-JHSjxMeS8UrLJDU-MFduG4eNz8PV97K4dXnqTrimurNHRvKW-_mALSEw4siiDa_9lqGaac-OTpx8qnwknIWWmBmYUZN_clR46gDZHFDEUQjBUj8afChNRHy2hQMznVg__R2FCZtuhzGph6S-UqpLnrE3HGqsbW3Mhjoo0dHc7FXdnEK00QlNHyxa"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Omega-3 Pure</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">Pharmaceutical Grade • 60 Softgels</p>
+</div>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors">delete</button>
+</div>
+<div class="flex justify-between items-center mt-md">
+<div class="flex items-center bg-surface-container-low rounded-full px-sm py-xs gap-md">
+<button class="material-symbols-outlined text-primary hover:bg-primary-container rounded-full p-1 transition-all">remove</button>
+<span class="font-label-md text-label-md text-on-surface">1</span>
+<button class="material-symbols-outlined text-primary hover:bg-primary-container rounded-full p-1 transition-all">add</button>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">$34.99</span>
+</div>
+</div>
+</div>
+<!-- Magnesium Max -->
+<div class="cart-item-card bg-surface-container-lowest p-md rounded-lg shadow-[0_4px_20px_rgba(30,41,59,0.04)] flex gap-md items-center group">
+<div class="w-24 h-24 md:w-32 md:h-32 bg-surface-container-low rounded-lg overflow-hidden flex-shrink-0">
+<img alt="Magnesium Max Supplement" class="w-full h-full object-cover" data-alt="A high-end designer bottle for Magnesium Max vitamins sitting on a clean, white surgical-grade surface. The lighting is diffused and professional, emphasizing the sleek, clinical branding of the supplement. Subtle shadows ground the product in a minimalist, tech-forward environment that suggests health and precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDldPQTqXF5JXwwKO3fOFBbm7uSyGKb-JVb3K5q3t_AnJWYR6uluFKShPKSx4_uy9zYe_bHWn9-MhYF0B8L-xeGX7eh21BTGh6weJvJ4BvR9gs84qgvkPL5bVTKUCXtLKaDBwcw8J3WS9_yPUfq88AteT9kI_MfUtSohmPJ92_etYyNGvY1V2j74ZUTD89HmJo7DBTdJ2FWhAeMbf8OB4-0oXVkSEj35_ABw6jMA1p-qYmVK6QCNkIC8-M3FVAm4bSHHeTqk6epTV6y"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Magnesium Max</h3>
+<p class="font-label-md text-label-md text-on-surface-variant">High Absorption • 90 Capsules</p>
+</div>
+<button class="material-symbols-outlined text-outline hover:text-error transition-colors">delete</button>
+</div>
+<div class="flex justify-between items-center mt-md">
+<div class="flex items-center bg-surface-container-low rounded-full px-sm py-xs gap-md">
+<button class="material-symbols-outlined text-primary hover:bg-primary-container rounded-full p-1 transition-all">remove</button>
+<span class="font-label-md text-label-md text-on-surface">1</span>
+<button class="material-symbols-outlined text-primary hover:bg-primary-container rounded-full p-1 transition-all">add</button>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">$28.50</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Summary Section -->
+<div class="w-full lg:col-span-4 sticky top-24">
+<div class="bg-surface-container-lowest p-lg rounded-lg shadow-[0_10px_30px_rgba(30,41,59,0.08)] flex flex-col gap-md border border-outline-variant/30">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Summary</h2>
+<div class="flex flex-col gap-sm py-md border-y border-outline-variant/20">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Subtotal</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold">$63.49</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Shipping</span>
+<span class="font-body-md text-body-md text-primary-container bg-on-primary-container/10 px-2 py-0.5 rounded-full text-xs font-bold uppercase tracking-wider">Free</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Estimated Tax</span>
+<span class="font-body-md text-body-md text-on-surface font-semibold">$5.08</span>
+</div>
+</div>
+<div class="flex justify-between items-center mb-md">
+<span class="font-headline-md text-headline-md text-on-surface">Total</span>
+<span class="font-headline-md text-headline-md text-primary">$68.57</span>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container py-md px-lg rounded-xl font-headline-sm text-headline-sm hover:scale-[1.02] active:scale-95 transition-all duration-300 shadow-lg shadow-primary-container/20">
+                        Proceed to Checkout
+                    </button>
+<div class="flex items-center gap-xs justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="font-label-sm text-label-sm">Secure checkout powered by VitalPay</span>
+</div>
+</div>
+<!-- Promo Code -->
+<div class="mt-md px-sm">
+<div class="relative group">
+<input class="w-full bg-surface-container-low border-none rounded-lg px-md py-sm font-body-md text-body-md focus:ring-2 focus:ring-primary outline-none transition-all pr-12" placeholder="Promo code" type="text"/>
+<button class="absolute right-2 top-1/2 -translate-y-1/2 material-symbols-outlined text-primary p-2">arrow_forward</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Frequently Bought Together -->
+<section class="mt-2xl">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-lg">Frequently Bought Together</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Suggestion 1 -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-outline-variant/30 hover:border-primary/50 transition-all cursor-pointer">
+<div class="aspect-square bg-surface-container-low rounded-lg mb-sm overflow-hidden">
+<img alt="Vitamin D3" class="w-full h-full object-cover" data-alt="A small clinical bottle of Vitamin D3 supplements in a clean-room setting. The lighting is bright and surgical, with high-key whites and subtle gray backgrounds. The focus is on the bottle's high-tech label and minimalist design, aligned with the modern med-tech aesthetic of the VitalFlow brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJUCMtMrWGiFXllCY7ads4nlCat3A2heZCkZyLlCFlG187IjvmVzvF3ITVdcKdt7cVmhgkigEGzAKA9YNKWYBti_AJewFSIaBFDLACLDmgnJygqBNLX2zKv0wfuwan1DcoOtqrezDae6ucHj8kwW0uUfFRC85SvEvCaCXxHaPfUuIWmLNYLYX7l1jdyreleErGXnbK097D32CEkwZ7rPfR1zyD-u9hA_qe02uk77HHCT6TM5aEOiF4G1vlJFZAavCWfmdmwsfxSlz7"/>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface truncate">Vitamin D3 Support</h3>
+<div class="flex justify-between items-center mt-xs">
+<span class="font-label-md text-label-md text-primary">$19.99</span>
+<button class="material-symbols-outlined text-primary bg-primary-container/20 rounded-full p-1 text-[18px]">add</button>
+</div>
+</div>
+<!-- Suggestion 2 -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-outline-variant/30 hover:border-primary/50 transition-all cursor-pointer">
+<div class="aspect-square bg-surface-container-low rounded-lg mb-sm overflow-hidden">
+<img alt="Probiotics" class="w-full h-full object-cover" data-alt="Premium glass jar of Probiotics placed on a sleek white medical workstation. The environment is impeccably clean, featuring soft shadows and an overall light-mode aesthetic. The product photography emphasizes transparency and scientific reliability, using the brand's primary lime and navy colors subtly in the environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpo8FShHY8x7N7nlTzPQhQ6CVZ9_BKKz-yi6sakVgrkh3uHy5eZec0TW5p8zvJcEhOCI0bzk84AeD49_upjPLHYvxZYaLQHv1KhG9hjwOaZ8OJzSVnoNlSPAgphfOp-wtG6RIWswcc0pzL4-FU3T5q0eTYntemKxbluvX3hilruKPJVci8-RSj9gBghvwOBGnedE6N2Lq7QFOZj3Inl04TWPlPTFTHExhwFYeVYf25w27A1vTMSNVPMZNRQD7j3ZL3pHUW7S_Gd-jp"/>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface truncate">Daily Probiotics</h3>
+<div class="flex justify-between items-center mt-xs">
+<span class="font-label-md text-label-md text-primary">$42.00</span>
+<button class="material-symbols-outlined text-primary bg-primary-container/20 rounded-full p-1 text-[18px]">add</button>
+</div>
+</div>
+<!-- Suggestion 3 -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-outline-variant/30 hover:border-primary/50 transition-all cursor-pointer hidden md:block">
+<div class="aspect-square bg-surface-container-low rounded-lg mb-sm overflow-hidden">
+<img alt="Zinc Complex" class="w-full h-full object-cover" data-alt="A modern supplement bottle containing Zinc Complex capsules, showcased in a clinical setting with bright, diffused sunlight. The scene is airy and professional, embodying high-end health technology. The image uses a clean, light color palette with high-contrast sharp details to signify medical precision and consumer trust." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDM0LFrvrizoOK3qRhrjK9euZQr5FHJc0_UDYWiJtWaKp8qprLr8OP0brxk2JywpyKWSE46_vbrkNky4mJCf4sZr_apNXAm3j5kYEhPkS_0CTNMGXAP-sslFKnLJt3rMepJbh_lWjStOp9rlcaFScEs0hccjpLpq8QMk0pyRi0pUGhNVEbMCb-GJrDcWQFcVwm68S2DsvTTcYnmA2kRJx15uAuL4GNDhvIHOvbMI9SrEDnfBh5aa5SaVbzPzZzP7oiCCF_rouDxwCDr"/>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface truncate">Immunity Zinc</h3>
+<div class="flex justify-between items-center mt-xs">
+<span class="font-label-md text-label-md text-primary">$15.50</span>
+<button class="material-symbols-outlined text-primary bg-primary-container/20 rounded-full p-1 text-[18px]">add</button>
+</div>
+</div>
+<!-- Suggestion 4 -->
+<div class="bg-surface-container-lowest p-sm rounded-lg border border-outline-variant/30 hover:border-primary/50 transition-all cursor-pointer hidden md:block">
+<div class="aspect-square bg-surface-container-low rounded-lg mb-sm overflow-hidden">
+<img alt="B-Complex" class="w-full h-full object-cover" data-alt="Sleek, clinical-grade bottle of Vitamin B-Complex standing on a polished high-tech surface. The lighting is crisp and cool, creating a sense of reliability and scientific advancement. The background is a soft-focus laboratory environment in light mode, highlighting the vibrant VitalFlow lime accent on the product's label." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBq0tWV1TH8jELaHWpZ9dphUZ9-6jBAnRRV44fJdW1ZxjDrTOvv_fDXZiIposzrWx6iHleII2ErA5zCSmWhj8GV1CWKoyfDoHrxWGjnLxOLz1UiKqcoZtM_hnwOI6YV6jZI_TYmVQ6LSHH2AvzHT9WIKZ6uufvronR2dNrTrApQ3KempRlI-QaxEc_paJl4uWjfg8YIOpzAKRKPSF6ht5CfnS-WKRqmOPKJ232h118CQD9l9cSVTHrStff1JRsb-lydK9_tflF_f5uG"/>
+</div>
+<h3 class="font-label-md text-label-md text-on-surface truncate">B-Complex Vitality</h3>
+<div class="flex justify-between items-center mt-xs">
+<span class="font-label-md text-label-md text-primary">$24.99</span>
+<button class="material-symbols-outlined text-primary bg-primary-container/20 rounded-full p-1 text-[18px]">add</button>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg py-sm pb-safe bg-surface-container-lowest shadow-[0_-4px_20px_rgba(30,41,59,0.04)] rounded-t-xl md:hidden">
+<a class="flex flex-col items-center justify-center text-on-secondary-container p-3 hover:bg-secondary-container/50 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-3 scale-90 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container p-3 hover:bg-secondary-container/50 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container p-3 hover:bg-secondary-container/50 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for quantity buttons
+        document.querySelectorAll('.material-symbols-outlined').forEach(btn => {
+            if(btn.innerText === 'add' || btn.innerText === 'remove') {
+                btn.addEventListener('click', (e) => {
+                    const parent = e.target.closest('.flex.items-center');
+                    const span = parent.querySelector('span');
+                    let val = parseInt(span.innerText);
+                    if(e.target.innerText === 'add') {
+                        span.innerText = val + 1;
+                    } else if(val > 1) {
+                        span.innerText = val - 1;
+                    }
+                });
+            }
+        });
+    </script>
+</body></html>

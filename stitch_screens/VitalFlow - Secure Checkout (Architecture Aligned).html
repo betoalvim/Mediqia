@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#4446d2",
+                        "on-surface": "#191c1e",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#98da27",
+                        "on-secondary-container": "#586377",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "on-secondary-fixed": "#111c2d",
+                        "background": "#f7f9fb",
+                        "secondary-container": "#d5e0f8",
+                        "on-primary-fixed": "#121f00",
+                        "surface": "#f7f9fb",
+                        "primary": "#446900",
+                        "on-surface-variant": "#424936",
+                        "on-primary-container": "#416400",
+                        "secondary-fixed": "#d8e3fb",
+                        "primary-fixed-dim": "#98da27",
+                        "secondary": "#545f73",
+                        "surface-tint": "#446900",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-tertiary-fixed": "#07006c",
+                        "on-primary-fixed-variant": "#334f00",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed": "#b2f746",
+                        "outline-variant": "#c2cab0",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-container": "#ceceff",
+                        "on-error": "#ffffff",
+                        "outline": "#727a64",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "primary-container": "#a3e635",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadc",
+                        "surface-bright": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "tertiary": "#494bd6",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary-fixed": "#e1e0ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "2xl": "64px",
+                        "lg": "32px",
+                        "xl": "48px",
+                        "sm": "16px",
+                        "md": "24px",
+                        "xs": "8px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Manrope"],
+                        "headline-sm": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "body-lg": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; background-color: #f7f9fb; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .loading-ring {
+            border: 4px solid #F1F5F9;
+            border-top: 4px solid #446900;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .pulse-soft { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .7; } }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- Top Navigation Anchor -->
+<header class="bg-surface dark:bg-background fixed top-0 left-0 w-full z-50 flex justify-between items-center px-md py-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-headline-md-mobile cursor-pointer hover:bg-surface-variant/50 p-2 rounded-full transition-all">arrow_back</span>
+<div class="font-headline-md text-headline-md-mobile font-bold text-primary dark:text-primary-fixed">VitalFlow</div>
+</div>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-on-surface-variant p-2 cursor-pointer hover:bg-surface-variant/50 rounded-full">notifications</span>
+</div>
+</header>
+<main class="pt-2xl pb-2xl px-md max-w-lg mx-auto min-h-screen flex flex-col">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs py-md">
+<span class="font-label-md text-label-md text-on-surface-variant">Resultados</span>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="font-label-md text-label-md text-primary font-bold">Finalizar</span>
+</nav>
+<!-- Redirect Status Card -->
+<div class="bg-surface-container-lowest rounded-lg p-lg shadow-[0_4px_20px_rgba(30,41,59,0.04)] border border-outline-variant/30 flex flex-col items-center text-center space-y-md">
+<div class="relative py-md">
+<div class="loading-ring"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[32px]">sync_saved_locally</span>
+</div>
+</div>
+<div class="space-y-xs">
+<h1 class="font-headline-lg text-headline-lg-mobile text-on-surface">Conectando você...</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Estamos preparando seu carrinho e enviando sua receita para a farmácia parceira.</p>
+</div>
+<!-- Secured Badge -->
+<div class="flex items-center gap-xs bg-surface-container-low px-sm py-xs rounded-full">
+<span class="material-symbols-outlined text-[18px] text-primary" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Conexão Segura</span>
+</div>
+</div>
+<!-- Controlled Meds Warning -->
+<div class="mt-md bg-error-container/20 border-l-4 border-error p-md rounded-r-md flex gap-md">
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+<div class="flex-1">
+<h3 class="font-label-md text-label-md text-on-error-container">Atenção: Medicamentos Controlados</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs leading-tight">
+                    A venda de medicamentos sob prescrição (retenção de receita) exige a apresentação física do documento original na entrega ou retirada.
+                </p>
+</div>
+</div>
+<!-- Pharmacy Visual Context -->
+<div class="mt-lg flex items-center justify-between p-md border border-outline-variant/30 rounded-lg bg-white overflow-hidden relative">
+<div class="flex items-center gap-md relative z-10">
+<div class="w-12 h-12 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden">
+<img alt="Pharmacy Logo" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0BgerZJ1fkTGl2mpxGKmdxZq03-SJ6muwoni6vqfCZuZrLuKe5xvvqm6TvjPB02F3AEV9KfFAOdGBl0z-LoD81E1OoCNJcuqktNygAkx2cNSwfm5ATBozRW9UyUmD1d2bh_W16Kv-FeUYsYba0_DudSe5sDZ6ELEP00veqZ59pbLVVUq0yvjQVqHrzK4cK5POfbrlQX3D4fuEa7J8qdsN2wvAM1uXcDkJvvun0hwUU6JxvwWaqbBbgQ1U6LQzyr_ni0fmQ7M1R7_w"/>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-surface">Farmácia Parceira</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Droga Raia - Unidade 104</p>
+</div>
+</div>
+<div class="flex items-center gap-xs relative z-10">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-md text-label-md">4.9</span>
+</div>
+<!-- Decorative Medical Pattern -->
+<div class="absolute right-[-10%] top-0 opacity-[0.03] select-none pointer-events-none">
+<span class="material-symbols-outlined text-[120px]">medical_services</span>
+</div>
+</div>
+<!-- Call to Actions -->
+<div class="mt-xl space-y-md">
+<button class="w-full bg-primary-container text-on-primary-container font-label-md text-label-md py-md rounded-full shadow-lg hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-sm">
+                Ir para o site da Farmácia
+                <span class="material-symbols-outlined">open_in_new</span>
+</button>
+<button class="w-full bg-on-secondary-fixed text-white font-label-md text-label-md py-md rounded-full hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-sm">
+<span class="material-symbols-outlined">chat</span>
+                Abrir WhatsApp
+            </button>
+<button class="w-full bg-transparent border border-outline-variant text-on-surface-variant font-label-md text-label-md py-md rounded-full hover:bg-surface-variant/20 transition-all">
+                Cancelar e Voltar
+            </button>
+</div>
+<!-- Trust Footer -->
+<footer class="mt-auto pt-xl pb-md text-center">
+<p class="font-label-sm text-label-sm text-outline-variant flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                Seus dados de saúde são criptografados
+            </p>
+</footer>
+</main>
+<!-- Success Modal Interaction Overlay (Hidden by Default) -->
+<div class="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm z-[100] flex items-center justify-center p-md hidden" id="success-overlay">
+<div class="bg-surface-container-lowest rounded-lg p-lg w-full max-w-sm text-center space-y-md animate-in fade-in zoom-in duration-300">
+<div class="w-16 h-16 bg-primary-container rounded-full flex items-center justify-center mx-auto">
+<span class="material-symbols-outlined text-on-primary-container text-[32px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h2 class="font-headline-md text-on-surface">Redirecionando...</h2>
+<p class="font-body-md text-on-surface-variant">Sua prescrição foi sincronizada com sucesso. Você será levado ao site parceiro agora.</p>
+</div>
+</div>
+<script>
+        // Simulate loading sequence
+        document.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('success-overlay');
+            const mainButton = document.querySelector('button.bg-primary-container');
+            
+            // Auto-trigger success after 4 seconds
+            setTimeout(() => {
+                overlay.classList.remove('hidden');
+                
+                // Hide after 2 seconds or let user click
+                setTimeout(() => {
+                    // Logic for real redirect would go here
+                    console.log('Redirecting to pharmacy portal...');
+                }, 2500);
+            }, 4000);
+
+            // Button interactions
+            mainButton.addEventListener('click', () => {
+                overlay.classList.remove('hidden');
+            });
+        });
+    </script>
+</body></html>

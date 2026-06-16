@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>VitalFlow - Criar Conta</title>
+<!-- Google Fonts: Manrope -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "surface-bright": "#f7f9fb",
+                    "inverse-surface": "#2d3133",
+                    "secondary-container": "#d5e0f8",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#111c2d",
+                    "surface-container-highest": "#e0e3e5",
+                    "outline-variant": "#c2cab0",
+                    "on-tertiary-fixed": "#07006c",
+                    "secondary": "#545f73",
+                    "on-surface": "#191c1e",
+                    "primary-fixed": "#b2f746",
+                    "inverse-on-surface": "#eff1f3",
+                    "secondary-fixed": "#d8e3fb",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-background": "#191c1e",
+                    "on-primary-fixed-variant": "#334f00",
+                    "primary-container": "#a3e635",
+                    "on-surface-variant": "#424936",
+                    "background": "#f7f9fb",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "surface-container-high": "#e6e8ea",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f2f4f6",
+                    "outline": "#727a64",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#e1e0ff",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "on-primary-fixed": "#121f00",
+                    "surface-container": "#eceef0",
+                    "on-primary-container": "#416400",
+                    "surface-tint": "#446900",
+                    "primary": "#446900",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#98da27",
+                    "tertiary-container": "#ceceff",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#586377",
+                    "surface-dim": "#d8dadc",
+                    "primary-fixed-dim": "#98da27",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f7f9fb",
+                    "tertiary": "#494bd6",
+                    "on-tertiary-container": "#4446d2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "48px",
+                    "sm": "16px",
+                    "md": "24px",
+                    "base": "4px",
+                    "2xl": "64px",
+                    "lg": "32px",
+                    "xs": "8px"
+            },
+            "fontFamily": {
+                    "label-md": ["Manrope"],
+                    "body-md": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "label-sm": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "headline-sm": ["Manrope"],
+                    "body-lg": ["Manrope"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-md-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        .soft-shadow {
+            box-shadow: 0px 4px 20px rgba(30, 41, 59, 0.04);
+        }
+        .btn-interaction:active {
+            transform: scale(0.96);
+            transition: transform 0.1s ease-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- Hero/Header Visual Context -->
+<div class="relative w-full h-[221px] overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-br from-primary-container/20 to-transparent z-0"></div>
+<div class="absolute top-0 left-0 w-full p-md flex flex-col justify-end h-full z-10">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">VitalFlow</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[280px]">Comece sua jornada de saúde inteligente hoje.</p>
+</div>
+<!-- Animated Background Element -->
+<div class="absolute -right-20 -top-20 w-64 h-64 bg-primary-container/30 rounded-full blur-3xl animate-pulse"></div>
+</div>
+<!-- Main Content Area: Sign Up Form -->
+<main class="flex-1 w-full max-w-md mx-auto bg-surface-container-lowest rounded-t-xl px-md pt-lg pb-xl soft-shadow -mt-6 relative z-20">
+<header class="mb-lg">
+<h2 class="font-headline-md-mobile text-headline-md-mobile text-on-surface mb-xs">Criar Conta</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Preencha seus dados para começar.</p>
+</header>
+<form class="space-y-sm" onsubmit="return false;">
+<!-- Full Name -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="name">Nome Completo</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline">person</span>
+<input class="w-full bg-surface-container-low border-none rounded-DEFAULT pl-11 pr-md py-sm font-body-md text-on-surface focus:ring-2 focus:ring-primary transition-all duration-200 placeholder:text-outline-variant" id="name" placeholder="Ex: João Silva" type="text"/>
+</div>
+</div>
+<!-- Email -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="email">E-mail</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline">mail</span>
+<input class="w-full bg-surface-container-low border-none rounded-DEFAULT pl-11 pr-md py-sm font-body-md text-on-surface focus:ring-2 focus:ring-primary transition-all duration-200 placeholder:text-outline-variant" id="email" placeholder="joao@vitalflow.com" type="email"/>
+</div>
+</div>
+<!-- CPF (Transactional requirement for medical/wellness apps in BR) -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="cpf">CPF</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline">fingerprint</span>
+<input class="w-full bg-surface-container-low border-none rounded-DEFAULT pl-11 pr-md py-sm font-body-md text-on-surface focus:ring-2 focus:ring-primary transition-all duration-200 placeholder:text-outline-variant" id="cpf" placeholder="000.000.000-00" type="text"/>
+</div>
+</div>
+<!-- Password -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="password">Senha</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-sm top-1/2 -translate-y-1/2 text-outline">lock</span>
+<input class="w-full bg-surface-container-low border-none rounded-DEFAULT pl-11 pr-12 py-sm font-body-md text-on-surface focus:ring-2 focus:ring-primary transition-all duration-200 placeholder:text-outline-variant" id="password" placeholder="••••••••" type="password"/>
+<button class="absolute right-sm top-1/2 -translate-y-1/2 text-outline hover:text-on-surface transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</div>
+<!-- Primary Action -->
+<div class="pt-md">
+<button class="w-full py-sm bg-primary-container text-on-primary-container font-label-md text-headline-sm rounded-full btn-interaction transition-transform shadow-lg shadow-primary-container/20" type="submit">
+                    Criar Conta
+                </button>
+</div>
+</form>
+<!-- Social Login Section -->
+<div class="mt-xl">
+<div class="relative flex items-center mb-lg">
+<div class="flex-grow border-t border-surface-variant"></div>
+<span class="flex-shrink mx-md font-label-sm text-label-sm text-outline-variant">OU CADASTRE-SE COM</span>
+<div class="flex-grow border-t border-surface-variant"></div>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<button class="flex items-center justify-center gap-xs py-sm border border-surface-variant rounded-full font-label-md text-on-surface hover:bg-surface-container transition-colors btn-interaction">
+<img alt="Google Logo" class="w-5 h-5" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC8-vU8tA0IIPIyJT4a2Cqf6NxUMm1zDmvzgEnMt6L7JjVGn7dfIi9j35TnDqyXEQRN-OFAMoxOeZDntNnbgHAW1_NdX23Ffr2Mwmso-_3fnPXcAUWwf32EJYAzi0Lj5ORakFmIGHdt00NPG-aLH5WWIySQ6vryN2aas0A1f4mvjZujxF38l32Z_KM8JcFJAniTJGwwuZQjnXtNWoBkCjkCtBe662Q7PwMJHBFbIs9EQ1fkZan6LmfS7FSUKQduwbHi__8m1ppK_Yhz"/>
+                    Google
+                </button>
+<button class="flex items-center justify-center gap-xs py-sm border border-surface-variant rounded-full font-label-md text-on-surface hover:bg-surface-container transition-colors btn-interaction">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">apps</span>
+                    Apple
+                </button>
+</div>
+</div>
+<!-- Footer Link -->
+<footer class="mt-xl text-center">
+<p class="font-body-md text-body-md text-on-surface-variant">
+                Já tem uma conta? 
+                <a class="text-primary font-label-md hover:underline transition-all" href="#">Faça Login</a>
+</p>
+</footer>
+</main>
+<!-- Decorative Bottom Gradient for Depth -->
+<div class="fixed bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent pointer-events-none -z-10"></div>
+<script>
+        // Simple Interaction logic for demo
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if(btn.type === 'submit') {
+                    console.log('Account creation triggered');
+                }
+            });
+        });
+
+        // Password visibility toggle simulation
+        const togglePass = document.querySelector('button .material-symbols-outlined:contains("visibility")');
+        if(togglePass) {
+            togglePass.parentElement.addEventListener('click', () => {
+                const input = document.getElementById('password');
+                const isPass = input.type === 'password';
+                input.type = isPass ? 'text' : 'password';
+                togglePass.textContent = isPass ? 'visibility_off' : 'visibility';
+            });
+        }
+    </script>
+</body></html>

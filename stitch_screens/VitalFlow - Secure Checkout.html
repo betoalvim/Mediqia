@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VitalFlow Secure Checkout</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#e6e8ea",
+                    "on-primary-container": "#416400",
+                    "error-container": "#ffdad6",
+                    "primary-fixed-dim": "#98da27",
+                    "on-surface-variant": "#424936",
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "surface-tint": "#446900",
+                    "inverse-surface": "#2d3133",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f7f9fb",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "secondary-container": "#d5e0f8",
+                    "on-tertiary-container": "#4446d2",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "surface-container": "#eceef0",
+                    "outline": "#727a64",
+                    "secondary-fixed": "#d8e3fb",
+                    "inverse-on-surface": "#eff1f3",
+                    "inverse-primary": "#98da27",
+                    "on-secondary": "#ffffff",
+                    "on-secondary-container": "#586377",
+                    "tertiary-container": "#ceceff",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "outline-variant": "#c2cab0",
+                    "on-error": "#ffffff",
+                    "tertiary": "#494bd6",
+                    "primary": "#446900",
+                    "on-primary-fixed": "#121f00",
+                    "on-primary-fixed-variant": "#334f00",
+                    "tertiary-fixed": "#e1e0ff",
+                    "secondary": "#545f73",
+                    "error": "#ba1a1a",
+                    "on-secondary-fixed": "#111c2d",
+                    "background": "#f7f9fb",
+                    "on-background": "#191c1e",
+                    "primary-container": "#a3e635",
+                    "surface-container-low": "#f2f4f6",
+                    "surface-variant": "#e0e3e5",
+                    "on-tertiary": "#ffffff",
+                    "surface-dim": "#d8dadc",
+                    "on-surface": "#191c1e",
+                    "on-tertiary-fixed": "#07006c",
+                    "surface-bright": "#f7f9fb",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "primary-fixed": "#b2f746"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "16px",
+                    "lg": "32px",
+                    "2xl": "64px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "xl": "48px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Manrope"],
+                    "headline-sm": ["Manrope"],
+                    "label-md": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "label-sm": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+            opacity: 0;
+        }
+        .accordion-content.active {
+            max-height: 1000px;
+            opacity: 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md antialiased overflow-x-hidden">
+<!-- Top Navigation Suppression: Not shown for transactional flow as per "Shell Visibility" rules -->
+<main class="max-w-4xl mx-auto px-md py-xl min-h-screen pb-2xl">
+<!-- Header Section -->
+<header class="flex flex-col items-center mb-xl text-center">
+<div class="flex items-center gap-xs mb-sm">
+<span class="material-symbols-outlined text-primary text-[28px]" data-icon="lock">lock</span>
+<h1 class="font-label-md text-label-md tracking-[0.2em] text-secondary uppercase">SECURE CHECKOUT</h1>
+</div>
+<!-- Progress Bar -->
+<div class="w-full max-w-md bg-surface-container h-1 rounded-full relative overflow-hidden mt-sm">
+<div class="absolute left-0 top-0 h-full bg-primary-container transition-all duration-500 ease-in-out" id="progress-bar" style="width: 33%;"></div>
+</div>
+<div class="flex justify-between w-full max-w-md mt-xs">
+<span class="font-label-sm text-label-sm text-primary">Shipping</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Payment</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Review</span>
+</div>
+</header>
+<div class="flex flex-col gap-sm">
+<!-- 1. Shipping Details (Initially Expanded) -->
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden transition-all duration-300">
+<button class="w-full px-md py-md flex justify-between items-center hover:bg-surface-container-low transition-colors" onclick="toggleAccordion('shipping')">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold text-label-sm">1</div>
+<h2 class="font-headline-sm text-headline-sm">Shipping Details</h2>
+</div>
+<span class="material-symbols-outlined transition-transform duration-300 rotate-180" data-icon="expand_more" id="shipping-icon">expand_more</span>
+</button>
+<div class="accordion-content active px-md pb-md" id="shipping-content">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md pt-sm">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">First Name</label>
+<input class="bg-surface-container-low border-none rounded-md px-sm py-sm focus:ring-2 focus:ring-primary-container font-body-md" placeholder="John" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Last Name</label>
+<input class="bg-surface-container-low border-none rounded-md px-sm py-sm focus:ring-2 focus:ring-primary-container font-body-md" placeholder="Doe" type="text"/>
+</div>
+<div class="flex flex-col gap-xs md:col-span-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Address</label>
+<input class="bg-surface-container-low border-none rounded-md px-sm py-sm focus:ring-2 focus:ring-primary-container font-body-md" placeholder="123 Medical Plaza" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">City</label>
+<input class="bg-surface-container-low border-none rounded-md px-sm py-sm focus:ring-2 focus:ring-primary-container font-body-md" placeholder="Boston" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">ZIP Code</label>
+<input class="bg-surface-container-low border-none rounded-md px-sm py-sm focus:ring-2 focus:ring-primary-container font-body-md" placeholder="02108" type="text"/>
+</div>
+</div>
+<div class="mt-lg flex justify-end">
+<button class="bg-secondary text-on-secondary px-lg py-sm rounded-full font-label-md transition-all hover:brightness-110 active:scale-95" onclick="nextStep('payment')">Continue to Payment</button>
+</div>
+</div>
+</section>
+<!-- 2. Payment Method (Collapsed) -->
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden transition-all duration-300">
+<button class="w-full px-md py-md flex justify-between items-center hover:bg-surface-container-low transition-colors" onclick="toggleAccordion('payment')">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-label-sm" id="step-2-indicator">2</div>
+<h2 class="font-headline-sm text-headline-sm">Payment Method</h2>
+</div>
+<span class="material-symbols-outlined transition-transform duration-300" data-icon="expand_more" id="payment-icon">expand_more</span>
+</button>
+<div class="accordion-content px-md pb-md" id="payment-content">
+<div class="flex flex-col gap-md pt-sm">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Card Number</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-md px-sm py-sm focus:ring-2 focus:ring-primary-container font-body-md" placeholder="0000 0000 0000 0000" type="text"/>
+<span class="absolute right-sm top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant/50" data-icon="credit_card">credit_card</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Expiry Date</label>
+<input class="bg-surface-container-low border-none rounded-md px-sm py-sm focus:ring-2 focus:ring-primary-container font-body-md" placeholder="MM / YY" type="text"/>
+</div>
+<div class="flex flex-col gap-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">CVC</label>
+<input class="bg-surface-container-low border-none rounded-md px-sm py-sm focus:ring-2 focus:ring-primary-container font-body-md" placeholder="123" type="text"/>
+</div>
+</div>
+</div>
+<div class="mt-lg flex justify-end">
+<button class="bg-secondary text-on-secondary px-lg py-sm rounded-full font-label-md transition-all hover:brightness-110 active:scale-95" onclick="nextStep('review')">Review Order</button>
+</div>
+</div>
+</section>
+<!-- 3. Order Review (Collapsed) -->
+<section class="bg-surface-container-lowest rounded-lg border border-outline-variant/30 shadow-sm overflow-hidden transition-all duration-300">
+<button class="w-full px-md py-md flex justify-between items-center hover:bg-surface-container-low transition-colors" onclick="toggleAccordion('review')">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-on-surface-variant font-bold text-label-sm" id="step-3-indicator">3</div>
+<h2 class="font-headline-sm text-headline-sm">Order Review</h2>
+</div>
+<span class="material-symbols-outlined transition-transform duration-300" data-icon="expand_more" id="review-icon">expand_more</span>
+</button>
+<div class="accordion-content px-md pb-md" id="review-content">
+<div class="pt-sm space-y-md">
+<div class="bg-surface-container-low rounded-md p-md">
+<div class="flex justify-between items-start border-b border-outline-variant/20 pb-sm mb-sm">
+<div class="flex gap-sm">
+<div class="w-16 h-16 bg-white rounded-md flex items-center justify-center border border-outline-variant/20 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A premium, clinical-grade amber glass vitamin bottle sitting on a polished white laboratory surface. The bottle has a minimalist label with clean sans-serif typography and the VitalFlow logo in lime green. Natural bright daylight illuminates the scene, creating a sense of purity and medical excellence. The aesthetic is high-end wellness technology with soft, professional shadows." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrZlBkB3bqqZorY05Ldn4UmIBuIf5wiqsUKTGyZVhqh4kN8LlOALjQOA4WGLBJW-woIqfXuz2IQDSu04Plld_J64pJ3cWfN61pQ1XJfVaswSTje4AlSRTrFAofZS7HrHOcaz3wxSCp0o8hnBsyFi4PF8EonKzveFaA1_YGe3sp3wu0hVJ6G5CmkjfysYD1dfh9DkmozE9l-yqhL5TbSjCJ_iUfW-WNAsHAW6GP6A80ooixh_BwmnBxSsb5sC52b00utLoXhP7AKSaS"/>
+</div>
+<div>
+<p class="font-label-md text-label-md">VitalFlow Personalized Pack</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">30-Day Subscription</p>
+</div>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary">$89.00</span>
+</div>
+<div class="space-y-xs">
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Subtotal</span>
+<span>$89.00</span>
+</div>
+<div class="flex justify-between text-body-md">
+<span class="text-on-surface-variant">Shipping</span>
+<span class="text-on-primary-container font-label-md">FREE</span>
+</div>
+<div class="flex justify-between text-headline-md border-t border-outline-variant/20 pt-sm mt-sm">
+<span>Total</span>
+<span class="text-primary">$89.00</span>
+</div>
+</div>
+</div>
+<div class="bg-tertiary-container/10 border border-tertiary-container/30 rounded-md p-sm flex gap-sm items-center">
+<span class="material-symbols-outlined text-tertiary" data-icon="verified">verified</span>
+<p class="font-label-sm text-label-sm text-on-tertiary-container">Your medical data is protected by industry-standard HIPAA encryption protocols.</p>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container font-headline-md text-headline-md py-md rounded-full shadow-lg shadow-primary-container/20 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-sm">
+                            Complete Purchase
+                            <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Trust Badges Footer -->
+<footer class="mt-2xl pt-xl border-t border-outline-variant/20">
+<div class="flex flex-wrap justify-center gap-xl opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+<div class="flex flex-col items-center gap-xs">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary text-[24px]" data-icon="security_update_good">security_update_good</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">HIPAA COMPLIANT</span>
+</div>
+<div class="flex flex-col items-center gap-xs">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary text-[24px]" data-icon="health_and_safety">health_and_safety</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">GMP CERTIFIED</span>
+</div>
+<div class="flex flex-col items-center gap-xs">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm border border-outline-variant/30">
+<span class="material-symbols-outlined text-secondary text-[24px]" data-icon="encryption">description</span>
+</div>
+<span class="font-label-sm text-label-sm uppercase tracking-wider">256-BIT SSL</span>
+</div>
+</div>
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant/40 mt-xl">© 2024 VitalFlow Medical. All rights reserved.</p>
+</footer>
+</main>
+<script>
+        function toggleAccordion(step) {
+            const sections = ['shipping', 'payment', 'review'];
+            
+            sections.forEach(s => {
+                const content = document.getElementById(`${s}-content`);
+                const icon = document.getElementById(`${s}-icon`);
+                
+                if (s === step) {
+                    content.classList.toggle('active');
+                    icon.classList.toggle('rotate-180');
+                } else {
+                    content.classList.remove('active');
+                    icon.classList.remove('rotate-180');
+                }
+            });
+        }
+
+        function nextStep(target) {
+            const progressBar = document.getElementById('progress-bar');
+            const paymentIndicator = document.getElementById('step-2-indicator');
+            const reviewIndicator = document.getElementById('step-3-indicator');
+
+            if (target === 'payment') {
+                progressBar.style.width = '66%';
+                paymentIndicator.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+                paymentIndicator.classList.add('bg-primary-container', 'text-on-primary-container');
+            } else if (target === 'review') {
+                progressBar.style.width = '100%';
+                reviewIndicator.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+                reviewIndicator.classList.add('bg-primary-container', 'text-on-primary-container');
+            }
+            
+            toggleAccordion(target);
+        }
+
+        // Initialize micro-interactions
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('label')?.classList.add('text-primary');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('label')?.classList.remove('text-primary');
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VitalFlow | Resultados da Busca</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-container": "#4446d2",
+                        "on-surface": "#191c1e",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#98da27",
+                        "on-secondary-container": "#586377",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "on-secondary-fixed": "#111c2d",
+                        "background": "#f7f9fb",
+                        "secondary-container": "#d5e0f8",
+                        "on-primary-fixed": "#121f00",
+                        "surface": "#f7f9fb",
+                        "primary": "#446900",
+                        "on-surface-variant": "#424936",
+                        "on-primary-container": "#416400",
+                        "secondary-fixed": "#d8e3fb",
+                        "primary-fixed-dim": "#98da27",
+                        "secondary": "#545f73",
+                        "surface-tint": "#446900",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-tertiary-fixed": "#07006c",
+                        "on-primary-fixed-variant": "#334f00",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed": "#b2f746",
+                        "outline-variant": "#c2cab0",
+                        "error-container": "#ffdad6",
+                        "on-tertiary": "#ffffff",
+                        "inverse-surface": "#2d3133",
+                        "inverse-on-surface": "#eff1f3",
+                        "tertiary-container": "#ceceff",
+                        "on-error": "#ffffff",
+                        "outline": "#727a64",
+                        "on-secondary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#e6e8ea",
+                        "surface-container-highest": "#e0e3e5",
+                        "surface-container": "#eceef0",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "primary-container": "#a3e635",
+                        "on-background": "#191c1e",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadc",
+                        "surface-bright": "#f7f9fb",
+                        "on-primary": "#ffffff",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "tertiary": "#494bd6",
+                        "surface-variant": "#e0e3e5",
+                        "tertiary-fixed": "#e1e0ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "2xl": "64px",
+                        "lg": "32px",
+                        "xl": "48px",
+                        "sm": "16px",
+                        "md": "24px",
+                        "xs": "8px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Manrope"],
+                        "headline-sm": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "body-md": ["Manrope"],
+                        "body-lg": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-tab-indicator {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 4px;
+            background-color: #446900;
+            transition: all 0.3s ease;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<!-- Top AppBar (from JSON) -->
+<header class="bg-surface dark:bg-background flex justify-between items-center w-full px-md py-sm sticky top-0 z-50">
+<div class="flex items-center gap-xs">
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-transform active:scale-95">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary dark:text-primary-fixed">VitalFlow</h1>
+</div>
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-transform active:scale-95">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<main class="max-w-screen-xl mx-auto px-4 md:px-lg mt-sm">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-md overflow-x-auto whitespace-nowrap">
+<span class="font-label-md text-label-md text-on-surface-variant">Início</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[16px]">chevron_right</span>
+<span class="font-label-md text-label-md text-primary">Resultados</span>
+</nav>
+<!-- Bento Layout for Tabs & Selection -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-md">
+<!-- Left Column: Results & Tabs -->
+<div class="lg:col-span-8 space-y-md">
+<!-- Tab Bar (from DOCUMENT_6: screen_results_tabs) -->
+<div class="bg-surface-container-lowest rounded-lg p-xs shadow-sm overflow-hidden">
+<div class="flex relative">
+<button class="flex-1 py-md font-label-md text-label-md text-primary text-center transition-colors relative z-10" onclick="switchTab('single', this)">
+                            Menor Cesta Única
+                        </button>
+<button class="flex-1 py-md font-label-md text-label-md text-on-surface-variant text-center transition-colors relative z-10" onclick="switchTab('split', this)">
+                            Cesta Dividida
+                        </button>
+<div class="active-tab-indicator w-1/2 translate-x-0 rounded-full" id="tab-indicator"></div>
+</div>
+</div>
+<!-- Pharmacy Header & Card -->
+<div class="bg-surface-container-lowest rounded-lg p-md shadow-[0_4px_20px_rgba(30,41,59,0.04)] border border-outline-variant/30">
+<div class="flex items-center justify-between mb-lg">
+<div class="flex items-center gap-md">
+<div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-10 h-10 object-contain" data-alt="A professional medical pharmacy logo featuring a minimalist cross symbol and modern sans-serif typography. The aesthetic is clean and corporate, utilizing a clinical blue and crisp white color palette to evoke trust and medical precision. The logo is centered on a textured paper-like background with soft, diffused studio lighting for a premium feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnzXXLDVjcAjlqPPgXAyyOYho0v3m-FIk6HpTqDiTKVirGaJPP6zEEYuymLCuM2d0lwyvDmSFlG4kRNR6yyBdpMyEK-hdlShsa6pjlo61nJ4l5xd43Qh0fKMFs6OF1Bfj7vPA6HEdwKXar4wp3-92WYcquNbrJjiPbmqf4NXbjcaqs6sDexVtcMEC56yS78MC8a2WaYSGNf4szuQFO4s7M0pvBKl7lCMygk5Xuud2tgmF73UWWrJtKK1L86vAyQCsWN95yZ9RQahJc"/>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Droga Raia - Unidade Pinheiros</h3>
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label-sm text-label-sm text-on-surface">4.8 (240 avaliações)</span>
+</div>
+</div>
+</div>
+<span class="bg-primary-container text-on-primary-container font-label-sm text-label-sm px-sm py-xs rounded-full">Melhor Preço</span>
+</div>
+<!-- Medicine List -->
+<div class="space-y-sm">
+<!-- Medicine Item 1 -->
+<div class="flex items-center gap-md p-sm hover:bg-surface-container-low rounded-lg transition-colors group">
+<div class="w-20 h-20 bg-surface-container rounded-md flex items-center justify-center overflow-hidden">
+<img class="w-16 h-16 object-cover mix-blend-multiply" data-alt="A macro close-up of a premium medicine box for Atorvastatina. The packaging is minimalist, using white and clinical grey colors with clear medical typography. High-key lighting highlights the sharp corners of the box against a soft-focus medical background, suggesting scientific backing and high quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOPGtZW5uPlNm6L8ENRLYG-N03ApRInOtNKhmP1Xy_p6vevu--CpBdCtGUSlMzZn7l06tn1_HgUup0D0HwQdfb_973H3QW1BJfyZisj9kpIVwWnuAQmOi6w8MkPoM49qVYELEuKYWlKah6_7AbpstM8TZZQzwIJetenRnIFMFVogDNbW5aVAubrrmT-26Dajvq-PDYREDl-3JP85L3OhrSx7qIvG5Kmk_ohhcHl_-2UWcWgQPcEl11bkALH7lnQzfyDzSanxRZ5h9e"/>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface">Atorvastatina Cálcica 20mg</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">30 Comprimidos Revestidos</p>
+</div>
+<div class="text-right">
+<p class="font-headline-sm text-headline-sm text-on-surface">R$ 42,90</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant line-through">R$ 58,00</p>
+</div>
+</div>
+<!-- Medicine Item 2 -->
+<div class="flex items-center gap-md p-sm hover:bg-surface-container-low rounded-lg transition-colors group">
+<div class="w-20 h-20 bg-surface-container rounded-md flex items-center justify-center overflow-hidden">
+<img class="w-16 h-16 object-cover mix-blend-multiply" data-alt="A clean, pharmaceutical-style bottle of generic medication, featuring a crisp white label with professional blue accents. The bottle is placed on a reflective glass surface under bright, clinical LED lighting that creates a sharp, technical look. The mood is scientific and reliable, aligning with modern med-tech standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqZAlvJfAdC5FgRFMFX0QF6Te05PGeBOIsfikDinSNQH4sNmDJAnjF7SqbMpHjhQqZVL0q6qRJ5IZ8mWW2PRgGYq8cCqOqoTXHf8l6sAK98P1fZrxtBs1O8lgmpQ_U4_xZrwEyBPLIW47gDN3yucDLa79xnkaWkuQHZ75TiMkuGk738FYmAaPuJxzBl1jfHRdCl7_LWkLJrB8rLXK8h1fMqYoafxOpfGsm3t9fauMuDG_g89QqGfZXabagzkEjKZXE0SVK20_LXcYw"/>
+</div>
+<div class="flex-1">
+<p class="font-label-md text-label-md text-on-surface">Vitamina D3 10.000 UI</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">30 Cápsulas Gelatinosas</p>
+</div>
+<div class="text-right">
+<p class="font-headline-sm text-headline-sm text-on-surface">R$ 31,50</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant line-through">R$ 45,00</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Summary Sticky -->
+<div class="lg:col-span-4 h-fit sticky top-[88px]">
+<div class="bg-on-secondary-fixed text-white rounded-lg p-lg shadow-xl relative overflow-hidden">
+<!-- Background Decoration -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-primary-container/10 rounded-full blur-3xl"></div>
+<h2 class="font-headline-md text-headline-md mb-lg">Resumo do Pedido</h2>
+<div class="space-y-md mb-lg">
+<div class="flex justify-between items-center opacity-80">
+<span class="font-label-md text-label-md">Subtotal</span>
+<span class="font-label-md text-label-md">R$ 74,40</span>
+</div>
+<div class="flex justify-between items-center opacity-80">
+<span class="font-label-md text-label-md">Frete Estimado</span>
+<span class="font-label-md text-label-md text-primary-fixed">R$ 8,90</span>
+</div>
+<div class="flex justify-between items-center opacity-80">
+<span class="font-label-md text-label-md">Descontos</span>
+<span class="font-label-md text-label-md text-primary-fixed">- R$ 15,00</span>
+</div>
+<div class="h-px bg-white/10 w-full"></div>
+<div class="flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm">Total</span>
+<span class="font-headline-md text-headline-md text-primary-fixed">R$ 68,30</span>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container py-md rounded-full font-headline-sm text-headline-sm hover:scale-[1.02] active:scale-95 transition-all shadow-lg shadow-primary/20">
+                        Prosseguir Compra
+                    </button>
+<p class="text-center font-label-sm text-label-sm text-white/50 mt-md">
+<span class="material-symbols-outlined text-[14px] align-middle mr-xs">lock</span>
+                        Pagamento 100% Seguro
+                    </p>
+</div>
+<!-- Incentive Card -->
+<div class="mt-md bg-tertiary-container text-on-tertiary-container p-md rounded-lg flex items-center gap-md">
+<span class="material-symbols-outlined text-4xl">local_pharmacy</span>
+<div>
+<p class="font-label-md text-label-md font-bold">Ganhe 150 pontos Flow</p>
+<p class="font-label-sm text-label-sm">Ao finalizar esta compra você sobe de nível!</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (from JSON) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg py-sm pb-safe bg-surface-container-lowest dark:bg-surface-dim shadow-[0_-4px_20px_rgba(30,41,59,0.04)] rounded-t-xl md:hidden">
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim p-3 hover:bg-secondary-container/50 rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-on-primary-fixed-variant text-on-primary-container dark:text-primary-fixed rounded-full p-3 scale-90 transition-all" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim p-3 hover:bg-secondary-container/50 rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim p-3 hover:bg-secondary-container/50 rounded-full transition-all" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+</a>
+</nav>
+<script>
+        function switchTab(type, element) {
+            const indicator = document.getElementById('tab-indicator');
+            const buttons = element.parentElement.querySelectorAll('button');
+            
+            buttons.forEach(btn => {
+                btn.classList.remove('text-primary');
+                btn.classList.add('text-on-surface-variant');
+            });
+            
+            element.classList.remove('text-on-surface-variant');
+            element.classList.add('text-primary');
+
+            if (type === 'split') {
+                indicator.style.transform = 'translateX(100%)';
+            } else {
+                indicator.style.transform = 'translateX(0)';
+            }
+        }
+    </script>
+</body></html>

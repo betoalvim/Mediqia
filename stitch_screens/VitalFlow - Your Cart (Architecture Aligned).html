@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+
+<html class="light" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Carrinho - VitalFlow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-tertiary-container": "#4446d2",
+                "on-surface": "#191c1e",
+                "surface-container-lowest": "#ffffff",
+                "inverse-primary": "#98da27",
+                "on-secondary-container": "#586377",
+                "on-tertiary-fixed-variant": "#2f2ebe",
+                "on-secondary-fixed": "#111c2d",
+                "background": "#f7f9fb",
+                "secondary-container": "#d5e0f8",
+                "on-primary-fixed": "#121f00",
+                "surface": "#f7f9fb",
+                "primary": "#446900",
+                "on-surface-variant": "#424936",
+                "on-primary-container": "#416400",
+                "secondary-fixed": "#d8e3fb",
+                "primary-fixed-dim": "#98da27",
+                "secondary": "#545f73",
+                "surface-tint": "#446900",
+                "secondary-fixed-dim": "#bcc7de",
+                "on-tertiary-fixed": "#07006c",
+                "on-primary-fixed-variant": "#334f00",
+                "surface-container-low": "#f2f4f6",
+                "primary-fixed": "#b2f746",
+                "outline-variant": "#c2cab0",
+                "error-container": "#ffdad6",
+                "on-tertiary": "#ffffff",
+                "inverse-surface": "#2d3133",
+                "inverse-on-surface": "#eff1f3",
+                "tertiary-container": "#ceceff",
+                "on-error": "#ffffff",
+                "outline": "#727a64",
+                "on-secondary": "#ffffff",
+                "on-error-container": "#93000a",
+                "surface-container-high": "#e6e8ea",
+                "surface-container-highest": "#e0e3e5",
+                "surface-container": "#eceef0",
+                "tertiary-fixed-dim": "#c0c1ff",
+                "primary-container": "#a3e635",
+                "on-background": "#191c1e",
+                "error": "#ba1a1a",
+                "surface-dim": "#d8dadc",
+                "surface-bright": "#f7f9fb",
+                "on-primary": "#ffffff",
+                "on-secondary-fixed-variant": "#3c475a",
+                "tertiary": "#494bd6",
+                "surface-variant": "#e0e3e5",
+                "tertiary-fixed": "#e1e0ff"
+            },
+            "borderRadius": {
+                "DEFAULT": "1rem",
+                "lg": "2rem",
+                "xl": "3rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "base": "4px",
+                "2xl": "64px",
+                "lg": "32px",
+                "xl": "48px",
+                "sm": "16px",
+                "md": "24px",
+                "xs": "8px"
+            },
+            "fontFamily": {
+                "label-md": ["Manrope"],
+                "headline-sm": ["Manrope"],
+                "headline-md": ["Manrope"],
+                "label-sm": ["Manrope"],
+                "headline-lg": ["Manrope"],
+                "display-lg": ["Manrope"],
+                "body-md": ["Manrope"],
+                "body-lg": ["Manrope"]
+            },
+            "fontSize": {
+                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Manrope', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-24 md:pb-0 overflow-x-hidden">
+<!-- Top AppBar (From Shared Components) -->
+<nav class="sticky top-0 z-50 bg-surface dark:bg-background flex justify-between items-center w-full px-md py-sm">
+<div class="flex items-center gap-sm">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-transform active:scale-95 duration-200 text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<span class="font-headline-md text-headline-md-mobile font-bold text-primary dark:text-primary-fixed">VitalFlow</span>
+</div>
+<div class="flex items-center gap-xs">
+<button class="p-2 rounded-full hover:bg-surface-variant/50 transition-transform active:scale-95 duration-200 text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</nav>
+<main class="max-w-[1280px] mx-auto px-md md:px-lg py-sm md:py-md">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-md">
+<span class="font-label-md text-label-md text-on-surface-variant">Início</span>
+<span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Resultados</span>
+<span class="material-symbols-outlined text-[16px] text-outline-variant">chevron_right</span>
+<span class="font-label-md text-label-md text-primary">Carrinho</span>
+</nav>
+<header class="mb-lg">
+<h1 class="font-headline-lg text-headline-lg-mobile text-on-surface mb-xs">Seu Carrinho</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Revise seus itens e prossiga para o pagamento seguro.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-lg">
+<!-- Item List Section -->
+<section class="lg:col-span-8 flex flex-col gap-sm">
+<!-- Cart Item 1 -->
+<div class="bg-surface-container-lowest p-md rounded-lg shadow-[0_4px_20px_rgba(30,41,59,0.04)] flex flex-col sm:flex-row items-center gap-md relative">
+<div class="w-32 h-32 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="A premium bottle of scientific health supplements displayed in a professional, medical-tech setting. The lighting is high-key and clean, emphasizing the VitalFlow brand aesthetic of clinical clarity and professional reliability. The product is surrounded by soft shadows and a neutral, light-mode background with lime green accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDbBUDNTk3HnCiourpywTYaJ477pqYcbjI61bMRpGxyVgbTcTfxW96sIuEszviLXfuwwBapx5wjdpf5OU8ngnieB4NvpHNfR251NrlGUr90IGz_QmYfieBdJEdhxFi91Dp-zl46NnUJsbLsxa1w3TFQlIbaq70blhh5s8P7vt3n-242v7Mgu6NLgQxL_knQb7l7sZRg2E49U3qdF5Vx2M2Zrn46YAw2mbgEQSWkb68V01uqMS2-Lul2GitNrDeOEA_aR2vmg_mLg9i3"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs w-full">
+<div class="flex justify-between items-start">
+<div>
+<span class="bg-primary-container/30 text-on-primary-container text-[10px] uppercase font-bold px-2 py-0.5 rounded-full mb-1 inline-block">Best Seller</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">VitalFlow Omega-3 Premium</h3>
+</div>
+<button class="text-error hover:bg-error-container/30 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant line-clamp-1">Suplemento de óleo de peixe ultra-puro.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-headline-md text-headline-md text-primary">R$ 189,90</span>
+<div class="flex items-center bg-surface-low rounded-full border border-outline-variant p-1">
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="px-4 font-label-md text-label-md">1</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Cart Item 2 -->
+<div class="bg-surface-container-lowest p-md rounded-lg shadow-[0_4px_20px_rgba(30,41,59,0.04)] flex flex-col sm:flex-row items-center gap-md relative">
+<div class="w-32 h-32 rounded-lg bg-surface-container overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover" data-alt="Modern apothecary style bottle containing professional grade magnesium supplements. The bottle features a clean, minimalist label under bright studio lighting that creates soft, ethereal glows. The scene is dominated by pristine white space and subtle tones of navy and lime green, reflecting high-tech medical precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2kD8Ysqjnyn_i5OJpHDQsewG8HTT7DsZBDwoyWAyOvzBF6RtzJYWiWXlFl6tBCb7iwRjK7K9K2XnSTFlQw-sjzDpHfuyT8dDs33WDeEeBm8TP2ZJjiTU4XX38sN2NZj_DhNamrRX3Me1Wd09Rtb4GoyhsBCz6_C4GorHsymbKbT6ctGmv3RQ_V4_FXMgRDepR2scWX06e0ON9-qMm-fUp9aM9QdB1DIZqgt3sIUM5mTD65WMOhn5JmIo8ApNIrH05myjbTiuwqQXW"/>
+</div>
+<div class="flex-grow flex flex-col gap-xs w-full">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">VitalFlow Magnésio Quelato</h3>
+</div>
+<button class="text-error hover:bg-error-container/30 p-2 rounded-full transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Recuperação muscular e suporte cognitivo.</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="font-headline-md text-headline-md text-primary">R$ 124,50</span>
+<div class="flex items-center bg-surface-low rounded-full border border-outline-variant p-1">
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+<span class="px-4 font-label-md text-label-md">2</span>
+<button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-variant/50 transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Recommendation Upsell -->
+<div class="mt-md p-md bg-secondary-container/30 rounded-lg border border-secondary-container flex items-center gap-md">
+<div class="bg-secondary-container p-3 rounded-full">
+<span class="material-symbols-outlined text-on-secondary-container">auto_awesome</span>
+</div>
+<div>
+<h4 class="font-label-md text-label-md text-on-secondary-container">Complete seu ciclo</h4>
+<p class="font-label-sm text-label-sm text-on-secondary-container/80">Adicione Multivitamínico e ganhe 10% de desconto no total.</p>
+</div>
+<button class="ml-auto bg-surface-container-lowest text-primary px-4 py-2 rounded-full font-label-md text-label-md shadow-sm border border-outline-variant hover:bg-surface-variant transition-colors">
+                        Adicionar
+                    </button>
+</div>
+</section>
+<!-- Checkout Summary Card -->
+<aside class="lg:col-span-4">
+<div class="bg-surface-container-lowest p-lg rounded-lg shadow-[0_10px_30px_rgba(30,41,59,0.08)] sticky top-24">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-md">Resumo do Pedido</h2>
+<div class="flex flex-col gap-sm mb-lg">
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Subtotal (3 itens)</span>
+<span class="font-body-md text-body-md text-on-surface">R$ 438,90</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Frete</span>
+<span class="font-body-md text-body-md text-on-primary-container font-bold">Grátis</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-md text-body-md text-on-surface-variant">Descontos</span>
+<span class="font-body-md text-body-md text-error">- R$ 0,00</span>
+</div>
+<div class="h-px bg-outline-variant my-xs"></div>
+<div class="flex justify-between items-center">
+<span class="font-headline-sm text-headline-sm text-on-surface">Total</span>
+<span class="font-headline-md text-headline-md text-primary">R$ 438,90</span>
+</div>
+</div>
+<div class="mb-lg">
+<label class="font-label-md text-label-md text-on-surface-variant block mb-xs">Cupom de Desconto</label>
+<div class="flex gap-xs">
+<input class="flex-grow bg-surface-low border-outline-variant rounded-md px-4 py-2 text-label-md focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Código" type="text"/>
+<button class="px-4 py-2 bg-secondary text-white font-label-md text-label-md rounded-md hover:bg-on-secondary-fixed-variant transition-colors">Aplicar</button>
+</div>
+</div>
+<button class="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-full text-headline-sm flex items-center justify-center gap-sm hover:scale-[1.02] active:scale-[0.98] transition-all shadow-md group">
+                        Proceed to Checkout
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<div class="mt-md flex items-center justify-center gap-md">
+<div class="flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-help">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span class="text-[10px] font-bold uppercase">Seguro</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-help">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+<span class="text-[10px] font-bold uppercase">Rápido</span>
+</div>
+<div class="flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity cursor-help">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+<span class="text-[10px] font-bold uppercase">Devolução</span>
+</div>
+</div>
+</div>
+<!-- Newsletter/Trust section below summary -->
+<div class="mt-md p-md rounded-lg border-2 border-dashed border-outline-variant flex items-start gap-sm">
+<span class="material-symbols-outlined text-primary">contact_support</span>
+<div>
+<p class="font-label-md text-label-md text-on-surface">Dúvidas com o pedido?</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Fale com nossos especialistas em saúde 24/7.</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Bottom Navigation (Shared Component Logic) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg py-sm pb-safe bg-surface-container-lowest dark:bg-surface-dim shadow-[0_-4px_20px_rgba(30,41,59,0.04)] dark:shadow-none rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim p-3 hover:bg-secondary-container/50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-on-primary-fixed-variant text-on-primary-container dark:text-primary-fixed rounded-full p-3 scale-90 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim p-3 hover:bg-secondary-container/50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">search</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim p-3 hover:bg-secondary-container/50 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for quantity controls
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                // Prevent default but allow the effect
+                const span = this.querySelector('.material-symbols-outlined');
+                if (span && (span.innerText === 'add' || span.innerText === 'remove')) {
+                    const quantityDisplay = this.parentElement.querySelector('span.px-4');
+                    let val = parseInt(quantityDisplay.innerText);
+                    if (span.innerText === 'add') val++;
+                    else if (span.innerText === 'remove' && val > 1) val--;
+                    quantityDisplay.innerText = val;
+                }
+            });
+        });
+    </script>
+</body></html>

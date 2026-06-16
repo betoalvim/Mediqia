@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VitalFlow - Perfil do Usuário</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-bright": "#f7f9fb",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e0e3e5",
+                        "on-primary-fixed-variant": "#334f00",
+                        "surface-container": "#eceef0",
+                        "on-surface-variant": "#424936",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ceceff",
+                        "surface": "#f7f9fb",
+                        "on-tertiary-container": "#4446d2",
+                        "outline-variant": "#c2cab0",
+                        "secondary-container": "#d5e0f8",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e0e3e5",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        "on-primary": "#ffffff",
+                        "secondary-fixed": "#d8e3fb",
+                        "on-secondary-container": "#586377",
+                        "secondary-fixed-dim": "#bcc7de",
+                        "on-primary-container": "#416400",
+                        "on-primary-fixed": "#121f00",
+                        "tertiary": "#494bd6",
+                        "primary-container": "#a3e635",
+                        "surface-container-lowest": "#ffffff",
+                        "inverse-primary": "#98da27",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#e1e0ff",
+                        "primary-fixed-dim": "#98da27",
+                        "outline": "#727a64",
+                        "surface-tint": "#446900",
+                        "on-background": "#191c1e",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "on-tertiary-fixed": "#07006c",
+                        "secondary": "#545f73",
+                        "background": "#f7f9fb",
+                        "surface-dim": "#d8dadc",
+                        "inverse-surface": "#2d3133",
+                        "inverse-on-surface": "#eff1f3",
+                        "on-surface": "#191c1e",
+                        "on-secondary-fixed": "#111c2d",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "surface-container-low": "#f2f4f6",
+                        "primary-fixed": "#b2f746",
+                        "on-error-container": "#93000a",
+                        "primary": "#446900",
+                        "surface-container-high": "#e6e8ea"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "32px",
+                        "sm": "16px",
+                        "2xl": "64px",
+                        "xl": "48px",
+                        "xs": "8px",
+                        "md": "24px",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "body-lg": ["Manrope"],
+                        "display-lg": ["Manrope"],
+                        "label-md": ["Manrope"],
+                        "label-sm": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "headline-sm": ["Manrope"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Manrope', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .profile-card-shadow {
+            box-shadow: 0px 4px 20px rgba(30, 41, 59, 0.04);
+        }
+        .active-nav-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface antialiased pb-32">
+<!-- TopAppBar -->
+<header class="bg-surface sticky top-0 z-40 w-full px-md py-sm flex justify-between items-center">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="menu">menu</span>
+<span class="font-headline-md text-headline-md-mobile font-bold text-primary">VitalFlow</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="relative p-base hover:bg-surface-variant/50 transition-colors rounded-full">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-error rounded-full"></span>
+</button>
+</div>
+</header>
+<main class="max-w-md mx-auto px-md py-sm">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-lg text-on-surface-variant">
+<span class="font-label-md text-label-md">Início</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+<span class="font-label-md text-label-md text-primary font-bold">Perfil</span>
+</nav>
+<h1 class="font-headline-lg text-headline-lg-mobile mb-lg">Perfil do Usuário</h1>
+<!-- User Identity Section -->
+<section class="flex flex-col items-center mb-xl">
+<div class="relative mb-md">
+<div class="w-32 h-32 rounded-xl overflow-hidden border-4 border-primary-container profile-card-shadow">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="A professional studio portrait of a friendly modern man with a clean haircut, smiling warmly. The background is a soft, blurred clinical white space with natural daylight. High-key lighting emphasizes clear skin and bright eyes. The overall aesthetic is professional, clean, and trustworthy, matching a premium med-tech brand identity with subtle green tones in the highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyZUUK6XPYwdwDi_O_VAfkUs11jOllvuAtejhxX7DoNtAEXJHKLkG05kcoc8Qnn2GP22LaNuBVNxjPRDv4ZU_QCIKyvvnedXyBqsNCVjF59RTidfaNAKSlMqn42kEJUUEMS5yFShM61ZbRX8tRWvI3YTzH-4ypFL9ClHM1dsIWsed6OS0IKRWUHZRqcOeT5UWjZ5TflyNX855nhiYLMCXk6SAU9iVWM_PJepuoV9KLB-QfCh_8VQcndyZAtttpMnHEjydaeTrEiUcV"/>
+</div>
+<button class="absolute bottom-0 right-0 bg-primary text-on-primary p-xs rounded-full shadow-lg border-2 border-white">
+<span class="material-symbols-outlined text-[18px]" data-icon="edit">edit</span>
+</button>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Ricardo Mendonça</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-base">CPF: 452.***.***-09</p>
+</section>
+<!-- Menu List -->
+<div class="space-y-sm">
+<a class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg profile-card-shadow hover:bg-surface-container-low transition-all duration-200 group" href="#">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+</div>
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Meus Dados</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg profile-card-shadow hover:bg-surface-container-low transition-all duration-200 group" href="#">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="location_on">location_on</span>
+</div>
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Endereços</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+<a class="flex items-center justify-between p-md bg-surface-container-lowest rounded-lg profile-card-shadow hover:bg-surface-container-low transition-all duration-200 group" href="#">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+</div>
+<span class="font-body-lg text-body-lg font-semibold text-on-surface">Termos e Privacidade</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+</a>
+</div>
+<!-- Logout Action -->
+<div class="mt-2xl px-sm">
+<button class="w-full flex items-center justify-center gap-sm p-md border-2 border-outline-variant text-on-surface-variant font-bold rounded-full hover:bg-error-container hover:text-on-error-container hover:border-transparent transition-all duration-300">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-label-md text-label-md">Sair da Conta</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg py-sm pb-safe bg-surface-container-lowest rounded-t-xl shadow-[0_-4px_20px_rgba(30,41,59,0.04)]">
+<!-- Home -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container p-3 hover:bg-secondary-container/50 transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Início</span>
+</a>
+<!-- Vault -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container p-3 hover:bg-secondary-container/50 transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-label-sm text-label-sm mt-1">Cofre</span>
+</a>
+<!-- Search (Contextual) -->
+<a class="flex flex-col items-center justify-center text-on-secondary-container p-3 hover:bg-secondary-container/50 transition-colors rounded-full" href="#">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="font-label-sm text-label-sm mt-1">Explorar</span>
+</a>
+<!-- Profile (Active) -->
+<a class="active-nav-transition flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full p-3 scale-90" href="#">
+<span class="material-symbols-outlined" data-icon="account_circle" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-label-sm text-label-sm mt-1">Perfil</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for feedback
+        document.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('mousedown', () => {
+                el.classList.add('scale-95');
+            });
+            el.addEventListener('mouseup', () => {
+                el.classList.remove('scale-95');
+            });
+            el.addEventListener('mouseleave', () => {
+                el.classList.remove('scale-95');
+            });
+        });
+    </script>
+</body></html>

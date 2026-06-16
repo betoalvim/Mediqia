@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Mediqia - Cotação &amp; Compra de Medicamentos</title>
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Global Error Handler to display JS errors directly on the screen (helpful for WebView debugging)
+    (function() {
+      function showDebugError(msg, file, line) {
+        var errorDiv = document.getElementById('debug-error-box');
+        if (!errorDiv) {
+          errorDiv = document.createElement('div');
+          errorDiv.id = 'debug-error-box';
+          errorDiv.style.position = 'fixed';
+          errorDiv.style.top = '0';
+          errorDiv.style.left = '0';
+          errorDiv.style.width = '100%';
+          errorDiv.style.background = 'rgba(239, 68, 68, 0.95)';
+          errorDiv.style.color = '#ffffff';
+          errorDiv.style.padding = '20px';
+          errorDiv.style.zIndex = '999999';
+          errorDiv.style.fontSize = '12px';
+          errorDiv.style.fontFamily = 'monospace';
+          errorDiv.style.maxHeight = '50vh';
+          errorDiv.style.overflowY = 'auto';
+          errorDiv.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.3)';
+          document.body.appendChild(errorDiv);
+        }
+        errorDiv.innerHTML += '<div><strong>Error:</strong> ' + msg + '<br><strong>File:</strong> ' + file + ':' + line + '<br><br></div>';
+      }
+      window.onerror = function(msg, url, line) {
+        showDebugError(msg, url, line);
+        return false;
+      };
+      window.addEventListener('unhandledrejection', function(event) {
+        showDebugError('Unhandled Promise: ' + event.reason, 'promise', 0);
+      });
+    })();
+  </script>
+  <script>
+    // Safe Storage Polyfill to prevent SecurityError crashes in sandboxed or local file:/// WebViews
+    (function() {
+      function createInMemoryStorage() {
+        var store = {};
+        return {
+          getItem: function(key) {
+            return store.hasOwnProperty(key) ? store[key] : null;
+          },
+          setItem: function(key, value) {
+            store[key] = String(value);
+          },
+          removeItem: function(key) {
+            delete store[key];
+          },
+          clear: function() {
+            store = {};
+          },
+          key: function(index) {
+            var keys = Object.keys(store);
+            return keys[index] || null;
+          },
+          get length() {
+            return Object.keys(store).length;
+          }
+        };
+      }
+
+      try {
+        var testKey = '__storage_test__';
+        window.localStorage.setItem(testKey, testKey);
+        window.localStorage.removeItem(testKey);
+      } catch (e) {
+        console.warn("localStorage is restricted. Using in-memory fallback.");
+        Object.defineProperty(window, 'localStorage', {
+          value: createInMemoryStorage(),
+          writable: true
+        });
+      }
+
+      try {
+        var testKey = '__session_test__';
+        window.sessionStorage.setItem(testKey, testKey);
+        window.sessionStorage.removeItem(testKey);
+      } catch (e) {
+        console.warn("sessionStorage is restricted. Using in-memory fallback.");
+        Object.defineProperty(window, 'sessionStorage', {
+          value: createInMemoryStorage(),
+          writable: true
+        });
+      }
+    })();
+  </script>
+</head>
+<body style="background-color: #0b0f19; color: #eceef0; margin: 0; padding: 0;">
+
+  <!-- SIMULADOR DE DISPOSITIVO MÓVEL -->
+  <div id="app-simulator">
+    <!-- Notch do Celular -->
+    <div class="simulator-notch"></div>
+    
+    <!-- Barra de Status do Celular -->
+    <div class="simulator-statusbar">
+      <div id="statusbar-time">09:41</div>
+      <div class="statusbar-icons">
+        <span class="material-symbols-outlined">signal_cellular_alt</span>
+        <span class="material-symbols-outlined">wifi</span>
+        <span class="material-symbols-outlined">battery_5_bar</span>
+      </div>
+    </div>
+    
+    <!-- CABEÇALHO GLOBAL DO APP -->
+    <header class="app-header">
+      <div class="header-logo" id="header-logo-btn" style="display: flex; align-items: center; gap: 8px;">
+        <img src="logo.png" alt="Mediqia" style="height: 32px; object-fit: contain;">
+      </div>
+      <div class="header-actions">
+        <!-- Carrinho de Compras -->
+        <button class="icon-btn" id="header-cart-btn" style="position: relative;">
+          <span class="material-symbols-outlined">shopping_cart</span>
+          <span id="cart-badge" style="display: none; position: absolute; top: 0; right: 0; background-color: var(--primary-container); color: var(--on-primary-container); font-size: 10px; font-weight: 800; width: 18px; height: 18px; border-radius: 50%; align-items: center; justify-content: center; border: 2px solid var(--surface-container-lowest);">0</span>
+        </button>
+        <!-- Perfil -->
+        <button class="icon-btn" id="header-profile-btn">
+          <span class="material-symbols-outlined">account_circle</span>
+        </button>
+      </div>
+    </header>
+    
+    <!-- CONTAINER DE RENDERIZAÇÃO DAS TELAS (SPA) -->
+    <div id="screen-container">
+      
+      <!-- 1. TELA DE TERMOS E CONDIÇÕES (LGPD) -->
+      <section id="screen-terms" class="screen">
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 20px; padding-top: 40px;">
+          <div style="width: 80px; height: 80px; border-radius: var(--radius-full); background-color: var(--primary-container); color: var(--on-primary-container); display: flex; align-items: center; justify-content: center;">
+            <span class="material-symbols-outlined" style="font-size: 44px;">shield_lock</span>
+          </div>
+          <h2 style="font-size: 24px; font-weight: 800; color: var(--on-surface);">Sua privacidade é nossa prioridade</h2>
+          <p style="font-size: 14px; line-height: 1.5; color: var(--on-surface-variant);">
+            De acordo com a Lei Geral de Proteção de Dados (LGPD), precisamos do seu consentimento para armazenar e processar suas receitas médicas para cotação e compra.
+          </p>
+          <div style="background-color: var(--surface-container-low); border-radius: var(--radius-default); padding: 16px; text-align: left; font-size: 12px; color: var(--secondary); max-height: 200px; overflow-y: auto;">
+            <strong>Termo de Consentimento de Dados de Saúde:</strong><br><br>
+            1. Coletamos a foto e o texto das suas receitas para identificar medicamentos.<br>
+            2. Seus dados são salvos localmente no seu dispositivo e enviados de forma criptografada para as farmácias selecionadas para cotação.<br>
+            3. Suas receitas permanecem arquivadas em seu "Cofre" seguro até que você decida excluí-las.
+          </div>
+          <button class="form-btn" id="btn-accept-terms" style="margin-top: 10px;">Aceitar e Continuar</button>
+        </div>
+      </section>
+
+      <!-- 2. TELA DE LOGIN / CPF -->
+      <!-- 2. TELA DE LOGIN / CPF -->
+      <section id="screen-login" class="screen">
+        <div style="display: flex; flex-direction: column; gap: 20px; padding-top: 30px; align-items: center;">
+          <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; margin-bottom: 10px;">
+            <img src="logo.png" alt="Mediqia" style="height: 72px; object-fit: contain; margin-bottom: 8px;">
+            <h2 style="font-size: 20px; font-weight: 800; color: var(--on-surface); margin: 0;">Acesse o Mediqia</h2>
+            <p style="font-size: 13px; color: var(--on-surface-variant); max-width: 280px; line-height: 1.4; margin: 0;">Suas cotações e compras de medicamentos de forma rápida e segura.</p>
+          </div>
+          
+          <div style="width: 100%; display: flex; flex-direction: column; gap: 14px;" class="glassmorphism-card">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="login-cpf">CPF</label>
+              <input class="form-input" type="text" id="login-cpf" placeholder="000.000.000-00" maxlength="14">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+              <label class="form-label" for="login-name">Nome Completo</label>
+              <input class="form-input" type="text" id="login-name" placeholder="Como quer ser chamado?">
+            </div>
+            <div class="form-group" style="flex-direction: row; align-items: center; gap: 8px; margin-bottom: 0;">
+              <input type="checkbox" id="login-keep-logged" style="width: 16px; height: 16px; accent-color: var(--primary);">
+              <label for="login-keep-logged" style="font-size: 13px; color: var(--on-surface);">Manter-me conectado</label>
+            </div>
+            <button class="form-btn" id="btn-login-submit" style="margin-top: 6px;">Entrar</button>
+          </div>
+
+          <div style="width: 100%; margin-top: 10px;">
+            <button class="form-btn" id="btn-login-emergency" style="background: linear-gradient(135deg, #e11d48, #be123c); color: white; display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 800; border: none; box-shadow: 0 4px 12px rgba(225, 29, 72, 0.3);">
+              <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">emergency</span>
+              BOTÃO DE EMERGÊNCIA (PÂNICO)
+            </button>
+          </div>
+          
+          <p style="font-size: 11px; text-align: center; color: var(--on-surface-variant); line-height: 1.4; max-width: 300px; margin-top: 10px;">
+            🔒 Seus dados de saúde estão seguros de acordo com as diretrizes da LGPD.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3. TELA HOME (DASHBOARD) -->
+      <section id="screen-home" class="screen">
+        <!-- Seção de Boas Vindas -->
+        <div class="welcome-section" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div>
+            <p class="welcome-subtitle" style="margin: 0;">Bem-vindo de volta,</p>
+            <h2 class="welcome-title" style="margin: 4px 0 0 0;">Olá, <span id="home-username">Visitante</span> 👋</h2>
+          </div>
+          <button id="btn-home-emergency" style="background: linear-gradient(135deg, #e11d48, #be123c); color: white; border: none; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(186, 26, 26, 0.3); cursor: pointer;" title="Ficha Médica de Emergência">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; font-size: 24px;">emergency</span>
+          </button>
+        </div>
+        
+        <!-- Ação Principal - Bento Card -->
+        <div class="primary-card" id="btn-scan-prescription-trigger" style="margin-bottom: 20px;">
+          <div class="card-bg-overlay">
+            <img src="https://images.unsplash.com/photo-1530026405186-ed1ea06073e5?auto=format&fit=crop&q=80&w=250" alt="Medtech background">
+          </div>
+          <div class="primary-card-icon">
+            <span class="material-symbols-outlined">document_scanner</span>
+          </div>
+          <div class="primary-card-content">
+            <h3 class="primary-card-title">Escanear Receita</h3>
+            <p class="primary-card-text">Nossa IA identifica os medicamentos e faz a melhor cotação automática.</p>
+          </div>
+          <button class="primary-card-btn">
+            Começar agora
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+        </div>
+        
+        <!-- Routine Card Tracker -->
+        <div class="routine-card" style="margin-bottom: 24px;">
+          <div class="routine-header">
+            <h4 class="routine-title">Rotina de Saúde</h4>
+            <span class="material-symbols-outlined" style="color: var(--primary)">calendar_today</span>
+          </div>
+          <div class="routine-progress-container">
+            <div class="routine-circle" id="home-routine-circle">75%</div>
+            <div class="routine-progress-text">
+              <p>Meta Diária</p>
+              <p id="home-routine-status">3 de 4 doses tomadas</p>
+            </div>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="home-routine-bar" style="width: 75%;"></div>
+          </div>
+          <button class="routine-btn" onclick="app.navigateTo('screen-schedule')">Ver Cronograma de Remédios</button>
+        </div>
+        
+        <!-- Promo Banner -->
+        <div class="promo-banner">
+          <div class="promo-banner-bg"></div>
+          <div class="promo-banner-overlay"></div>
+          <div class="promo-banner-content">
+            <span class="promo-tag">ASSINATURA</span>
+            <h3 class="promo-title">Economize com a Vital+</h3>
+            <p class="promo-desc">Frete grátis em todas as entregas e 15% de desconto fixo.</p>
+            <button class="promo-btn">Conhecer Planos</button>
+          </div>
+        </div>
+        
+        <!-- Compras Recentes -->
+        <div class="section-header">
+          <h3 class="section-title">Compras Recentes</h3>
+          <button class="section-link" id="home-history-btn">
+            Ver todas
+            <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>
+          </button>
+        </div>
+        
+        <div class="horizontal-scroll" id="recent-purchases-container">
+          <!-- Card de Compra Fictícia 1 -->
+          <div class="recent-purchase-card">
+            <div class="purchase-item-info">
+              <div class="purchase-item-icon">
+                <span class="material-symbols-outlined">pill</span>
+              </div>
+              <div class="purchase-item-details">
+                <h4>Dipirona 500mg</h4>
+                <p>Pedido #VF-9021 • Pague Menos</p>
+              </div>
+            </div>
+            <div class="purchase-meta">
+              <span class="status-badge">Entregue</span>
+              <p class="purchase-price">R$ 4,50</p>
+            </div>
+            <div class="quantity-control-compact" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px 0;">
+              <button class="qty-btn" onclick="event.stopPropagation(); app.updateRecentPurchaseQty('dipirona', -1)" style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--surface-container-high); background: var(--surface-container-low); color: var(--on-surface); font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
+              <span id="qty-recent-dipirona" style="font-size: 14px; font-weight: bold; min-width: 16px; text-align: center;">1</span>
+              <button class="qty-btn" onclick="event.stopPropagation(); app.updateRecentPurchaseQty('dipirona', 1)" style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--surface-container-high); background: var(--surface-container-low); color: var(--on-surface); font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+            </div>
+            <button class="purchase-repeat-btn" onclick="app.repeatPurchase('dipirona')">Repetir Compra</button>
+          </div>
+          
+          <!-- Card de Compra Fictícia 2 -->
+          <div class="recent-purchase-card">
+            <div class="purchase-item-info">
+              <div class="purchase-item-icon">
+                <span class="material-symbols-outlined">healing</span>
+              </div>
+              <div class="purchase-item-details">
+                <h4>Vitamina C efervescente</h4>
+                <p>Pedido #VF-8974 • Drogasil</p>
+              </div>
+            </div>
+            <div class="purchase-meta">
+              <span class="status-badge">Entregue</span>
+              <p class="purchase-price">R$ 18,90</p>
+            </div>
+            <div class="quantity-control-compact" style="display: flex; align-items: center; justify-content: center; gap: 8px; margin: 8px 0;">
+              <button class="qty-btn" onclick="event.stopPropagation(); app.updateRecentPurchaseQty('omega3', -1)" style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--surface-container-high); background: var(--surface-container-low); color: var(--on-surface); font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">-</button>
+              <span id="qty-recent-omega3" style="font-size: 14px; font-weight: bold; min-width: 16px; text-align: center;">1</span>
+              <button class="qty-btn" onclick="event.stopPropagation(); app.updateRecentPurchaseQty('omega3', 1)" style="width: 24px; height: 24px; border-radius: 50%; border: 1px solid var(--surface-container-high); background: var(--surface-container-low); color: var(--on-surface); font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center;">+</button>
+            </div>
+            <button class="purchase-repeat-btn" onclick="app.repeatPurchase('omega3')">Repetir Compra</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. TELA DE SCANNER / CÂMERA MOCADA -->
+      <section id="screen-scanner" class="screen">
+        <button class="detail-back-btn" onclick="app.navigateTo('screen-home')">
+          <span class="material-symbols-outlined">arrow_back</span> Voltar ao início
+        </button>
+        
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 8px;">Enviar Receita</h2>
+        <p style="font-size: 13px; color: var(--on-surface-variant); margin-bottom: 20px;">
+          Posicione a receita médica no enquadramento ou envie uma foto nítida do seu arquivo.
+        </p>
+        
+        <!-- Janela de Visualização da Câmera -->
+        <div class="camera-container" id="camera-container-box">
+          <img class="camera-preview-img" id="camera-mock-preview" src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=400" alt="Câmera Preview">
+          <div class="camera-guide-box"></div>
+          <div class="laser-scanner-line" id="camera-laser-line"></div>
+        </div>
+        
+        <!-- Controles da Câmera -->
+        <div class="camera-controls">
+          <button class="shutter-btn" id="btn-camera-shutter" title="Tirar foto">
+            <span class="material-symbols-outlined" style="font-size: 32px; color: var(--primary);">photo_camera</span>
+          </button>
+          
+          <div style="font-size: 12px; font-weight: 700; color: var(--secondary);">OU</div>
+          
+          <button class="upload-recipe-btn" id="btn-recipe-upload-file">
+            <span class="material-symbols-outlined">cloud_upload</span> Enviar arquivo de imagem
+            <input type="file" id="recipe-file-input" style="display: none;" accept="image/*">
+          </button>
+          
+          <!-- Seleção rápida de presets para facilitar os testes -->
+          <div style="margin-top: 10px; width: 100%; border-top: 1px solid var(--surface-container-high); padding-top: 15px;">
+            <p style="font-size: 11px; font-weight: 800; color: var(--on-surface-variant); margin-bottom: 8px; text-align: center;">DICA DE TESTE: SELECIONE UM MODELO DE RECEITA PRONTO</p>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <button class="routine-btn" onclick="app.loadPresetPrescription('preset1')">Receita 1 (Cardiológica): 5 Remédios (Losartana, Atorvastatina...)</button>
+              <button class="routine-btn" onclick="app.loadPresetPrescription('preset2')">Receita 2 (Controlada): 5 Remédios (Clonazepam, Alprazolam...)</button>
+              <button class="routine-btn" onclick="app.loadPresetPrescription('preset3')">Receita 3 (Geral): 5 Remédios (Prednisona, Pantoprazol...)</button>
+              <button class="routine-btn" onclick="app.loadPresetPrescription('preset4')" style="background: linear-gradient(135deg, #111827, #1f2937); color: #fff; font-weight: 700; border: 1px solid #111827;">Receita Premium: Tarja Preta + Laboratório + Progressivo</button>
+            </div>
+          </div>
+          
+          <div class="lgpd-badge">
+            🔒 Seus dados de saúde estão sob proteção da LGPD. As receitas são encriptadas e apagadas automaticamente quando solicitado.
+          </div>
+        </div>
+      </section>
+
+      <!-- 4B. TELA DETALHES DA RECEITA ESCANEADA (INTERMEDIÁRIA) -->
+      <section id="screen-prescription-detail" class="screen">
+        <button class="detail-back-btn" id="btn-back-prescription-detail">
+          <span class="material-symbols-outlined">arrow_back</span> <span id="prescription-detail-back-label">Voltar</span>
+        </button>
+        
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 4px;">Detalhes da Receita</h2>
+        <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: 20px;">Confira os itens identificados antes de prosseguir com a cotação.</p>
+        
+        <div id="prescription-detail-content">
+          <!-- Renderizado via JS -->
+        </div>
+      </section>
+
+      <!-- 5. TELA DE RESULTADOS DA COTAÇÃO -->
+      <section id="screen-quote-results" class="screen">
+        <button class="detail-back-btn" id="btn-back-quote">
+          <span class="material-symbols-outlined">arrow_back</span> Voltar
+        </button>
+        
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 4px;">Comparação de Preços</h2>
+        <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: 12px;">Receita identificada com sucesso. Veja as opções de compra abaixo:</p>
+        
+        <!-- Opções de Medicamentos e Genéricos -->
+        <div id="quote-options-box" style="margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px;">
+          <!-- Renderizado dinamicamente pelo JS -->
+        </div>
+        
+        <!-- Abas Cesta Única vs Cesta Dividida -->
+        <div class="results-tabs">
+          <button class="tab-btn active" id="tab-single-basket">Melhor Cesta Única</button>
+          <button class="tab-btn" id="tab-split-basket">Cesta Dividida (Economia)</button>
+        </div>
+        
+        <!-- Conteúdo das Abas -->
+        <div class="results-list" id="quote-results-list-container">
+          <!-- Renderizado dinamicamente pelo JS -->
+        </div>
+      </section>
+
+      <!-- 6. TELA DA LOJA (SHOP/E-COMMERCE) -->
+      <section id="screen-shop" class="screen">
+        <div class="welcome-section">
+          <p class="welcome-subtitle">Direct Shop</p>
+          <h2 class="welcome-title">Bem-Estar &amp; OTC</h2>
+        </div>
+        
+        <!-- Barra de Busca -->
+        <div class="search-bar-container">
+          <span class="material-symbols-outlined">search</span>
+          <input class="search-input" type="text" id="shop-search-input" placeholder="Buscar protetor, vitaminas, ômega...">
+        </div>
+        
+        <!-- Filtros de Categoria -->
+        <div class="category-filter-scroll" id="shop-categories-container" style="margin-bottom: 12px;">
+          <button class="filter-chip active" data-category="all">Todos</button>
+          <button class="filter-chip" data-category="Suplementos">Suplementos</button>
+          <button class="filter-chip" data-category="Vitaminas">Vitaminas</button>
+          <button class="filter-chip" data-category="Dermocosméticos">Dermocosméticos</button>
+        </div>
+
+        <!-- Filtros e Ordenação Avançada -->
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+            <label for="shop-filter-order" style="font-size: 11px; font-weight: 700; color: var(--on-surface-variant);">Ordenar por</label>
+            <select id="shop-filter-order" class="form-input" style="height: 36px; padding: 0 8px; font-size: 12px; margin-bottom: 0;">
+              <option value="default">Padrão</option>
+              <option value="discount">Maior Desconto</option>
+              <option value="price">Menor Preço</option>
+              <option value="rating">Melhor Avaliação</option>
+            </select>
+          </div>
+          <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+            <label for="shop-filter-network" style="font-size: 11px; font-weight: 700; color: var(--on-surface-variant);">Rede de Farmácias</label>
+            <select id="shop-filter-network" class="form-input" style="height: 36px; padding: 0 8px; font-size: 12px; margin-bottom: 0;">
+              <option value="all">Todas as redes</option>
+              <option value="drogasil">Drogasil</option>
+              <option value="paguemenos">Pague Menos</option>
+              <option value="saopaulo">Drogaria São Paulo</option>
+              <option value="verde">Farmácia Verde</option>
+            </select>
+          </div>
+        </div>
+        
+        <!-- Grid de Produtos -->
+        <div class="products-grid" id="shop-products-grid">
+          <!-- Renderizado dinamicamente pelo JS -->
+        </div>
+      </section>
+
+      <!-- 7. TELA DE DETALHES DO PRODUTO -->
+      <section id="screen-product-details" class="screen">
+        <button class="detail-back-btn" onclick="app.navigateTo('screen-shop')">
+          <span class="material-symbols-outlined">arrow_back</span> Voltar para a loja
+        </button>
+        
+        <div id="product-detail-content">
+          <!-- Renderizado dinamicamente pelo JS -->
+        </div>
+      </section>
+
+      <!-- 8. TELA DE CARRINHO UNIFICADO -->
+      <section id="screen-cart" class="screen">
+        <button class="detail-back-btn" id="btn-back-cart" style="display: none; margin-bottom: 12px;">
+          <span class="material-symbols-outlined">arrow_back</span> Voltar para Cotação
+        </button>
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 4px;">Meu Carrinho</h2>
+        <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: 20px;">Confirme os itens selecionados para a entrega.</p>
+        
+        <!-- Lista de Itens no Carrinho -->
+        <div class="cart-items-list" id="cart-items-container">
+          <!-- Renderizado dinamicamente pelo JS -->
+        </div>
+        
+        <!-- Seção de Endereço de Entrega -->
+        <div style="background-color: var(--surface-container-lowest); border-radius: var(--radius-default); padding: 16px; border: 1px solid var(--surface-container); margin-bottom: 20px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14px; color: var(--on-surface);">
+              <span class="material-symbols-outlined" style="color: var(--primary);">pin_drop</span>
+              Endereço de Entrega
+            </div>
+            <button class="section-link" onclick="app.openAddAddressScreen()" style="font-size: 12px;">+ Adicionar</button>
+          </div>
+          <div id="cart-address-select-box">
+            <select class="form-input" id="cart-address-selector" style="padding: 8px 12px;">
+              <!-- Preenchido dinamicamente -->
+            </select>
+          </div>
+        </div>
+        
+        <!-- Resumo de Preços -->
+        <div class="cart-summary-card" id="cart-summary-box">
+          <!-- Renderizado dinamicamente pelo JS -->
+        </div>
+        
+        <button class="checkout-btn" id="btn-cart-checkout-proceed">
+          Prosseguir para o Pagamento
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </section>
+
+      <!-- 9. TELA DE CHECKOUT SEGURO -->
+      <section id="screen-checkout" class="screen">
+        <button class="detail-back-btn" onclick="app.navigateTo('screen-cart')">
+          <span class="material-symbols-outlined">arrow_back</span> Carrinho
+        </button>
+        
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 4px;">Finalizar Pedido</h2>
+        <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: 20px;">Escolha a forma de pagamento e confirme.</p>
+        
+        <!-- Alerta de medicamento controlado (se aplicável) -->
+        <div id="checkout-prescription-alert" style="display: none; background-color: var(--error-container); color: var(--on-error-container); border-radius: var(--radius-default); padding: 12px 16px; margin-bottom: 16px; font-size: 12px; line-height: 1.4; gap: 8px; align-items: flex-start;">
+          <span class="material-symbols-outlined" style="font-size: 20px;">warning</span>
+          <div>
+            <strong>Atenção - Receita Exigida:</strong><br>
+            Este pedido contém medicamentos controlados (ex: antibióticos). O entregador precisará reter a receita original física carimbada na entrega.
+          </div>
+        </div>
+        
+        <!-- Resumo do Pedido -->
+        <div style="background-color: var(--surface-container-lowest); border-radius: var(--radius-default); padding: 16px; border: 1px solid var(--surface-container); margin-bottom: 16px;">
+          <h4 style="font-size: 14px; font-weight: 800; color: var(--on-surface); margin-bottom: 8px;">Resumo dos Itens</h4>
+          <div id="checkout-items-summary" style="display: flex; flex-direction: column; gap: 6px; font-size: 12px; color: var(--on-surface-variant);">
+            <!-- Renderizado dinamicamente -->
+          </div>
+          <div id="checkout-total-price-badge" style="margin-top: 10px; border-top: 1px solid var(--surface-container); padding-top: 8px; display: flex; justify-content: space-between; font-weight: 800; font-size: 14px; color: var(--primary);">
+            <span>Total com frete</span>
+            <span id="checkout-total-val">R$ 0,00</span>
+          </div>
+        </div>
+        
+        <!-- Seleção de Forma de Pagamento -->
+        <div style="margin-bottom: 20px;">
+          <h4 style="font-size: 14px; font-weight: 800; color: var(--on-surface); margin-bottom: 12px;">Forma de Pagamento</h4>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <label style="display: flex; align-items: center; gap: 12px; background-color: var(--surface-container-lowest); border: 1px solid var(--surface-container); padding: 14px; border-radius: var(--radius-default); cursor: pointer; font-size: 13px; font-weight: 700; color: var(--on-surface);">
+              <input type="radio" name="payment-method" value="pix" checked>
+              <span class="material-symbols-outlined" style="color: #32bcad;">qr_code_2</span>
+              Pix (Aprovação Instantânea)
+            </label>
+            <label style="display: flex; align-items: center; gap: 12px; background-color: var(--surface-container-lowest); border: 1px solid var(--surface-container); padding: 14px; border-radius: var(--radius-default); cursor: pointer; font-size: 13px; font-weight: 700; color: var(--on-surface);">
+              <input type="radio" name="payment-method" value="credit">
+              <span class="material-symbols-outlined" style="color: var(--tertiary);">credit_card</span>
+              Cartão de Crédito (no aplicativo)
+            </label>
+            <label style="display: flex; align-items: center; gap: 12px; background-color: var(--surface-container-lowest); border: 1px solid var(--surface-container); padding: 14px; border-radius: var(--radius-default); cursor: pointer; font-size: 13px; font-weight: 700; color: var(--on-surface);">
+              <input type="radio" name="payment-method" value="debit">
+              <span class="material-symbols-outlined" style="color: #ffb300;">credit_card</span>
+              Cartão de Débito (no aplicativo)
+            </label>
+          </div>
+        </div>
+        
+        <button class="checkout-btn" id="btn-checkout-finish">
+          Confirmar e Finalizar Pedido
+          <span class="material-symbols-outlined">task_alt</span>
+        </button>
+      </section>
+
+      <!-- 10. TELA DE PERFIL -->
+      <section id="screen-profile" class="screen">
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 20px;">Minha Conta</h2>
+        
+        <!-- Cartão do Usuário -->
+        <div style="background-color: var(--surface-container-lowest); border-radius: var(--radius-default); padding: 20px; border: 1px solid var(--surface-container); box-shadow: var(--shadow-sm); display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+          <div style="width: 56px; height: 56px; border-radius: var(--radius-full); background-color: var(--primary-container); color: var(--on-primary-container); display: flex; align-items: center; justify-content: center; font-size: 24px;">
+            <span class="material-symbols-outlined">person</span>
+          </div>
+          <div>
+            <h3 style="font-size: 18px; font-weight: 800; color: var(--on-surface);" id="profile-name-val">Alexandre</h3>
+            <p style="font-size: 12px; color: var(--on-surface-variant); font-weight: 600;" id="profile-cpf-val">CPF: 000.000.000-00</p>
+            <p style="font-size: 11px; color: var(--on-surface-variant); font-weight: 500;" id="profile-age-val"></p>
+          </div>
+        </div>
+        
+        <!-- Seção de Endereços Salvos -->
+        <div style="margin-bottom: 24px;">
+          <h3 style="font-size: 16px; font-weight: 800; color: var(--on-surface); margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+            <span>Endereços Salvos</span>
+            <button class="section-link" onclick="app.openAddAddressScreen()" style="font-size: 12px;">+ Adicionar</button>
+          </h3>
+          <div id="profile-addresses-container" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- Renderizado dinamicamente pelo JS -->
+          </div>
+        </div>
+        
+        <!-- Menu do Perfil -->
+        <div class="profile-menu">
+          <div class="profile-menu-item" onclick="app.navigateTo('screen-edit-profile')">
+            <div class="profile-menu-left">
+              <span class="material-symbols-outlined">manage_accounts</span>
+              Editar Meus Dados
+            </div>
+            <span class="material-symbols-outlined">chevron_right</span>
+          </div>
+          
+          <div class="profile-menu-item" onclick="app.openAddAddressScreen()">
+            <div class="profile-menu-left">
+              <span class="material-symbols-outlined">add_location_alt</span>
+              Adicionar Novo Endereço
+            </div>
+            <span class="material-symbols-outlined">chevron_right</span>
+          </div>
+          
+          <div class="profile-menu-item" onclick="app.navigateTo('screen-vault')">
+            <div class="profile-menu-left">
+              <span class="material-symbols-outlined">folder_shared</span>
+              Cofre de Receitas
+            </div>
+            <span class="material-symbols-outlined">chevron_right</span>
+          </div>
+          
+          <div class="profile-menu-item" onclick="app.navigateTo('screen-purchase-history')">
+            <div class="profile-menu-left">
+              <span class="material-symbols-outlined">history</span>
+              Histórico de Compras
+            </div>
+            <span class="material-symbols-outlined">chevron_right</span>
+          </div>
+          
+          <div class="profile-menu-item btn-logout" id="btn-logout" style="border-color: var(--error-container); color: var(--error);">
+            <div class="profile-menu-left" style="color: var(--error);">
+              <span class="material-symbols-outlined" style="color: var(--error);">logout</span>
+              Sair da Conta
+            </div>
+            <span class="material-symbols-outlined" style="color: var(--error);">chevron_right</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 11. TELA DE EDITAR PERFIL (AMPLIADO) -->
+      <section id="screen-edit-profile" class="screen">
+        <button class="detail-back-btn" onclick="app.navigateTo('screen-profile')">
+          <span class="material-symbols-outlined">arrow_back</span> Perfil
+        </button>
+        
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 20px;">Editar Dados</h2>
+        
+        <!-- Dados Pessoais -->
+        <div class="profile-section-title">
+          <span class="material-symbols-outlined">person</span> Dados Pessoais
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="edit-name">Nome Completo</label>
+          <input class="form-input" type="text" id="edit-name">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="edit-cpf">CPF</label>
+          <input class="form-input" type="text" id="edit-cpf" disabled style="background-color: var(--surface-container);">
+        </div>
+        
+        <div style="display: flex; gap: 12px;">
+          <div class="form-group" style="flex: 2;">
+            <label class="form-label" for="edit-birthdate">Data de Nascimento</label>
+            <input class="form-input" type="date" id="edit-birthdate">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" for="edit-sex">Sexo</label>
+            <select class="form-input" id="edit-sex">
+              <option value="">Prefiro não informar</option>
+              <option value="M">Masculino</option>
+              <option value="F">Feminino</option>
+              <option value="O">Outro</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="edit-blood-type">Tipo Sanguíneo</label>
+          <select class="form-input" id="edit-blood-type">
+            <option value="">Não informado</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+          </select>
+        </div>
+        
+        <div id="edit-age-display" style="display: none; font-size: 12px; color: var(--primary); font-weight: 700; margin-top: -10px; margin-bottom: 16px;">
+          <span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle;">cake</span>
+          <span id="edit-age-text"></span>
+        </div>
+        
+        <!-- Informações de Saúde -->
+        <div class="profile-section-title" style="margin-top: 8px;">
+          <span class="material-symbols-outlined">favorite</span> Informações de Saúde
+        </div>
+        
+        <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: 12px;">Marque as condições de saúde que se aplicam a você:</p>
+        
+        <div class="health-conditions-grid">
+          <label class="health-chip">
+            <input type="checkbox" id="health-diabetes" name="health"> Diabetes
+          </label>
+          <label class="health-chip">
+            <input type="checkbox" id="health-hypertension" name="health"> Hipertensão
+          </label>
+          <label class="health-chip">
+            <input type="checkbox" id="health-heart" name="health"> Infarto/Cardíaco
+          </label>
+          <label class="health-chip">
+            <input type="checkbox" id="health-kidney" name="health"> Renal
+          </label>
+          <label class="health-chip">
+            <input type="checkbox" id="health-asthma" name="health"> Asma/Pulmão
+          </label>
+          <label class="health-chip">
+            <input type="checkbox" id="health-thyroid" name="health"> Tireoide
+          </label>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="edit-other-conditions">Outras condições crônicas</label>
+          <input class="form-input" type="text" id="edit-other-conditions" placeholder="Ex: Hipotireoidismo, artrite...">
+        </div>
+        
+        <!-- Alergias -->
+        <div class="profile-section-title" style="margin-top: 8px;">
+          <span class="material-symbols-outlined">emergency</span> Alergias a Medicamentos
+        </div>
+        
+        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+          <input class="form-input" type="text" id="allergy-input" placeholder="Ex: Penicilina, Dipirona..." style="flex: 1;">
+          <button class="form-btn" id="btn-add-allergy" style="width: auto; padding: 0 16px; white-space: nowrap;">Adicionar</button>
+        </div>
+        <div id="allergy-chips-container" class="allergy-chips"></div>
+        
+        <!-- Convênio Médico -->
+        <div class="profile-section-title" style="margin-top: 8px;">
+          <span class="material-symbols-outlined">health_and_safety</span> Plano de Saúde / Convênio
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label" for="edit-insurance-name">Nome do Plano de Saúde</label>
+          <input class="form-input" type="text" id="edit-insurance-name" placeholder="Ex: SulAmérica, Unimed, Bradesco...">
+        </div>
+        
+        <div style="display: flex; gap: 12px;">
+          <div class="form-group" style="flex: 2;">
+            <label class="form-label" for="edit-insurance-number">Número da Carteirinha</label>
+            <input class="form-input" type="text" id="edit-insurance-number" placeholder="0000 0000 0000 0000">
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" for="edit-insurance-code">Cód. Segurança</label>
+            <input class="form-input" type="text" id="edit-insurance-code" placeholder="Ex: 321">
+          </div>
+        </div>
+
+        <!-- Observações Médicas -->
+        <div class="profile-section-title" style="margin-top: 8px;">
+          <span class="material-symbols-outlined">clinical_notes</span> Observações Médicas
+        </div>
+        
+        <div class="form-group">
+          <textarea class="form-input" id="edit-medical-notes" rows="4" placeholder="Informações adicionais para sua segurança: dosagens especiais, preferências médicas, contato do médico..." style="resize: none; height: 100px;"></textarea>
+        </div>
+        
+        <button class="form-btn" id="btn-save-profile">Salvar Alterações</button>
+      </section>
+
+      <!-- TELA DE EMERGÊNCIA (PÂNICO) -->
+      <section id="screen-emergency" class="screen">
+        <div style="display: flex; flex-direction: column; gap: 20px; padding-top: 10px;">
+          <button class="detail-back-btn" id="btn-back-emergency" style="width: fit-content; margin-bottom: 0;">
+            <span class="material-symbols-outlined">arrow_back</span> Voltar
+          </button>
+          
+          <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--error-container); color: var(--error); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(186, 26, 26, 0.2);">
+              <span class="material-symbols-outlined" style="font-size: 36px; font-variation-settings: 'FILL' 1;">emergency</span>
+            </div>
+            <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin: 4px 0 0 0;">Ficha de Emergência 🚨</h2>
+            <p style="font-size: 13px; color: var(--on-surface-variant); text-align: center; max-width: 300px; line-height: 1.4; margin: 0;">
+              Informações médicas críticas para atendimento de urgência.
+            </p>
+          </div>
+
+          <div style="background-color: var(--error-container); color: var(--on-error-container); border-radius: var(--radius-default); padding: 12px 16px; font-size: 11px; line-height: 1.4; display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
+            <span class="material-symbols-outlined" style="font-size: 18px;">info</span>
+            <div>
+              <strong>Modo de Leitura:</strong> As informações abaixo foram previamente cadastradas e não podem ser editadas nesta tela para garantir a integridade dos dados médicos.
+            </div>
+          </div>
+
+          <!-- Dados Pessoais -->
+          <div class="glassmorphism-card" style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--surface-container-high); padding-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">person</span>
+              Dados Pessoais
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <span style="font-size: 11px; color: var(--on-surface-variant); font-weight: 600;">Nome Completo</span>
+              <span id="emergency-name" style="font-size: 14px; font-weight: 700; color: var(--on-surface);">-</span>
+            </div>
+            <div style="display: flex; gap: 16px;">
+              <div style="display: flex; flex-direction: column; gap: 4px; flex: 2;">
+                <span style="font-size: 11px; color: var(--on-surface-variant); font-weight: 600;">Nascimento</span>
+                <span id="emergency-birthdate" style="font-size: 13px; font-weight: 700; color: var(--on-surface);">-</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 4px; flex: 1;">
+                <span style="font-size: 11px; color: var(--on-surface-variant); font-weight: 600;">Tipo Sanguíneo</span>
+                <span id="emergency-blood-type" style="font-size: 15px; font-weight: 800; color: var(--error); background-color: var(--error-container); padding: 2px 8px; border-radius: 4px; width: fit-content; line-height: 1; text-align: center;">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Informações de Saúde -->
+          <div class="glassmorphism-card" style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--surface-container-high); padding-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">favorite</span>
+              Informações de Saúde
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px;" id="emergency-conditions-list">
+              <!-- Preenchido dinamicamente -->
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 4px;">
+              <span style="font-size: 11px; color: var(--on-surface-variant); font-weight: 600;">Outras Condições</span>
+              <span id="emergency-other-conditions" style="font-size: 13px; font-weight: 600; color: var(--on-surface);">-</span>
+            </div>
+          </div>
+
+          <!-- Alergias -->
+          <div class="glassmorphism-card" style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--surface-container-high); padding-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">emergency</span>
+              Alergias Medicamentosas
+            </div>
+            <div id="emergency-allergies-list" style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <!-- Chips preenchidos dinamicamente -->
+            </div>
+          </div>
+
+          <!-- Plano de Saúde -->
+          <div class="glassmorphism-card" style="display: flex; flex-direction: column; gap: 10px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--surface-container-high); padding-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">health_and_safety</span>
+              Plano de Saúde
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 4px;">
+              <span style="font-size: 11px; color: var(--on-surface-variant); font-weight: 600;">Convênio / Plano</span>
+              <span id="emergency-insurance-name" style="font-size: 14px; font-weight: 700; color: var(--on-surface);">-</span>
+            </div>
+            <div style="display: flex; gap: 16px;">
+              <div style="display: flex; flex-direction: column; gap: 4px; flex: 2;">
+                <span style="font-size: 11px; color: var(--on-surface-variant); font-weight: 600;">Número da Carteirinha</span>
+                <span id="emergency-insurance-number" style="font-size: 13px; font-weight: 700; color: var(--on-surface);">-</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 4px; flex: 1;">
+                <span style="font-size: 11px; color: var(--on-surface-variant); font-weight: 600;">Cód. Segurança</span>
+                <span id="emergency-insurance-code" style="font-size: 13px; font-weight: 700; color: var(--on-surface);">-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Observações Médicas -->
+          <div class="glassmorphism-card" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+            <div style="font-size: 12px; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--surface-container-high); padding-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+              <span class="material-symbols-outlined" style="font-size: 16px;">clinical_notes</span>
+              Observações Médicas
+            </div>
+            <p id="emergency-medical-notes" style="font-size: 13px; color: var(--on-surface-variant); line-height: 1.5; margin: 0; font-weight: 500;">
+              -
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 12. TELA DO COFRE DE RECEITAS -->
+      <section id="screen-vault" class="screen">
+        <button class="detail-back-btn" id="btn-back-vault">
+          <span class="material-symbols-outlined">arrow_back</span> <span id="vault-back-label">Voltar</span>
+        </button>
+        
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 4px;">Cofre de Receitas</h2>
+        <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: 20px;">Suas receitas arquivadas para cotações rápidas e recorrentes.</p>
+        
+        <!-- Lista de Receitas no Cofre -->
+        <div id="vault-items-container">
+          <!-- Carregado via JS -->
+        </div>
+      </section>
+
+      <!-- 12B. TELA DE HISTÓRICO DE COMPRAS / DASHBOARD -->
+      <section id="screen-purchase-history" class="screen">
+        <button class="detail-back-btn" id="btn-back-history">
+          <span class="material-symbols-outlined">arrow_back</span> <span id="history-back-label">Voltar</span>
+        </button>
+        
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 4px;">Histórico de Compras</h2>
+        <p style="font-size: 12px; color: var(--on-surface-variant); margin-bottom: 20px;">Acompanhe seus gastos, economias e histórico de pedidos.</p>
+        
+        <!-- DASHBOARD DE MÉTRICAS (Glassmorphic) -->
+        <div style="background-color: var(--surface-container-lowest); border-radius: var(--radius-default); padding: 16px; border: 1px solid var(--surface-container); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;" class="glassmorphism-card">
+          <h3 style="font-size: 14px; font-weight: 800; color: var(--on-surface); margin: 0; display: flex; align-items: center; gap: 6px;">
+            <span class="material-symbols-outlined" style="color: var(--primary);">monitoring</span>
+            Resumo de Consumo
+          </h3>
+          
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div style="background-color: var(--surface-container-low); padding: 10px; border-radius: 8px; display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 10px; font-weight: 700; color: var(--secondary); text-transform: uppercase;">Compras</span>
+              <span id="history-metric-purchases" style="font-size: 16px; font-weight: 800; color: var(--on-surface);">0</span>
+            </div>
+            <div style="background-color: var(--surface-container-low); padding: 10px; border-radius: 8px; display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 10px; font-weight: 700; color: var(--secondary); text-transform: uppercase;">Total Gasto</span>
+              <span id="history-metric-spent" style="font-size: 16px; font-weight: 800; color: var(--primary);">R$ 0,00</span>
+            </div>
+            <div style="background-color: var(--surface-container-low); padding: 10px; border-radius: 8px; display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 10px; font-weight: 700; color: var(--secondary); text-transform: uppercase;">Média Mensal</span>
+              <span id="history-metric-average" style="font-size: 16px; font-weight: 800; color: var(--on-surface);">R$ 0,00</span>
+            </div>
+            <div style="background-color: var(--surface-container-low); padding: 10px; border-radius: 8px; display: flex; flex-direction: column; gap: 2px;">
+              <span style="font-size: 10px; font-weight: 700; color: var(--secondary); text-transform: uppercase;">Economia</span>
+              <span id="history-metric-savings" style="font-size: 16px; font-weight: 800; color: #32bcad;">R$ 0,00</span>
+            </div>
+          </div>
+          
+          <div style="background-color: var(--surface-container-low); padding: 10px; border-radius: 8px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-size: 10px; font-weight: 700; color: var(--secondary); text-transform: uppercase;">Mais Comprado</span>
+            <span id="history-metric-top-med" style="font-size: 12px; font-weight: 800; color: var(--on-surface); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Nenhum</span>
+          </div>
+          <div style="background-color: var(--surface-container-low); padding: 10px; border-radius: 8px; display: flex; flex-direction: column; gap: 4px;">
+            <span style="font-size: 10px; font-weight: 700; color: var(--secondary); text-transform: uppercase;">Última Compra</span>
+            <span id="history-metric-last-purchase" style="font-size: 12px; font-weight: 700; color: var(--on-surface-variant);">Nenhuma</span>
+          </div>
+        </div>
+        
+        <!-- FILTROS (Glassmorphic) -->
+        <div style="background-color: var(--surface-container-lowest); border-radius: var(--radius-default); padding: 16px; border: 1px solid var(--surface-container); margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px;" class="glassmorphism-card">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="history-filter-period">Período</label>
+            <select class="form-input" id="history-filter-period">
+              <option value="all">Todo o período</option>
+              <option value="7">Últimos 7 dias</option>
+              <option value="30">Últimos 30 dias</option>
+              <option value="90">Últimos 90 dias</option>
+              <option value="180">Últimos 6 meses</option>
+              <option value="365">Último ano</option>
+              <option value="custom">Período personalizado</option>
+            </select>
+          </div>
+          
+          <!-- Filtro de Datas Customizado (Oculto por padrão) -->
+          <div id="history-custom-dates" style="display: none; gap: 8px;">
+            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+              <label class="form-label" for="history-filter-start">De</label>
+              <input class="form-input" type="date" id="history-filter-start">
+            </div>
+            <div class="form-group" style="flex: 1; margin-bottom: 0;">
+              <label class="form-label" for="history-filter-end">Até</label>
+              <input class="form-input" type="date" id="history-filter-end">
+            </div>
+          </div>
+          
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="history-filter-medicine">Medicamento</label>
+            <div class="search-bar-container" style="padding: 0 10px; margin-bottom: 0; background-color: var(--surface-container); border: none;">
+              <span class="material-symbols-outlined" style="font-size: 18px; margin-right: 4px;">search</span>
+              <input class="search-input" type="text" id="history-filter-medicine" placeholder="Buscar medicamento..." style="height: 36px; font-size: 12px;">
+            </div>
+          </div>
+        </div>
+        
+        <!-- LISTA DE PEDIDOS -->
+        <div id="history-items-container" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px;">
+          <!-- Carregado via JS -->
+        </div>
+      </section>
+
+      <!-- 13. TELA DE ADICIONAR ENDEREÇO -->
+      <section id="screen-new-address" class="screen">
+        <button class="detail-back-btn" id="btn-back-new-address">
+          <span class="material-symbols-outlined">arrow_back</span> Voltar
+        </button>
+        
+        <h2 style="font-size: 22px; font-weight: 800; color: var(--on-surface); margin-bottom: 20px;">Novo Endereço</h2>
+        
+        <div class="form-group">
+          <label class="form-label" for="addr-cep">CEP</label>
+          <input class="form-input" type="text" id="addr-cep" placeholder="00000-000">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="addr-street">Rua/Avenida</label>
+          <input class="form-input" type="text" id="addr-street" placeholder="Ex: Av. Paulista">
+        </div>
+        <div style="display: flex; gap: 12px;">
+          <div class="form-group" style="flex: 1;">
+            <label class="form-label" for="addr-number">Número</label>
+            <input class="form-input" type="text" id="addr-number" placeholder="123">
+          </div>
+          <div class="form-group" style="flex: 2;">
+            <label class="form-label" for="addr-complement">Complemento</label>
+            <input class="form-input" type="text" id="addr-complement" placeholder="Ex: Apto 42">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="addr-neighborhood">Bairro</label>
+          <input class="form-input" type="text" id="addr-neighborhood" placeholder="Ex: Bela Vista">
+        </div>
+        
+        <button class="form-btn" id="btn-save-address">Salvar Endereço</button>
+      </section>
+
+      <!-- 14. TELA DO CRONOGRAMA DE MEDICAMENTOS -->
+      <section id="screen-schedule" class="screen">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <div>
+            <p style="font-size: 13px; color: var(--on-surface-variant); font-weight: 600;">Meus Remédios</p>
+            <h2 style="font-size: 24px; font-weight: 800; color: var(--on-surface);">Cronograma</h2>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="schedule-add-btn" id="btn-simulate-notification" style="background-color: var(--secondary);" title="Simular Notificação">
+              <span class="material-symbols-outlined">notifications_active</span>
+            </button>
+            <button class="schedule-add-btn" id="btn-open-schedule-modal">
+              <span class="material-symbols-outlined">add</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mini calendário semanal -->
+        <div class="week-calendar" id="schedule-week-calendar">
+          <!-- Renderizado via JS -->
+        </div>
+        
+        <!-- Resumo do dia -->
+        <div class="schedule-day-header">
+          <h3 id="schedule-today-label">Hoje</h3>
+          <span id="schedule-day-progress" class="schedule-day-chip">0/0 doses</span>
+        </div>
+        
+        <!-- Lista de doses do dia -->
+        <div id="schedule-doses-list">
+          <!-- Renderizado via JS -->
+        </div>
+
+        <!-- Histórico -->
+        <div class="schedule-history-section">
+          <div class="schedule-history-header" id="btn-toggle-history">
+            <span style="font-size: 14px; font-weight: 700; color: var(--on-surface);">Histórico (7 dias)</span>
+            <span class="material-symbols-outlined" id="history-chevron">expand_more</span>
+          </div>
+          <div id="schedule-history-container" style="display: none; margin-top: 12px;">
+            <!-- Renderizado via JS -->
+          </div>
+        </div>
+      </section>
+      
+    </div>
+    
+    <!-- BARRA DE NAVEGAÇÃO INFERIOR FLUTUANTE (5 itens) -->
+    <nav class="app-navbar" id="app-main-navbar" style="display: none;">
+      <button class="nav-item active" data-target="screen-home">
+        <span class="material-symbols-outlined">home</span>
+        Início
+      </button>
+      <button class="nav-item" data-target="screen-shop">
+        <span class="material-symbols-outlined">shopping_bag</span>
+        Loja
+      </button>
+      <button class="nav-item" data-target="screen-schedule">
+        <span class="material-symbols-outlined">event_note</span>
+        <span id="schedule-nav-badge" class="nav-schedule-badge" style="display:none;"></span>
+        Horários
+      </button>
+      <button class="nav-item" data-target="screen-vault">
+        <span class="material-symbols-outlined">folder_shared</span>
+        Cofre
+      </button>
+      <button class="nav-item" data-target="screen-profile">
+        <span class="material-symbols-outlined">person</span>
+        Perfil
+      </button>
+    </nav>
+    
+    <!-- Home indicator do iPhone simulado -->
+    <div class="simulator-home-indicator"></div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL DE SUCESSO DE PEDIDO / CONFIRMAÇÃO -->
+  <!-- ==================================================== -->
+  <div class="overlay-modal" id="modal-order-success">
+    <div class="modal-content">
+      <div style="text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px;">
+        <div style="width: 64px; height: 64px; border-radius: 50%; background-color: var(--primary-container); color: var(--on-primary-container); display: flex; align-items: center; justify-content: center;">
+          <span class="material-symbols-outlined" style="font-size: 36px;">done_all</span>
+        </div>
+        <h3 class="modal-title">Pedido Confirmado!</h3>
+        <p class="modal-body">
+          Seu pedido foi enviado para as farmácias e já está sendo preparado. Você pode acompanhar o status da entrega pelo menu "Histórico".
+        </p>
+        <button class="modal-btn primary" id="btn-success-modal-close" style="width: 100%;">Voltar ao Início</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- ==================================================== -->
+  <!-- MODAL DE AVISO DE RECEITA CONTROLADA -->
+  <!-- ==================================================== -->
+  <div class="overlay-modal" id="modal-controlled-alert">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" style="color: var(--error);">Aviso Importante</h3>
+        <button class="modal-close-btn" onclick="app.closeModal('modal-controlled-alert')">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Este pedido contém <strong>Medicamentos Controlados</strong> que necessitam de retenção de receita física. O entregador coletará a receita no ato da entrega. Certifique-se de que a via física está assinada e carimbada pelo médico.
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn secondary" onclick="app.closeModal('modal-controlled-alert')">Cancelar</button>
+        <button class="modal-btn primary" id="btn-confirm-controlled-checkout">Estou ciente e aceito</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL DE ADICIONAR MEDICAMENTO AO CRONOGRAMA -->
+  <!-- ==================================================== -->
+  <div class="overlay-modal" id="modal-add-schedule">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Adicionar ao Cronograma</h3>
+        <button class="modal-close-btn" onclick="app.closeModal('modal-add-schedule')">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px; max-height: 60vh; overflow-y: auto; padding-right: 4px;">
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="sched-med-name">Nome do Medicamento</label>
+          <input class="form-input" type="text" id="sched-med-name" placeholder="Ex: Losartana 50mg">
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="sched-dosage">Dosagem</label>
+          <input class="form-input" type="text" id="sched-dosage" placeholder="Ex: 1 comprimido">
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label">Horários (adicione até 4)</label>
+          <div id="sched-times-container" style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; gap: 8px;">
+              <input class="form-input sched-time-input" type="time" value="08:00" style="flex: 1;">
+              <button class="remove-item-btn" onclick="this.parentElement.remove()" style="flex-shrink: 0;">
+                <span class="material-symbols-outlined">close</span>
+              </button>
+            </div>
+          </div>
+          <button class="routine-btn" id="btn-add-sched-time" style="margin-top: 8px; font-size: 12px;">+ Adicionar horário</button>
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" for="sched-frequency">Frequência</label>
+          <select class="form-input" id="sched-frequency">
+            <option value="daily">Diariamente</option>
+            <option value="weekly">Semanalmente</option>
+            <option value="custom">Dias específicos</option>
+          </select>
+        </div>
+        
+        <div id="sched-days-selector" style="display: none;">
+          <label class="form-label">Dias da semana</label>
+          <div class="days-selector">
+            <label class="day-chip"><input type="checkbox" value="0"> Dom</label>
+            <label class="day-chip"><input type="checkbox" value="1" checked> Seg</label>
+            <label class="day-chip"><input type="checkbox" value="2" checked> Ter</label>
+            <label class="day-chip"><input type="checkbox" value="3" checked> Qua</label>
+            <label class="day-chip"><input type="checkbox" value="4" checked> Qui</label>
+            <label class="day-chip"><input type="checkbox" value="5" checked> Sex</label>
+            <label class="day-chip"><input type="checkbox" value="6"> Sáb</label>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label">Cor de identificação</label>
+          <div class="color-picker-row">
+            <button class="color-swatch active" data-color="#446900" style="background:#446900;" onclick="app.selectScheduleColor(this)"></button>
+            <button class="color-swatch" data-color="#494bd6" style="background:#494bd6;" onclick="app.selectScheduleColor(this)"></button>
+            <button class="color-swatch" data-color="#d63649" style="background:#d63649;" onclick="app.selectScheduleColor(this)"></button>
+            <button class="color-swatch" data-color="#e07c00" style="background:#e07c00;" onclick="app.selectScheduleColor(this)"></button>
+            <button class="color-swatch" data-color="#0097a7" style="background:#0097a7;" onclick="app.selectScheduleColor(this)"></button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-actions" style="margin-top: 16px;">
+        <button class="modal-btn secondary" onclick="app.closeModal('modal-add-schedule')">Cancelar</button>
+        <button class="modal-btn primary" id="btn-save-schedule-entry">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL DE AÇÕES DO CRONOGRAMA -->
+  <!-- ==================================================== -->
+  <div class="overlay-modal" id="modal-schedule-actions">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-schedule-actions-title">Ações do Medicamento</h3>
+        <button class="modal-close-btn" onclick="app.closeModal('modal-schedule-actions')">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 12px;">
+        <button class="modal-btn secondary" id="btn-schedule-action-edit" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+          <span class="material-symbols-outlined">edit</span> Editar Agendamento
+        </button>
+        <button class="modal-btn secondary" id="btn-schedule-action-delete" style="color: var(--error); border-color: rgba(214, 54, 73, 0.3); display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+          <span class="material-symbols-outlined">delete</span> Excluir Agendamento
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL DE NOTIFICAÇÃO SIMULADA (LEMBRETE DE DOSE) -->
+  <!-- ==================================================== -->
+  <div class="overlay-modal" id="modal-dose-reminder">
+    <div class="modal-content" style="border-left: 6px solid var(--primary); padding: 20px;">
+      <div style="display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px;">
+        <div style="width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-container); color: var(--on-primary-container); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+        </div>
+        <div style="flex-grow: 1; text-align: left;">
+          <h4 style="font-size: 11px; font-weight: 800; color: var(--secondary); text-transform: uppercase; margin: 0; letter-spacing: 0.5px;">Hora do medicamento</h4>
+          <h3 class="modal-title" id="reminder-med-name" style="font-size: 17px; font-weight: 800; color: var(--on-surface); margin: 4px 0 2px 0;">Dipirona 500mg</h3>
+          <p id="reminder-med-details" style="font-size: 13px; color: var(--on-surface-variant); margin: 0; font-weight: 500;">08:00 • 1 comprimido</p>
+        </div>
+      </div>
+      <div class="modal-actions" style="display: flex; flex-direction: column; gap: 8px;">
+        <button class="modal-btn primary" id="btn-reminder-take" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+          <span class="material-symbols-outlined">done</span> Tomado
+        </button>
+        <button class="modal-btn secondary" id="btn-reminder-snooze" style="display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%;">
+          <span class="material-symbols-outlined">snooze</span> Lembrar em 10 min
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================================================== -->
+  <!-- MODAL DE CONFIGURAÇÃO DE COTAÇÃO (WIZARD 3 PERGUNTAS) -->
+  <!-- ==================================================== -->
+  <div class="overlay-modal" id="modal-ask-generics">
+    <div class="modal-content" style="max-height: 85vh; overflow-y: auto;">
+      <div class="modal-header">
+        <h3 class="modal-title">Configurar Cotação</h3>
+        <button class="modal-close-btn" onclick="app.closeModal('modal-ask-generics')">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 12px; text-align: left;">
+        
+        <!-- Pergunta 1: Genéricos -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" style="font-weight: 700; margin-bottom: 8px;">1. Pesquisar medicamentos genéricos para:</label>
+          <div id="quote-generics-list" style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
+            <!-- Itens preenchidos via JS -->
+          </div>
+        </div>
+
+        <!-- Pergunta 2: Controlados -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" style="font-weight: 700;">2. Receita contém medicamentos controlados (tarja preta)?</label>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button type="button" class="modal-btn secondary" id="btn-quote-controlled-yes" style="flex: 1; padding: 8px;">Sim</button>
+            <button type="button" class="modal-btn primary" id="btn-quote-controlled-no" style="flex: 1; padding: 8px;">Não</button>
+          </div>
+        </div>
+
+        <!-- Pergunta 3: Convênio/Benefícios -->
+        <div class="form-group" style="margin-bottom: 0;">
+          <label class="form-label" style="font-weight: 700;">3. Possui convênio ou benefícios farmacêuticos?</label>
+          <div style="display: flex; gap: 8px; margin-top: 4px;">
+            <button type="button" class="modal-btn secondary" id="btn-quote-benefits-yes" style="flex: 1; padding: 8px;">Sim</button>
+            <button type="button" class="modal-btn primary" id="btn-quote-benefits-no" style="flex: 1; padding: 8px;">Não</button>
+          </div>
+        </div>
+
+        <!-- Campos de Benefícios (Exibidos dinamicamente) -->
+        <div id="quote-benefits-fields" style="display: none; flex-direction: column; gap: 10px; padding: 12px; border-radius: 8px; background: rgba(0,0,0,0.03); margin-top: 4px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="quote-benefit-insurance" style="font-size: 12px;">Convênio Médico</label>
+            <input class="form-input" type="text" id="quote-benefit-insurance" placeholder="Ex: Bradesco, Amil, SulAmérica">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="quote-benefit-program" style="font-size: 12px;">Programa de Desconto (Laboratório)</label>
+            <input class="form-input" type="text" id="quote-benefit-program" placeholder="Ex: FazBem, Cuidados Pessoais">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="quote-benefit-fidelity" style="font-size: 12px;">Cartão Fidelidade (Farmácia)</label>
+            <input class="form-input" type="text" id="quote-benefit-fidelity" placeholder="Ex: CPF ou número do cartão">
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label class="form-label" for="quote-benefit-pharma" style="font-size: 12px;">Benefício Farmacêutico (PBM)</label>
+            <input class="form-input" type="text" id="quote-benefit-pharma" placeholder="Ex: e-Pharma, Vidalink">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-actions" style="margin-top: 20px;">
+        <button class="modal-btn primary" id="btn-save-quote-config" style="width: 100%;">Ver Cotação</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERLAY DE CARREGAMENTO / ESCANEAMENTO (OCR) -->
+  <div class="loading-overlay" id="global-loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text" id="global-loading-text">Processando...</div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="database.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

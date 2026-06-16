@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SuppleMind - Your Cart</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Manrope:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-lowest": "#ffffff",
+                "surface-dim": "#d8dadc",
+                "secondary-fixed": "#c4e7ff",
+                "secondary": "#00668a",
+                "tertiary-fixed-dim": "#b7c8e1",
+                "inverse-on-surface": "#eff1f3",
+                "tertiary-fixed": "#d3e4fe",
+                "surface-tint": "#565e74",
+                "primary": "#000000",
+                "surface-variant": "#e0e3e5",
+                "primary-container": "#131b2e",
+                "on-primary": "#ffffff",
+                "secondary-fixed-dim": "#7bd0ff",
+                "on-error": "#ffffff",
+                "on-surface": "#191c1e",
+                "secondary-container": "#40c2fd",
+                "on-secondary": "#ffffff",
+                "surface-container-highest": "#e0e3e5",
+                "error": "#ba1a1a",
+                "on-tertiary-container": "#75859d",
+                "on-background": "#191c1e",
+                "outline": "#76777d",
+                "tertiary": "#000000",
+                "background": "#f7f9fb",
+                "surface-container-high": "#e6e8ea",
+                "on-secondary-fixed": "#001e2c",
+                "on-tertiary": "#ffffff",
+                "on-primary-fixed": "#131b2e",
+                "on-primary-fixed-variant": "#3f465c",
+                "surface-container": "#eceef0",
+                "on-secondary-container": "#004d6a",
+                "on-primary-container": "#7c839b",
+                "outline-variant": "#c6c6cd",
+                "on-surface-variant": "#45464d",
+                "primary-fixed": "#dae2fd",
+                "surface-container-low": "#f2f4f6",
+                "tertiary-container": "#0b1c30",
+                "on-secondary-fixed-variant": "#004c69",
+                "on-tertiary-fixed": "#0b1c30",
+                "surface-bright": "#f7f9fb",
+                "inverse-surface": "#2d3133",
+                "error-container": "#ffdad6",
+                "on-error-container": "#93000a",
+                "inverse-primary": "#bec6e0",
+                "on-tertiary-fixed-variant": "#38485d",
+                "primary-fixed-dim": "#bec6e0",
+                "surface": "#f7f9fb"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "lg": "24px",
+                "xl": "32px",
+                "sm": "8px",
+                "md": "16px",
+                "margin-mobile": "20px",
+                "xs": "4px",
+                "unit": "4px",
+                "gutter": "16px"
+            },
+            "fontFamily": {
+                "display-lg-mobile": ["Manrope"],
+                "label-md": ["Inter"],
+                "body-md": ["Inter"],
+                "display-lg": ["Manrope"],
+                "headline-sm": ["Manrope"],
+                "headline-md": ["Manrope"],
+                "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                "display-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+                "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                "headline-sm": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            text-transform: none;
+            letter-spacing: normal;
+            word-wrap: normal;
+            white-space: nowrap;
+            direction: ltr;
+        }
+        body {
+            background-color: #f7f9fb;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .cart-item-grid {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 16px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- TopAppBar -->
+<header class="w-full sticky top-0 z-50 bg-surface border-b border-outline-variant flex justify-between items-center h-14 px-margin-mobile">
+<div class="flex items-center gap-md">
+<button class="active:scale-95 duration-100 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight">SuppleMind</h1>
+</div>
+<div class="flex items-center">
+<button class="active:scale-95 duration-100 hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-primary">shopping_cart</span>
+</button>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-margin-mobile py-lg pb-32">
+<div class="flex justify-between items-end mb-xl">
+<h2 class="font-headline-md text-headline-md text-primary">Your Selection</h2>
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-widest">3 Items</span>
+</div>
+<!-- Cart Items List -->
+<div class="space-y-md">
+<!-- Item 1 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded-lg cart-item-grid items-center">
+<div class="w-20 h-20 bg-surface-container rounded-sm overflow-hidden border border-outline-variant">
+<img alt="Omega-3 Concentrate" class="w-full h-full object-cover" data-alt="A premium amber glass supplement bottle sitting on a polished white marble surface. The lighting is bright and clinical, emphasizing the clean, minimalist label design in black and white. Soft shadows and a high-key background create a sense of pharmaceutical purity and high-end health optimization." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAvtPS6FmXgXA-zJU2ULpv94LOMBcYORoiMucpadQ8ooZXZQKDt4JLIJyJGsv_26vhDc1YjnL1ynMKQIGAT3svexQzGRBdvbxAHbjdggnNxIx3SqRq3txDm-jcCDwCd73X6259OvoQjKSC_VTzRkuiEms0jSaSbywj9dmaTXjHY-87x51LiMj09DpRt4Q4ZRq430YF2TRRL2uYlLIgE_3l380Z_H8PdR62vU--qHEjV0IBUbN7EUH5v6QNO8WVMvmsq9OiXbtbgxS-"/>
+</div>
+<div class="flex flex-col justify-between py-xs">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Omega-3 Elite</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Molecularly Distilled • 60 Capsules</p>
+</div>
+<div class="flex items-center gap-sm mt-sm">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-sm py-xs font-label-md text-label-md rounded-full uppercase tracking-tighter">Heart Health</span>
+</div>
+</div>
+<div class="flex flex-col items-end justify-between h-full py-xs">
+<span class="font-headline-sm text-headline-sm text-primary">$34.00</span>
+<div class="flex items-center border border-outline rounded-sm overflow-hidden">
+<button class="p-1 hover:bg-surface-container transition-colors active:scale-90" onclick="decrement(this)">
+<span class="material-symbols-outlined text-body-md">remove</span>
+</button>
+<span class="px-md font-label-md text-label-md select-none">1</span>
+<button class="p-1 hover:bg-surface-container transition-colors active:scale-90" onclick="increment(this)">
+<span class="material-symbols-outlined text-body-md">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded-lg cart-item-grid items-center">
+<div class="w-20 h-20 bg-surface-container rounded-sm overflow-hidden border border-outline-variant">
+<img alt="Magnesium Glycinate" class="w-full h-full object-cover" data-alt="Modern white supplement packaging with bold, sans-serif black typography against a soft slate gray background. The scene is lit with cool-toned studio lights that highlight the sharp edges of the box and create a professional, SaaS-inspired health aesthetic. The overall mood is calm, organized, and scientifically authoritative." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlS3OT8hBnWU6csJ0mfDddz3PpmYrPSGIsm6KUbNdl1NjYkn8QX528Ad3uOLu6wKlgkHH2mHM0wik4uNB1Umu4-lAZm65ANOWE5-T6smv_9YRQUMLzuwDGQ9McLpQGZL3N1Ux2EarZKVuIq9BcQcBcnOcBLPhCAyXfALex3Zuyui4RnBl6j5ggUBhU7RSMSZOU7c1KlUhLLaiLjekPbS8KtEo2lHuK2ZJHgMGkLQXVT5NEIdKW6BuIEYnwFbjh2PuA2YzlB51v9UWZ"/>
+</div>
+<div class="flex flex-col justify-between py-xs">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Magnesium Calm</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">High Absorption • 90 Tablets</p>
+</div>
+<div class="flex items-center gap-sm mt-sm">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-sm py-xs font-label-md text-label-md rounded-full uppercase tracking-tighter">Sleep Support</span>
+</div>
+</div>
+<div class="flex flex-col items-end justify-between h-full py-xs">
+<span class="font-headline-sm text-headline-sm text-primary">$28.00</span>
+<div class="flex items-center border border-outline rounded-sm overflow-hidden">
+<button class="p-1 hover:bg-surface-container transition-colors active:scale-90" onclick="decrement(this)">
+<span class="material-symbols-outlined text-body-md">remove</span>
+</button>
+<span class="px-md font-label-md text-label-md select-none">2</span>
+<button class="p-1 hover:bg-surface-container transition-colors active:scale-90" onclick="increment(this)">
+<span class="material-symbols-outlined text-body-md">add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-surface-container-lowest border border-outline-variant p-md rounded-lg cart-item-grid items-center">
+<div class="w-20 h-20 bg-surface-container rounded-sm overflow-hidden border border-outline-variant">
+<img alt="B-Complex" class="w-full h-full object-cover" data-alt="Close-up of bright yellow capsules spilling out of a sleek, matte black container onto a reflective white glass surface. High-contrast lighting creates dramatic shadows while the soft sky blue and deep navy accents of the brand palette are hinted in the reflections. The composition is asymmetrical and dynamic, conveying energy and biological precision." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx6HP5EjS9_VyqrGj-eRWPnJUrD1hV6J2bHi71Ev3WCeN6tvqIn_a9PzGAzgj_KRxdpvechivaM8e7muOzSYj4f-uj6_2WY2PMdUD12ktL9R1fgRK-MgoZetty6bYVcozb3wY1vnRlSQ9kpyq56Izx3ykfkRjpKft8AXg6o4kvvi4vTA1qy5V5W02suN2jAG40XTqPtYfAVCB9S-KqqntgSf22XJzzcWtR2ayykflueEg4FL9aQYLwvIRuQ7bWqZA_cTfC7eHT58Zc"/>
+</div>
+<div class="flex flex-col justify-between py-xs">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">B-Complex Bio</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Methylated Folate • 60 Count</p>
+</div>
+<div class="flex items-center gap-sm mt-sm">
+<span class="bg-secondary-fixed text-on-secondary-fixed px-sm py-xs font-label-md text-label-md rounded-full uppercase tracking-tighter">Energy</span>
+</div>
+</div>
+<div class="flex flex-col items-end justify-between h-full py-xs">
+<span class="font-headline-sm text-headline-sm text-primary">$22.00</span>
+<div class="flex items-center border border-outline rounded-sm overflow-hidden">
+<button class="p-1 hover:bg-surface-container transition-colors active:scale-90" onclick="decrement(this)">
+<span class="material-symbols-outlined text-body-md">remove</span>
+</button>
+<span class="px-md font-label-md text-label-md select-none">1</span>
+<button class="p-1 hover:bg-surface-container transition-colors active:scale-90" onclick="increment(this)">
+<span class="material-symbols-outlined text-body-md">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Summary Section -->
+<div class="mt-xl pt-lg border-t border-outline-variant space-y-md">
+<div class="flex justify-between items-center">
+<span class="font-body-lg text-body-lg text-on-surface-variant">Subtotal</span>
+<span class="font-headline-sm text-headline-sm text-primary">$112.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-body-lg text-body-lg text-on-surface-variant">Shipping</span>
+<span class="font-body-lg text-body-lg text-primary">Calculated at checkout</span>
+</div>
+<div class="pt-sm border-t border-outline-variant flex justify-between items-center">
+<span class="font-headline-md text-headline-md text-primary">Total Est.</span>
+<span class="font-display-lg text-display-lg text-primary">$112.00</span>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Layer (Fixed Action Button Container) -->
+<div class="fixed bottom-0 left-0 w-full bg-surface border-t border-outline-variant p-md flex flex-col items-center gap-md z-50">
+<button class="w-full max-w-2xl bg-primary text-on-primary h-14 font-headline-sm text-headline-sm rounded-sm hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-sm">
+<span>Proceed to Checkout</span>
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<!-- BottomNavBar (Actual Nav Shell) -->
+<nav class="fixed bottom-0 w-full z-[60] h-16 hidden md:flex">
+<!-- Hidden on Mobile as per user request for Cart focus, but provided as per shared component logic -->
+<div class="flex justify-around items-center w-full bg-surface">
+<div class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-colors px-lg cursor-pointer">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-colors px-lg cursor-pointer">
+<span class="material-symbols-outlined">search</span>
+<span>Discovery</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary font-semibold font-label-md text-label-md hover:bg-surface-container-low transition-colors px-lg cursor-pointer">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span>Cart</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-colors px-lg cursor-pointer">
+<span class="material-symbols-outlined">person</span>
+<span>Account</span>
+</div>
+</div>
+</nav>
+<script>
+        function increment(btn) {
+            const span = btn.previousElementSibling;
+            let val = parseInt(span.innerText);
+            span.innerText = val + 1;
+        }
+
+        function decrement(btn) {
+            const span = btn.nextElementSibling;
+            let val = parseInt(span.innerText);
+            if (val > 1) {
+                span.innerText = val - 1;
+            }
+        }
+        
+        // Micro-interaction for list item entry
+        document.querySelectorAll('.cart-item-grid').forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(10px)';
+            setTimeout(() => {
+                el.style.transition = 'all 0.4s ease-out';
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            }, 100 * index);
+        });
+    </script>
+</body></html>

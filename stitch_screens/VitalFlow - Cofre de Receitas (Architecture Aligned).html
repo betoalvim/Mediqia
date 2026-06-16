@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VitalFlow - Cofre de Receitas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-bright": "#f7f9fb",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#e0e3e5",
+                    "on-primary-fixed-variant": "#334f00",
+                    "surface-container": "#eceef0",
+                    "on-surface-variant": "#424936",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#ceceff",
+                    "surface": "#f7f9fb",
+                    "on-tertiary-container": "#4446d2",
+                    "outline-variant": "#c2cab0",
+                    "secondary-container": "#d5e0f8",
+                    "on-secondary": "#ffffff",
+                    "surface-container-highest": "#e0e3e5",
+                    "on-tertiary-fixed-variant": "#2f2ebe",
+                    "on-primary": "#ffffff",
+                    "secondary-fixed": "#d8e3fb",
+                    "on-secondary-container": "#586377",
+                    "secondary-fixed-dim": "#bcc7de",
+                    "on-primary-container": "#416400",
+                    "on-primary-fixed": "#121f00",
+                    "tertiary": "#494bd6",
+                    "primary-container": "#a3e635",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-primary": "#98da27",
+                    "error-container": "#ffdad6",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#e1e0ff",
+                    "primary-fixed-dim": "#98da27",
+                    "outline": "#727a64",
+                    "surface-tint": "#446900",
+                    "on-background": "#191c1e",
+                    "on-secondary-fixed-variant": "#3c475a",
+                    "on-tertiary-fixed": "#07006c",
+                    "secondary": "#545f73",
+                    "background": "#f7f9fb",
+                    "surface-dim": "#d8dadc",
+                    "inverse-surface": "#2d3133",
+                    "inverse-on-surface": "#eff1f3",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#111c2d",
+                    "tertiary-fixed-dim": "#c0c1ff",
+                    "surface-container-low": "#f2f4f6",
+                    "primary-fixed": "#b2f746",
+                    "on-error-container": "#93000a",
+                    "primary": "#446900",
+                    "surface-container-high": "#e6e8ea"
+            },
+            "borderRadius": {
+                    "DEFAULT": "1rem",
+                    "lg": "2rem",
+                    "xl": "3rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "32px",
+                    "sm": "16px",
+                    "2xl": "64px",
+                    "xl": "48px",
+                    "xs": "8px",
+                    "md": "24px",
+                    "base": "4px"
+            },
+            "fontFamily": {
+                    "body-md": ["Manrope"],
+                    "body-lg": ["Manrope"],
+                    "display-lg": ["Manrope"],
+                    "label-md": ["Manrope"],
+                    "label-sm": ["Manrope"],
+                    "headline-md": ["Manrope"],
+                    "headline-lg": ["Manrope"],
+                    "headline-sm": ["Manrope"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f7f9fb;
+            color: #191c1e;
+            -webkit-font-smoothing: antialiased;
+        }
+        .prescription-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .prescription-card:active {
+            transform: scale(0.98);
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e0e3e5;
+            border-radius: 10px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="sticky top-0 z-50 bg-surface dark:bg-background flex justify-between items-center w-full px-md py-sm">
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">VitalFlow</h1>
+</div>
+<div class="flex items-center gap-sm">
+<button class="p-2 hover:bg-surface-variant/50 rounded-full transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 w-full max-w-[1280px] mx-auto px-md py-md pb-32">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-xs mb-md overflow-x-auto whitespace-nowrap custom-scrollbar">
+<span class="font-label-md text-label-md text-on-surface-variant">Início</span>
+<span class="material-symbols-outlined text-[16px] text-outline">chevron_right</span>
+<span class="font-label-md text-label-md text-primary font-bold">Cofre</span>
+</nav>
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-md mb-lg">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs">Cofre de Receitas</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Suas prescrições organizadas e prontas para o uso.</p>
+</div>
+<button class="flex items-center justify-center gap-sm bg-primary-container text-on-primary-container font-label-md text-label-md py-md px-lg rounded-full shadow-sm hover:brightness-95 transition-all active:scale-95">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+                Nova Cotação
+            </button>
+</div>
+<!-- Filter Chips (Bonus for High-End UX) -->
+<div class="flex gap-sm mb-lg overflow-x-auto pb-2 custom-scrollbar">
+<div class="bg-primary text-on-primary font-label-sm text-label-sm px-md py-xs rounded-full cursor-pointer">Todas</div>
+<div class="bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm px-md py-xs rounded-full cursor-pointer hover:bg-outline-variant transition-colors">Ativas</div>
+<div class="bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm px-md py-xs rounded-full cursor-pointer hover:bg-outline-variant transition-colors">Vencidas</div>
+<div class="bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm px-md py-xs rounded-full cursor-pointer hover:bg-outline-variant transition-colors">Recorrentes</div>
+</div>
+<!-- Prescription Grid/List -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-md">
+<!-- Prescription Item 1 -->
+<div class="prescription-card bg-surface-container-lowest p-md rounded-lg shadow-[0_4px_20px_rgba(30,41,59,0.04)] border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<div class="p-3 bg-secondary-container/50 rounded-lg">
+<span class="material-symbols-outlined text-secondary">description</span>
+</div>
+<div class="bg-primary-container/20 text-primary font-label-sm text-label-sm px-sm py-1 rounded-full">
+                        Recorrente
+                    </div>
+</div>
+<div class="mb-lg">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-base">Suplementação Vitamínica</h3>
+<p class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">local_pharmacy</span>
+                        Farmácia São João
+                    </p>
+</div>
+<div class="flex items-center justify-between border-t border-surface-container pt-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Última Compra</span>
+<span class="font-body-md text-body-md font-bold">12 Out, 2023</span>
+</div>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary-container/30 transition-colors">
+<span class="material-symbols-outlined text-on-surface">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Prescription Item 2 -->
+<div class="prescription-card bg-surface-container-lowest p-md rounded-lg shadow-[0_4px_20px_rgba(30,41,59,0.04)] border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<div class="p-3 bg-secondary-container/50 rounded-lg">
+<span class="material-symbols-outlined text-secondary">medication</span>
+</div>
+<div class="bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm px-sm py-1 rounded-full">
+                        Finalizada
+                    </div>
+</div>
+<div class="mb-lg">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-base">Protocolo Cardiovascular</h3>
+<p class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">local_pharmacy</span>
+                        Droga Raia
+                    </p>
+</div>
+<div class="flex items-center justify-between border-t border-surface-container pt-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Última Compra</span>
+<span class="font-body-md text-body-md font-bold">05 Set, 2023</span>
+</div>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary-container/30 transition-colors">
+<span class="material-symbols-outlined text-on-surface">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Prescription Item 3 -->
+<div class="prescription-card bg-surface-container-lowest p-md rounded-lg shadow-[0_4px_20px_rgba(30,41,59,0.04)] border border-outline-variant/30 flex flex-col justify-between">
+<div class="flex justify-between items-start mb-md">
+<div class="p-3 bg-secondary-container/50 rounded-lg">
+<span class="material-symbols-outlined text-secondary">healing</span>
+</div>
+<div class="bg-primary-container/20 text-primary font-label-sm text-label-sm px-sm py-1 rounded-full">
+                        Ativa
+                    </div>
+</div>
+<div class="mb-lg">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-base">Tratamento Dermatológico</h3>
+<p class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">local_pharmacy</span>
+                        Pague Menos
+                    </p>
+</div>
+<div class="flex items-center justify-between border-t border-surface-container pt-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-outline">Última Compra</span>
+<span class="font-body-md text-body-md font-bold">28 Nov, 2023</span>
+</div>
+<button class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center hover:bg-primary-container/30 transition-colors">
+<span class="material-symbols-outlined text-on-surface">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Empty State / Add Card Asymmetric -->
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-md flex flex-col items-center justify-center text-center group cursor-pointer hover:bg-surface-container/50 transition-all">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest flex items-center justify-center mb-sm group-hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">upload_file</span>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface">Upload de Nova Receita</h4>
+<p class="font-label-sm text-label-sm text-outline">PDF, JPG ou PNG</p>
+</div>
+</div>
+<!-- Featured Section (Bento Style) -->
+<div class="mt-2xl">
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-md">Gestão Inteligente</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-md">
+<div class="md:col-span-2 bg-tertiary-container/30 p-lg rounded-lg flex flex-col md:flex-row items-center gap-lg">
+<div class="flex-1">
+<h4 class="font-headline-sm text-headline-sm text-tertiary-fixed-dim mb-xs">Cotação Automática</h4>
+<p class="font-body-md text-body-md text-on-tertiary-container mb-md">Economize até 30% automatizando suas compras mensais diretamente pelo cofre.</p>
+<button class="bg-tertiary text-on-tertiary font-label-md text-label-md px-md py-xs rounded-full">Configurar Agora</button>
+</div>
+<div class="w-48 h-48 rounded-lg overflow-hidden shrink-0 shadow-lg">
+<img class="w-full h-full object-cover" data-alt="A macro close-up of colorful medicine pills and high-tech pharmaceutical equipment in a modern laboratory setting. The lighting is clean, clinical, and bright, with soft cyan and lime green glows. The image feels technologically advanced and trustworthy, perfectly matching the VitalFlow health-tech aesthetic with professional depth of field." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvg69i3XZbFY-ubEjYCYG02_I-hp5HecI1ejbqOR2q2EcJEH0hOWu5gyU9FrFDeCGN9lek-PDjt2MEfQ1wKF11_5awWJb4NeaUkIe6B6CsYTefhAgVZVgUlRfiihDe0YdlpWmjSFw_qqbBoYP2PjCKqw2yesrN7QugAylkeE0QSSbAE2An9DKdJatcfMZsCfWKPQOuJNbdhe4Bau_Fx0N7WN-BjWltg3H2o5khKhNA5FEOdAJ6jHlEaDTAwKDXgTn4dV3KEKgiH12O"/>
+</div>
+</div>
+<div class="bg-surface-container-high p-lg rounded-lg flex flex-col justify-center text-center">
+<span class="material-symbols-outlined text-[48px] text-primary mb-sm">verified_user</span>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-xs">Criptografia de Ponta</h4>
+<p class="font-label-md text-label-md text-on-surface-variant">Suas prescrições médicas estão seguras e protegidas pela VitalFlow.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-lg py-sm pb-safe bg-surface-container-lowest dark:bg-surface-dim shadow-[0_-4px_20px_rgba(30,41,59,0.04)] dark:shadow-none rounded-t-xl md:hidden">
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim p-3 hover:bg-secondary-container/50 transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm mt-1">Início</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-on-primary-fixed-variant text-on-primary-container dark:text-primary-fixed rounded-full p-3 scale-90 transition-all duration-300 ease-out" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-label-sm text-label-sm mt-1">Cofre</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-secondary-container dark:text-secondary-fixed-dim p-3 hover:bg-secondary-container/50 transition-all" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<span class="font-label-sm text-label-sm mt-1">Perfil</span>
+</a>
+</nav>
+<!-- Floating Action Button (Desktop Only Style context) -->
+<button class="hidden md:flex fixed bottom-lg right-lg bg-primary-container text-on-primary-container p-md rounded-full shadow-lg hover:scale-110 active:scale-95 transition-all z-40 items-center gap-sm">
+<span class="material-symbols-outlined">add</span>
+<span class="font-label-md text-label-md pr-sm">Nova Receita</span>
+</button>
+<script>
+        // Micro-interaction for cards
+        document.querySelectorAll('.prescription-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.boxShadow = '0px 10px 30px rgba(30, 41, 59, 0.08)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.boxShadow = '0px 4px 20px rgba(30, 41, 59, 0.04)';
+            });
+        });
+    </script>
+</body></html>

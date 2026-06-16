@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "surface-container-lowest": "#ffffff",
+            "surface-dim": "#d8dadc",
+            "secondary-fixed": "#c4e7ff",
+            "secondary": "#00668a",
+            "tertiary-fixed-dim": "#b7c8e1",
+            "inverse-on-surface": "#eff1f3",
+            "tertiary-fixed": "#d3e4fe",
+            "surface-tint": "#565e74",
+            "primary": "#000000",
+            "surface-variant": "#e0e3e5",
+            "primary-container": "#131b2e",
+            "on-primary": "#ffffff",
+            "secondary-fixed-dim": "#7bd0ff",
+            "on-error": "#ffffff",
+            "on-surface": "#191c1e",
+            "secondary-container": "#40c2fd",
+            "on-secondary": "#ffffff",
+            "surface-container-highest": "#e0e3e5",
+            "error": "#ba1a1a",
+            "on-tertiary-container": "#75859d",
+            "on-background": "#191c1e",
+            "outline": "#76777d",
+            "tertiary": "#000000",
+            "background": "#f7f9fb",
+            "surface-container-high": "#e6e8ea",
+            "on-secondary-fixed": "#001e2c",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed": "#131b2e",
+            "on-primary-fixed-variant": "#3f465c",
+            "surface-container": "#eceef0",
+            "on-secondary-container": "#004d6a",
+            "on-primary-container": "#7c839b",
+            "outline-variant": "#c6c6cd",
+            "on-surface-variant": "#45464d",
+            "primary-fixed": "#dae2fd",
+            "surface-container-low": "#f2f4f6",
+            "tertiary-container": "#0b1c30",
+            "on-secondary-fixed-variant": "#004c69",
+            "on-tertiary-fixed": "#0b1c30",
+            "surface-bright": "#f7f9fb",
+            "inverse-surface": "#2d3133",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a",
+            "inverse-primary": "#bec6e0",
+            "on-tertiary-fixed-variant": "#38485d",
+            "primary-fixed-dim": "#bec6e0",
+            "surface": "#f7f9fb"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "lg": "24px",
+            "xl": "32px",
+            "sm": "8px",
+            "md": "16px",
+            "margin-mobile": "20px",
+            "xs": "4px",
+            "unit": "4px",
+            "gutter": "16px"
+          },
+          "fontFamily": {
+            "display-lg-mobile": ["Manrope"],
+            "label-md": ["Inter"],
+            "body-md": ["Inter"],
+            "display-lg": ["Manrope"],
+            "headline-sm": ["Manrope"],
+            "headline-md": ["Manrope"],
+            "body-lg": ["Inter"]
+          },
+          "fontSize": {
+            "display-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+            "label-md": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+            "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+            "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+    .accordion-active .accordion-content {
+      max-height: 1000px;
+    }
+    .accordion-active .rotate-icon {
+      transform: rotate(180deg);
+    }
+    input:focus {
+      outline: none;
+      border-color: #40c2fd !important;
+      border-width: 2px !important;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- Top Navigation Shell -->
+<header class="w-full sticky top-0 z-50 bg-surface border-b border-outline-variant flex justify-between items-center h-14 px-margin-mobile md:px-xl">
+<div class="flex items-center gap-md">
+<button class="active:scale-95 duration-100 hover:opacity-80">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight">SuppleMind</h1>
+</div>
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-primary">shopping_cart</span>
+</div>
+</header>
+<main class="max-w-3xl mx-auto px-margin-mobile py-lg pb-32">
+<div class="mb-xl">
+<h2 class="font-headline-md text-headline-md text-on-surface mb-xs">Checkout</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Complete your order in seconds.</p>
+</div>
+<!-- Accordion Sections -->
+<div class="space-y-md">
+<!-- Section 1: Shipping -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl accordion-active overflow-hidden transition-all duration-300" id="shipping-section">
+<button class="w-full flex items-center justify-between p-md text-left hover:bg-surface-container-low transition-colors" onclick="toggleSection('shipping-section')">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary">local_shipping</span>
+<span class="font-headline-sm text-headline-sm">Shipping Details</span>
+</div>
+<span class="material-symbols-outlined rotate-icon transition-transform">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="p-md pt-0 space-y-md">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">First Name</label>
+<input autocomplete="given-name" class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg text-body-md" placeholder="John" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Last Name</label>
+<input autocomplete="family-name" class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg text-body-md" placeholder="Doe" type="text"/>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Address</label>
+<input autocomplete="street-address" class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg text-body-md" placeholder="123 Wellness Way" type="text"/>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">City</label>
+<input autocomplete="address-level2" class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg text-body-md" placeholder="Austin" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">State</label>
+<input autocomplete="address-level1" class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg text-body-md" placeholder="TX" type="text"/>
+</div>
+<div class="space-y-xs col-span-2 md:col-span-1">
+<label class="font-label-md text-label-md text-on-surface-variant">ZIP Code</label>
+<input autocomplete="postal-code" class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg text-body-md" placeholder="78701" type="text"/>
+</div>
+</div>
+<div class="flex justify-end pt-md">
+<button class="h-10 px-lg bg-secondary-container text-on-secondary-container font-label-md rounded-full active:scale-95 transition-all" onclick="toggleSection('payment-section'); toggleSection('shipping-section');">Next: Payment</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Payment -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden transition-all duration-300" id="payment-section">
+<button class="w-full flex items-center justify-between p-md text-left hover:bg-surface-container-low transition-colors" onclick="toggleSection('payment-section')">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary">payments</span>
+<span class="font-headline-sm text-headline-sm">Payment Method</span>
+</div>
+<span class="material-symbols-outlined rotate-icon transition-transform">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="p-md pt-0 space-y-md">
+<div class="flex gap-sm mb-sm">
+<div class="flex-1 border border-outline rounded-lg p-sm flex items-center justify-center bg-surface-container-low">
+<span class="material-symbols-outlined text-on-surface-variant mr-xs">shield</span>
+<span class="font-label-md text-on-surface-variant">Secure SSL</span>
+</div>
+<div class="flex-1 border border-outline-variant rounded-lg p-sm flex items-center justify-center opacity-60">
+<span class="material-symbols-outlined text-on-surface-variant">credit_card</span>
+</div>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Card Number</label>
+<div class="relative">
+<input autocomplete="cc-number" class="w-full h-12 px-md pr-12 bg-surface border border-outline-variant rounded-lg text-body-md" placeholder="0000 0000 0000 0000" type="text"/>
+<span class="material-symbols-outlined absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant">lock</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-md">
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">Expiry</label>
+<input autocomplete="cc-exp" class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg text-body-md" placeholder="MM/YY" type="text"/>
+</div>
+<div class="space-y-xs">
+<label class="font-label-md text-label-md text-on-surface-variant">CVV</label>
+<input autocomplete="cc-csc" class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg text-body-md" placeholder="123" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-sm py-sm">
+<input class="w-5 h-5 border-outline-variant rounded text-secondary focus:ring-secondary" id="save-card" type="checkbox"/>
+<label class="text-body-md text-on-surface-variant" for="save-card">Save card for future clinical refills</label>
+</div>
+<div class="flex justify-end pt-md">
+<button class="h-10 px-lg bg-secondary-container text-on-secondary-container font-label-md rounded-full active:scale-95 transition-all" onclick="toggleSection('review-section'); toggleSection('payment-section');">Next: Review</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Review -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden transition-all duration-300" id="review-section">
+<button class="w-full flex items-center justify-between p-md text-left hover:bg-surface-container-low transition-colors" onclick="toggleSection('review-section')">
+<div class="flex items-center gap-md">
+<span class="material-symbols-outlined text-secondary">shopping_bag</span>
+<span class="font-headline-sm text-headline-sm">Review &amp; Confirm</span>
+</div>
+<span class="material-symbols-outlined rotate-icon transition-transform">expand_more</span>
+</button>
+<div class="accordion-content">
+<div class="p-md pt-0 space-y-md">
+<div class="space-y-sm">
+<div class="flex justify-between items-center py-sm border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A clean, close-up shot of a pharmaceutical-grade glass bottle filled with clear vitamin capsules. The setting is a bright, clinical white environment with soft shadows and minimalist branding. The image uses a high-key lighting style to evoke trust and clarity, following a modern SaaS aesthetic with neutral tones and sharp focus." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAt73mxGe_t8_o5kOWCIW1YVmkN26bp0uR0MTzjgn8b4M3u81oZr0AKaTTS1tskzsDIJUOf7xcJQVo65-f3PymXBVSAOuIkzMVI7B4tFQioEqmwg7gkMpOh42baX5wbmnCKnH4EKTU57l9JMhmI44KW38gsDSxxZt-kOM8jToV6cmh1aTkZkytshfZz9x_vz2yyayqnWeZGU5XBzHgo2FHxM_zSnk9Af-ZJwmQkPRclUXh2LgAj29OlD0zxsamjSIe4rW27l-KP_SE5"/>
+</div>
+<div>
+<p class="font-headline-sm text-body-md">Mind Focus Complex</p>
+<p class="text-label-md text-on-surface-variant">30 Day Supply • Subscription</p>
+</div>
+</div>
+<p class="font-headline-sm text-body-md">$49.00</p>
+</div>
+<div class="flex justify-between items-center py-sm border-b border-outline-variant">
+<div class="flex items-center gap-md">
+<div class="w-12 h-12 rounded-lg bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional product shot of a minimal supplement bottle labeled Omega-3 in a sleek, charcoal-gray finish. The bottle sits on a soft gray surface with subtle reflections and diffused laboratory lighting. The overall mood is authoritative, organized, and calm, reflecting a premium healthcare and clinical clarity brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFk641Q_oGxuKEzRJBUOT1rXEd0LcSXJK_qb-BP7liBPh1RbJBMTPAsHev1RoeWejl4dZAh9KZhD7yXM2BOTLbrrT-Ngl0pVWjHElQplOLLs_fWbGPXOsrp9gkc_aFkQVJdO4zU9S5aETVEm9wwQXvXWV9wDlIHuU2YcGMB1-elXx_bqb-3x47qR_JwCU4jz_Ozozd19pW_PZ3k99XlurgzsCEoPFmXTmAG6CCLSFEFUwU9IRwV_BvsM6mbNaV7kp8LL_BsQ9GLr-U"/>
+</div>
+<div>
+<p class="font-headline-sm text-body-md">Omega-3 Elite</p>
+<p class="text-label-md text-on-surface-variant">60 Softgels</p>
+</div>
+</div>
+<p class="font-headline-sm text-body-md">$32.00</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-md rounded-xl space-y-sm">
+<div class="flex justify-between text-body-md text-on-surface-variant">
+<span>Subtotal</span>
+<span>$81.00</span>
+</div>
+<div class="flex justify-between text-body-md text-on-surface-variant">
+<span>Shipping</span>
+<span class="text-secondary font-semibold text-label-md uppercase">Free</span>
+</div>
+<div class="flex justify-between font-headline-sm text-on-surface pt-sm border-t border-outline-variant">
+<span>Total</span>
+<span>$81.00</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Security Badges -->
+<div class="mt-xl flex flex-wrap justify-center gap-xl opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+<div class="flex flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-2xl">verified_user</span>
+<span class="font-label-md text-[10px]">HIPAA SECURE</span>
+</div>
+<div class="flex flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-2xl">workspace_premium</span>
+<span class="font-label-md text-[10px]">GMP CERTIFIED</span>
+</div>
+<div class="flex flex-col items-center gap-xs">
+<span class="material-symbols-outlined text-2xl">task_alt</span>
+<span class="font-label-md text-[10px]">3RD PARTY TESTED</span>
+</div>
+</div>
+</main>
+<!-- Sticky Fixed Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-md border-t border-outline-variant px-margin-mobile py-md">
+<div class="max-w-3xl mx-auto flex items-center justify-between gap-md">
+<div class="hidden sm:block">
+<p class="text-label-md text-on-surface-variant">Final Amount</p>
+<p class="font-headline-sm text-primary">$81.00</p>
+</div>
+<button class="flex-1 sm:flex-none h-14 px-xl bg-primary text-on-primary font-headline-sm rounded-full active:scale-95 duration-150 flex items-center justify-center gap-md shadow-lg shadow-primary/10">
+<span>Complete Purchase</span>
+<span class="material-symbols-outlined">lock</span>
+</button>
+</div>
+</div>
+<script>
+    function toggleSection(id) {
+      const section = document.getElementById(id);
+      const isCurrentlyActive = section.classList.contains('accordion-active');
+      
+      // Close all others if we want a strict single-open accordion
+      // document.querySelectorAll('section').forEach(s => s.classList.remove('accordion-active'));
+
+      if (isCurrentlyActive) {
+        section.classList.remove('accordion-active');
+      } else {
+        section.classList.add('accordion-active');
+      }
+    }
+
+    // Micro-interaction for the checkout button
+    const mainBtn = document.querySelector('button.bg-primary');
+    mainBtn.addEventListener('mousedown', () => {
+      mainBtn.innerHTML = 'Processing...';
+      setTimeout(() => {
+        if(mainBtn.innerHTML === 'Processing...') {
+            mainBtn.innerHTML = '<span>Complete Purchase</span><span class="material-symbols-outlined">lock</span>';
+        }
+      }, 2000);
+    });
+  </script>
+</body></html>
