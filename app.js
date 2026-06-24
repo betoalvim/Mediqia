@@ -70,14 +70,12 @@ class MediqiaApp {
     this.renderShopProducts();
     this.updateCartBadge();
     
-    // FLUXO DE ACESSO: Sempre exige login a cada abertura do app
-    // Os termos só aparecem na primeira vez (salvo em localStorage)
-    const termsAccepted = localStorage.getItem('mediqia_terms_accepted');
-    
-    if (!termsAccepted) {
-      // Primeira abertura: mostrar termos
-      this.navigateTo('screen-terms');
-    } else {
+    // Inicia na Splash Screen
+    this.navigateTo('screen-splash');
+    const navbar = document.getElementById('app-main-navbar');
+    if (navbar) navbar.style.display = 'none';
+
+    setTimeout(() => {
       // Check session
       let session = sessionStorage.getItem('mediqia_session');
       
@@ -91,19 +89,19 @@ class MediqiaApp {
         // Sessão ativa nesta aba: vai para Home
         this.activeSession = true;
         this.updateProfileUI();
-        this.navigateTo('screen-home');
         this.updateScheduleBadge();
+        this.navigateTo('screen-home');
       } else {
         // Sem sessão ativa: ir para Login
         // Pré-preenche CPF se já cadastrado
         if (this.currentUser && this.currentUser.cpf) {
-          document.getElementById('login-cpf').value = this.currentUser.cpf;
-          document.getElementById('login-name').value = this.currentUser.name || '';
+          const cpfField = document.getElementById('login-cpf');
+          if (cpfField) cpfField.value = this.currentUser.cpf;
         }
         this.navigateTo('screen-login');
       }
-    }
-    this.startDoseScheduler();
+      this.startDoseScheduler();
+    }, 3500);
   }
 
   // ----------------------------------------------------
@@ -374,65 +372,54 @@ class MediqiaApp {
     // LGPD Terms Screen – salva aceite permanente
     document.getElementById('btn-accept-terms').addEventListener('click', () => {
       localStorage.setItem('mediqia_terms_accepted', 'true');
-      // Se já tinha usuário cadastrado, pré-preenche login
-      if (this.currentUser && this.currentUser.cpf) {
-        document.getElementById('login-cpf').value = this.currentUser.cpf;
-        document.getElementById('login-name').value = this.currentUser.name || '';
-      }
-      this.navigateTo('screen-login');
+      this.navigateTo('screen-home');
     });
 
     // Login Screen – salva sessão em sessionStorage (apaga ao fechar)
     document.getElementById('btn-login-submit').addEventListener('click', () => {
       const cpfInput = document.getElementById('login-cpf').value.trim();
-      const nameInput = document.getElementById('login-name').value.trim();
       
-      if (!cpfInput || cpfInput.replace(/\D/g, '').length < 11) {
-        alert('Por favor, insira um CPF válido para prosseguir.');
-        return;
-      }
-      if (!nameInput) {
-        alert('Por favor, insira seu nome completo.');
+      if (!cpfInput || cpfInput.length < 5) {
+        alert('Por favor, insira seu CPF, e-mail ou telefone para prosseguir.');
         return;
       }
 
       // Cria ou atualiza usuário no localStorage (dados permanentes)
       if (!this.currentUser) this.currentUser = {};
-      this.currentUser.cpf = cpfInput;
-      this.currentUser.name = nameInput;
+      this.currentUser.cpf = cpfInput; // Storing as cpf for compatibility
+      this.currentUser.name = this.currentUser.name || "Visitante"; // Default fallback
       this.saveUser();
       
       // Registra sessão ativa em sessionStorage (dura apenas enquanto aba aberta)
       sessionStorage.setItem('mediqia_session', JSON.stringify({ cpf: cpfInput, loginTime: Date.now() }));
       
-      const keepLogged = document.getElementById('login-keep-logged').checked;
-      if (keepLogged) {
-        localStorage.setItem('mediqia_session_permanent', 'true');
-      } else {
-        localStorage.removeItem('mediqia_session_permanent');
-      }
+      // Default to keep logged in for now, since checkbox is removed
+      localStorage.setItem('mediqia_session_permanent', 'true');
       
       this.activeSession = true;
-      
       this.updateProfileUI();
       this.updateScheduleBadge();
-      this.navigateTo('screen-home');
-    });
-
-    // Formatação de CPF automática no Login
-    document.getElementById('login-cpf').addEventListener('input', (e) => {
-      let v = e.target.value.replace(/\D/g, "");
-      if (v.length > 11) v = v.substring(0, 11);
-      if (v.length > 9) {
-        e.target.value = `${v.substring(0,3)}.${v.substring(3,6)}.${v.substring(6,9)}-${v.substring(9)}`;
-      } else if (v.length > 6) {
-        e.target.value = `${v.substring(0,3)}.${v.substring(3,6)}.${v.substring(6)}`;
-      } else if (v.length > 3) {
-        e.target.value = `${v.substring(0,3)}.${v.substring(3)}`;
+      
+      const termsAccepted = localStorage.getItem('mediqia_terms_accepted');
+      if (!termsAccepted) {
+        this.navigateTo('screen-terms');
       } else {
-        e.target.value = v;
+        this.navigateTo('screen-home');
       }
     });
+
+    // Formatação de CPF automática no Login (removida pois agora aceita e-mail/telefone)
+    const loginCpfInput = document.getElementById('login-cpf');
+    if (loginCpfInput) {
+      loginCpfInput.addEventListener('input', (e) => {
+        // Se for só números, pode formatar, mas não é obrigatório para e-mail
+        const isNumeric = /^\d+$/.test(e.target.value.replace(/\D/g, ''));
+        if (isNumeric && e.target.value.includes('@') === false && e.target.value.replace(/\D/g, '').length === 11) {
+            let v = e.target.value.replace(/\D/g, "");
+            e.target.value = `${v.substring(0,3)}.${v.substring(3,6)}.${v.substring(6,9)}-${v.substring(9)}`;
+        }
+      });
+    }
 
     // Home screen buttons
     document.getElementById('btn-scan-prescription-trigger').addEventListener('click', () => {
@@ -478,8 +465,6 @@ class MediqiaApp {
     });
 
     // Modal de Genéricos e Configurações (Wizard de Pré-Cotação)
-    const genericYes = document.getElementById('btn-quote-generics-yes');
-    const genericNo = document.getElementById('btn-quote-generics-no');
     const controlledYes = document.getElementById('btn-quote-controlled-yes');
     const controlledNo = document.getElementById('btn-quote-controlled-no');
     const benefitsYes = document.getElementById('btn-quote-benefits-yes');
@@ -677,7 +662,6 @@ class MediqiaApp {
         this.activeSession = false;
         this.currentUser = null;
         if (document.getElementById('login-cpf')) document.getElementById('login-cpf').value = '';
-        if (document.getElementById('login-name')) document.getElementById('login-name').value = '';
         document.getElementById('app-main-navbar').style.display = 'none';
         this.navigateTo('screen-login');
       });
@@ -744,6 +728,14 @@ class MediqiaApp {
         this.navigateTo(target);
       });
     });
+
+    // Botão central de SCAN no dock flutuante
+    const navScanBtn = document.getElementById('btn-nav-scan');
+    if (navScanBtn) {
+      navScanBtn.addEventListener('click', () => {
+        this.navigateTo('screen-scanner');
+      });
+    }
 
     // Vault back button - smart navigation
     document.getElementById('btn-back-vault').addEventListener('click', () => {
@@ -941,7 +933,9 @@ class MediqiaApp {
       const chevron = document.getElementById('history-chevron');
       const isHidden = container.style.display === 'none';
       container.style.display = isHidden ? 'block' : 'none';
-      chevron.textContent = isHidden ? 'expand_less' : 'expand_more';
+      if (chevron) {
+        chevron.className = isHidden ? 'ph ph-caret-up' : 'ph ph-caret-down';
+      }
       if (isHidden) this.renderScheduleHistory();
     });
 
@@ -1005,7 +999,7 @@ class MediqiaApp {
 
   navigateTo(screenId) {
     // Autenticação obrigatória para telas protegidas (Logout/Segurança)
-    const publicScreens = ['screen-terms', 'screen-login', 'screen-emergency'];
+    const publicScreens = ['screen-splash', 'screen-terms', 'screen-login', 'screen-emergency'];
     if (!this.activeSession && !publicScreens.includes(screenId)) {
       this.activeSession = false;
       this.currentUser = null;
@@ -1021,6 +1015,17 @@ class MediqiaApp {
       scr.classList.remove('active');
     });
 
+    // Controla a exibição do Header Global
+    const header = document.querySelector('header.app-header');
+    if (header) {
+      const noHeaderScreens = ['screen-splash', 'screen-login', 'screen-terms'];
+      if (noHeaderScreens.includes(screenId)) {
+        header.style.display = 'none';
+      } else {
+        header.style.display = 'flex';
+      }
+    }
+
     // Ativa a selecionada
     const targetScreen = document.getElementById(screenId);
     if (targetScreen) {
@@ -1033,7 +1038,7 @@ class MediqiaApp {
 
     // Controla visibilidade e estado da Navbar Inferior
     const mainNavbar = document.getElementById('app-main-navbar');
-    const noNavbarScreens = ['screen-terms', 'screen-login', 'screen-scanner', 'screen-emergency'];
+    const noNavbarScreens = ['screen-splash', 'screen-terms', 'screen-login', 'screen-scanner', 'screen-emergency'];
     
     if (noNavbarScreens.includes(screenId) || !this.currentUser || !this.currentUser.cpf) {
       mainNavbar.style.display = 'none';
@@ -1061,7 +1066,10 @@ class MediqiaApp {
     }
 
     // Ações de renderização sob demanda
-    if (screenId === 'screen-cart') {
+    if (screenId === 'screen-home') {
+      this.updateHomeRoutineCard();
+      this.updateProfileUI();
+    } else if (screenId === 'screen-cart') {
       const btnBackCart = document.getElementById('btn-back-cart');
       if (prevScreenId === 'screen-quote-results') {
         btnBackCart.style.display = 'flex';
@@ -1124,6 +1132,18 @@ class MediqiaApp {
       const historyLabel = document.getElementById('history-back-label');
       if (historyLabel) historyLabel.textContent = (historyPrev === 'screen-profile') ? 'Perfil' : 'Início';
       this.renderPurchaseHistory();
+    } else if (screenId === 'screen-prescription-detail') {
+      const backBtn = document.getElementById('btn-back-prescription-detail');
+      if (backBtn) {
+        backBtn.onclick = () => this.navigateTo('screen-scanner');
+        const backLabel = document.getElementById('prescription-detail-back-label');
+        if (backLabel) backLabel.textContent = 'Voltar';
+      }
+    } else if (screenId === 'screen-quote-results') {
+      const backBtn = document.getElementById('btn-back-quote');
+      if (backBtn) {
+        backBtn.onclick = () => this.navigateTo('screen-prescription-detail');
+      }
     }
 
     // Limpa a flag flash-update após o render
@@ -1546,7 +1566,7 @@ class MediqiaApp {
           const catItem = MEDICINES_CATALOG.find(c => c.id === medId);
           if (catItem && catItem.generic) {
             genHtml += `
-              <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; padding: 4px 0;">
+              <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--on-surface); cursor: pointer; padding: 4px 0;">
                 <input type="checkbox" class="generic-filter-checkbox" value="${catItem.id}" checked style="accent-color: var(--primary); width: 16px; height: 16px;">
                 ${catItem.name}
               </label>
@@ -1840,14 +1860,14 @@ class MediqiaApp {
                   <span>R$ ${economia.toFixed(2).replace('.', ',')}</span>
                 </div>
                 
-                <div style="display: flex; flex-direction: column; gap: 4px;">
-                  <label class="generic-choice-wrapper" onclick="app.changePharmacyGenericChoice('${basket.pharmacy.id}', '${item.origId}', false)" style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px 8px; border-radius: 4px; background: ${!isGenericChosen ? 'rgba(68, 105, 0, 0.05)' : 'transparent'}; border: 1px solid ${!isGenericChosen ? 'var(--primary)' : 'transparent'};">
-                    <input type="radio" name="choice_${basket.pharmacy.id}_${item.origId}" value="original" ${!isGenericChosen ? 'checked' : ''} style="accent-color: var(--primary); pointer-events: none;">
-                    <span style="pointer-events: none;">Escolher Referência ${origDiscBadge}</span>
+                <div style="display: flex; flex-direction: column; gap: 6px;">
+                  <label class="generic-choice-wrapper" onclick="app.changePharmacyGenericChoice('${basket.pharmacy.id}', '${item.origId}', false)" style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; cursor: pointer; padding: 10px 12px; border-radius: 8px; background: ${!isGenericChosen ? '#e2ebd5' : '#ffffff'}; border: 1.5px solid ${!isGenericChosen ? 'var(--secondary)' : 'var(--outline-variant)'}; color: var(--on-surface);">
+                    <input type="radio" name="choice_${basket.pharmacy.id}_${item.origId}" value="original" ${!isGenericChosen ? 'checked' : ''} style="accent-color: var(--secondary); pointer-events: none; width: 16px; height: 16px;">
+                    <span style="pointer-events: none; color: var(--on-surface);">Escolher Referência ${origDiscBadge}</span>
                   </label>
-                  <label class="generic-choice-wrapper" onclick="app.changePharmacyGenericChoice('${basket.pharmacy.id}', '${item.origId}', true)" style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px 8px; border-radius: 4px; background: ${isGenericChosen ? 'rgba(68, 105, 0, 0.05)' : 'transparent'}; border: 1px solid ${isGenericChosen ? 'var(--primary)' : 'transparent'};">
-                    <input type="radio" name="choice_${basket.pharmacy.id}_${item.origId}" value="generic" ${isGenericChosen ? 'checked' : ''} style="accent-color: var(--primary); pointer-events: none;">
-                    <span style="pointer-events: none;">Escolher Genérico ${genDiscBadge}</span>
+                  <label class="generic-choice-wrapper" onclick="app.changePharmacyGenericChoice('${basket.pharmacy.id}', '${item.origId}', true)" style="display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; cursor: pointer; padding: 10px 12px; border-radius: 8px; background: ${isGenericChosen ? '#e2ebd5' : '#ffffff'}; border: 1.5px solid ${isGenericChosen ? 'var(--secondary)' : 'var(--outline-variant)'}; color: var(--on-surface);">
+                    <input type="radio" name="choice_${basket.pharmacy.id}_${item.origId}" value="generic" ${isGenericChosen ? 'checked' : ''} style="accent-color: var(--secondary); pointer-events: none; width: 16px; height: 16px;">
+                    <span style="pointer-events: none; color: var(--on-surface);">Escolher Genérico ${genDiscBadge}</span>
                   </label>
                 </div>
               </div>
@@ -3116,11 +3136,11 @@ class MediqiaApp {
           <div class="vault-item-info">
             <div style="margin-bottom: 6px;">
               <h4 style="font-size: 14px; font-weight: 800; color: var(--primary); margin: 0;">${item.doctorName || "Dr. João Silva"}</h4>
-              <p style="font-size: 11px; color: var(--secondary); font-weight: 600; text-transform: uppercase; margin: 2px 0 0 0; letter-spacing: 0.5px;">${item.doctorSpecialty || "Cardiologista"}</p>
+              <p style="font-size: 11px; color: #28664A; font-weight: 700; text-transform: uppercase; margin: 2px 0 0 0; letter-spacing: 0.5px;">${item.doctorSpecialty || "Cardiologista"}</p>
             </div>
             <h5 style="font-size: 12px; font-weight: 700; color: var(--on-surface); margin: 0;">${item.title}</h5>
             <p style="font-size: 11px; color: var(--on-surface-variant); margin: 2px 0 4px 0;">${item.date}</p>
-            <div style="font-size: 11px; color: var(--on-surface-variant); line-height: 1.4;">
+            <div style="font-size: 11px; color: var(--on-surface); line-height: 1.4; font-weight: 500;">
               ${medsListHtml}
             </div>
           </div>
@@ -3664,16 +3684,41 @@ class MediqiaApp {
   }
 
   updateHomeRoutineCard() {
-    const title = document.getElementById('home-routine-title');
-    const desc = document.getElementById('home-routine-desc');
-    if (!title || !desc) return;
-    
-    if (this.schedule.length > 0) {
-      title.textContent = "Seu Cronograma Ativo";
-      desc.textContent = "Você tem medicamentos agendados para hoje. Mantenha sua rotina em dia.";
+    const circleEl = document.getElementById('home-routine-circle');
+    const statusEl = document.getElementById('home-routine-status');
+    const barEl    = document.getElementById('home-routine-bar');
+    if (!circleEl || !statusEl || !barEl) return;
+
+    const today = new Date().toISOString().split('T')[0];
+    const dayOfWeek = new Date().getDay();
+
+    let totalDoses = 0;
+    let takenDoses = 0;
+
+    this.schedule.forEach(entry => {
+      let shouldCount = false;
+      if (entry.frequency === 'daily') shouldCount = true;
+      else if (entry.frequency === 'custom' && entry.customDays && entry.customDays.includes(dayOfWeek)) shouldCount = true;
+
+      if (shouldCount) {
+        entry.times.forEach(time => {
+          totalDoses++;
+          const key = `${entry.id}_${today}_${time}`;
+          if (this.doseTaken[key]) takenDoses++;
+        });
+      }
+    });
+
+    const pct = totalDoses === 0 ? 0 : Math.round((takenDoses / totalDoses) * 100);
+    circleEl.textContent = `${pct}%`;
+    barEl.style.width = `${pct}%`;
+
+    if (totalDoses === 0) {
+      statusEl.textContent = 'Nenhum medicamento hoje';
+    } else if (takenDoses === totalDoses) {
+      statusEl.textContent = `✅ Todas as ${totalDoses} doses tomadas!`;
     } else {
-      title.textContent = "Crie seu Cronograma";
-      desc.textContent = "Organize seus medicamentos, horários e receba alertas para não esquecer nenhuma dose.";
+      statusEl.textContent = `${takenDoses} de ${totalDoses} dose${totalDoses > 1 ? 's' : ''} tomada${takenDoses !== 1 ? 's' : ''}`;
     }
   }
 
@@ -3741,11 +3786,19 @@ class MediqiaApp {
 
   // Modais helpers
   openModal(modalId) {
-    document.getElementById(modalId).classList.add('active');
+    const modal = document.getElementById(modalId);
+    if (modal) modal.classList.add('active');
+    
+    const navbar = document.getElementById('app-main-navbar');
+    if (navbar) navbar.classList.add('nav-hidden');
   }
 
   closeModal(modalId) {
-    document.getElementById(modalId).classList.remove('active');
+    const modal = document.getElementById(modalId);
+    if (modal) modal.classList.remove('active');
+    
+    const navbar = document.getElementById('app-main-navbar');
+    if (navbar) navbar.classList.remove('nav-hidden');
   }
 
   renderEmergencyScreen() {
@@ -3765,7 +3818,8 @@ class MediqiaApp {
     };
 
     // Personal Info
-    document.getElementById('emergency-name').textContent = user.name || "-";
+    const nameEl = document.getElementById('emergency-name');
+    if (nameEl) nameEl.textContent = user.name || "Visitante";
     
     let birthText = "-";
     if (user.birthdate) {
@@ -3774,61 +3828,125 @@ class MediqiaApp {
       const formattedDate = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : user.birthdate;
       birthText = `${formattedDate} (${age} anos)`;
     }
-    document.getElementById('emergency-birthdate').textContent = birthText;
-    document.getElementById('emergency-blood-type').textContent = user.bloodType || "-";
+    const birthdateEl = document.getElementById('emergency-birthdate');
+    if (birthdateEl) birthdateEl.textContent = birthText;
 
-    // Conditions list
-    const condList = document.getElementById('emergency-conditions-list');
-    condList.innerHTML = '';
-    
-    const conditionOptions = ["Diabetes", "Hipertensão", "Infarto/Cardíaco", "Renal", "Asma/Pulmão", "Tireoide"];
-    const activeConditions = user.conditions || [];
-    
-    conditionOptions.forEach(opt => {
-      const hasCond = activeConditions.includes(opt);
-      const row = document.createElement('div');
-      row.style.display = 'flex';
-      row.style.alignItems = 'center';
-      row.style.justifyContent = 'space-between';
-      row.style.fontSize = '12px';
-      row.style.color = 'var(--on-surface)';
-      row.style.fontWeight = '600';
-      row.innerHTML = `
-        <span>${opt}</span>
-        <span style="color: ${hasCond ? 'var(--error)' : 'var(--primary)'}; display: flex; align-items: center; gap: 4px;">
-          <span class="material-symbols-outlined" style="font-size: 14px;">${hasCond ? 'error' : 'check_circle'}</span>
-          ${hasCond ? 'Sim' : 'Não'}
-        </span>
-      `;
-      condList.appendChild(row);
-    });
+    const bloodTypeEl = document.getElementById('emergency-blood-type');
+    if (bloodTypeEl) bloodTypeEl.textContent = user.bloodType || "-";
 
-    document.getElementById('emergency-other-conditions').textContent = user.otherConditions || "Nenhuma";
-
-    // Allergies
+    // Allergies List
     const algList = document.getElementById('emergency-allergies-list');
-    algList.innerHTML = '';
-    if (user.allergies && user.allergies.length > 0) {
-      user.allergies.forEach(alg => {
-        const chip = document.createElement('div');
-        chip.className = 'allergy-chip';
-        chip.style.backgroundColor = 'var(--error-container)';
-        chip.style.color = 'var(--on-error-container)';
-        chip.style.border = 'none';
-        chip.textContent = alg;
-        algList.appendChild(chip);
-      });
-    } else {
-      algList.innerHTML = '<span style="font-size: 12px; color: var(--on-surface-variant);">Nenhuma alergia cadastrada</span>';
+    if (algList) {
+      algList.innerHTML = '';
+      if (user.allergies && user.allergies.length > 0) {
+        user.allergies.forEach(alg => {
+          const chip = document.createElement('div');
+          chip.className = 'px-3 py-1 bg-red-100 text-red-800 rounded-full font-label-md text-label-md shadow-sm font-semibold';
+          chip.textContent = alg;
+          algList.appendChild(chip);
+        });
+      } else {
+        algList.innerHTML = '<span class="text-[12px] text-primary/60 font-semibold">Nenhuma</span>';
+      }
+    }
+
+    // Health Conditions Card - Only active ones!
+    const condList = document.getElementById('emergency-conditions-list');
+    if (condList) {
+      condList.innerHTML = '';
+      const activeConditions = user.conditions || [];
+      if (activeConditions.length > 0) {
+        activeConditions.forEach(cond => {
+          const li = document.createElement('div');
+          li.className = 'flex items-center gap-3 text-[15px] font-semibold text-primary';
+          li.innerHTML = `
+            <div class="w-2.5 h-2.5 rounded-full bg-brand-alert" style="background-color: var(--coral-alert) !important;"></div>
+            <span>${cond}</span>
+          `;
+          condList.appendChild(li);
+        });
+      } else {
+        condList.innerHTML = '<span class="text-[14px] text-primary/60 font-semibold ml-2">Nenhuma condição ativa cadastrada</span>';
+      }
+    }
+
+    const otherCondEl = document.getElementById('emergency-other-conditions');
+    if (otherCondEl) otherCondEl.textContent = user.otherConditions || "Nenhuma";
+
+    // Medications Card - Dynamic medications from this.schedule
+    const medList = document.getElementById('emergency-medications-list');
+    if (medList) {
+      medList.innerHTML = '';
+      if (this.schedule && this.schedule.length > 0) {
+        this.schedule.forEach(entry => {
+          const li = document.createElement('li');
+          li.className = 'flex items-center gap-3';
+          li.innerHTML = `
+            <div class="w-2 h-2 rounded-full bg-brand-secondary" style="background-color: var(--lime-vibrant) !important;"></div>
+            <span>${entry.medicineName} (${entry.dosage})</span>
+          `;
+          medList.appendChild(li);
+        });
+      } else {
+        medList.innerHTML = '<li class="text-[14px] text-primary/60 font-semibold">Nenhum medicamento programado</li>';
+      }
     }
 
     // Insurance info
-    document.getElementById('emergency-insurance-name').textContent = user.insuranceName || "Não cadastrado";
-    document.getElementById('emergency-insurance-number').textContent = user.insuranceNumber || "-";
-    document.getElementById('emergency-insurance-code').textContent = user.insuranceCode || "-";
+    const insName = document.getElementById('emergency-insurance-name');
+    if (insName) insName.textContent = user.insuranceName || "Não cadastrado";
+    const insNumber = document.getElementById('emergency-insurance-number');
+    if (insNumber) insNumber.textContent = user.insuranceNumber || "-";
+    const insCode = document.getElementById('emergency-insurance-code');
+    if (insCode) insCode.textContent = user.insuranceCode || "-";
 
     // Medical notes
-    document.getElementById('emergency-medical-notes').textContent = user.medicalNotes || "Nenhuma observação relevante.";
+    const medNotes = document.getElementById('emergency-medical-notes');
+    if (medNotes) medNotes.textContent = user.medicalNotes || "Nenhuma observação relevante.";
+
+    // Render ICE Contacts
+    const contactsContainer = document.getElementById('emergency-contacts-container');
+    if (contactsContainer) {
+      contactsContainer.innerHTML = `
+        <!-- Contact 1 -->
+        <div class="bg-white rounded-xl p-4 flex items-center justify-between shadow-clay-card active:scale-[0.98] transition-transform cursor-pointer group" onclick="alert('Ligando para Ana Silva (Esposa): (11) 98888-0000')">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-background flex items-center justify-center shadow-inner">
+              <span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+            </div>
+            <div class="text-left">
+              <p class="text-[16px] font-semibold text-primary">Ana Silva</p>
+              <p class="text-[14px] font-medium text-primary/60">Esposa • (11) 98888-0000</p>
+            </div>
+          </div>
+          <div class="w-10 h-10 rounded-full bg-background flex items-center justify-center shadow-clay-btn">
+            <span class="material-symbols-outlined text-primary text-[20px]" data-icon="call" style="font-variation-settings: 'FILL' 1;">call</span>
+          </div>
+        </div>
+        <!-- Contact 2 -->
+        <div class="bg-white rounded-xl p-4 flex items-center justify-between shadow-clay-card active:scale-[0.98] transition-transform cursor-pointer group" onclick="alert('Ligando para Dr. Roberto Santos (Cardiologista): (11) 97777-1111')">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full bg-background flex items-center justify-center shadow-inner">
+              <span class="material-symbols-outlined text-primary" data-icon="person">person</span>
+            </div>
+            <div class="text-left">
+              <p class="text-[16px] font-semibold text-primary">Dr. Roberto Santos</p>
+              <p class="text-[14px] font-medium text-primary/60">Cardiologista • (11) 97777-1111</p>
+            </div>
+          </div>
+          <div class="w-10 h-10 rounded-full bg-background flex items-center justify-center shadow-clay-btn">
+            <span class="material-symbols-outlined text-primary text-[20px]" data-icon="call" style="font-variation-settings: 'FILL' 1;">call</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // Render Location Details
+    const locationVal = document.getElementById('emergency-location-val');
+    if (locationVal && this.addresses && this.addresses.length > 0) {
+      const primaryAddr = this.addresses[0];
+      locationVal.textContent = `${primaryAddr.street}, ${primaryAddr.number} - ${primaryAddr.neighborhood}, ${primaryAddr.city}`;
+    }
   }
 
   renderPurchaseHistory() {
