@@ -1,0 +1,32 @@
+{
+  "name": "MediQia — Cotação e Compra de Medicamentos",
+  "short_name": "MediQia",
+  "description": "Escaneie a receita, compare o preço entre farmácias e compre pelo app.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#032518",
+  "theme_color": "#032518",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "vendor/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "vendor/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "vendor/img/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

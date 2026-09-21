@@ -1,7 +1,5 @@
 /* style.css - Folha de estilos para o aplicativo Mediqia */
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 :root {
   /* Paleta de Cores Health Tech Premium */
@@ -99,7 +97,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -573,7 +571,7 @@ header.app-header.scrolled {
 
 .primary-card-text {
   font-size: 14px;
-  color: rgba(65, 100, 0, 0.85);
+  color: rgba(255, 255, 255, 0.88);
   font-weight: 500;
   max-width: 200px;
 }
@@ -866,7 +864,7 @@ header.app-header.scrolled {
 
 .purchase-repeat-btn {
   background-color: var(--secondary);
-  color: var(--primary);
+  color: var(--on-primary);
   border: none;
   padding: 8px 16px;
   font-size: 11px;

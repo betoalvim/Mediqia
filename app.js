@@ -971,10 +971,14 @@ class MediqiaApp {
     document.getElementById('btn-home-emergency').addEventListener('click', () => {
       this.navigateTo('screen-emergency');
     });
-    document.getElementById('btn-back-emergency').addEventListener('click', () => {
+    const backEmergencyHandler = () => {
       const prev = this._emergencyPrevScreen || 'screen-login';
       this.navigateTo(prev);
-    });
+    };
+    const backEmBtn = document.getElementById('btn-back-emergency');
+    if (backEmBtn) backEmBtn.addEventListener('click', backEmergencyHandler);
+    const backEmTopBtn = document.getElementById('btn-back-emergency-top');
+    if (backEmTopBtn) backEmTopBtn.addEventListener('click', backEmergencyHandler);
 
     // Auto-hiding navbar interaction events
     const resetEvents = ['click', 'touchstart', 'keypress'];
@@ -1743,7 +1747,7 @@ class MediqiaApp {
           <h3 style="font-size: 14px; font-weight: 800; color: var(--on-surface); margin: 2px 0 0 0;">${catalogItem.name}</h3>
           ${promoBadgeHtml}
         </div>
-        <span style="font-size: 11px; font-weight: 700; color: var(--primary); background: var(--primary-container); padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 4px;">
+        <span style="font-size: 11px; font-weight: 700; color: var(--on-primary); background: var(--primary-container); padding: 4px 10px; border-radius: 12px; display: flex; align-items: center; gap: 4px;">
           <span class="material-symbols-outlined" style="font-size: 14px;">description</span>
           Prescrito
         </span>
@@ -2287,7 +2291,7 @@ class MediqiaApp {
         isGeneric: isGen,
         quantity: qty,
         pharmacyId: pharmacyId,
-        image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=100' // mock medicine image
+        image: 'vendor/img/ph-e5d09982-100.jpg' // mock medicine image
       };
     });
 
@@ -2352,7 +2356,7 @@ class MediqiaApp {
           isGeneric: bestIsGeneric,
           quantity: qty,
           pharmacyId: bestPharmId,
-          image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=100'
+          image: 'vendor/img/ph-e5d09982-100.jpg'
         });
       }
     });
@@ -3179,7 +3183,7 @@ class MediqiaApp {
       price: bestPrice,
       quantity: qty,
       pharmacyId: bestPharmId,
-      image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=100'
+      image: 'vendor/img/ph-e5d09982-100.jpg'
     });
 
     this.saveCart();
@@ -3771,7 +3775,7 @@ class MediqiaApp {
       setTimeout(() => {
         new Notification("Mediqia - Lembrete de Medicamento", {
           body: `Sua próxima dose de ${nextDose.entry.medicineName} é às ${nextDose.time}.`,
-          icon: "https://fonts.gstatic.com/s/i/short-term/release/googlesymbols/medication/default/24px.svg"
+          icon: "logo.png"
         });
         this._notificationScheduled = false;
       }, 5000);
@@ -4116,7 +4120,7 @@ class MediqiaApp {
         price: m.price,
         quantity: m.quantity,
         pharmacyId: order.pharmacy.toLowerCase().replace(/\s/g, ''),
-        image: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=100'
+        image: 'vendor/img/ph-e5d09982-100.jpg'
       });
     });
 

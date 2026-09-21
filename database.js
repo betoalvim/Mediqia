@@ -520,7 +520,7 @@ const SHOP_PRODUCTS = [
     reviews: 142,
     pharmacyId: "drogasil",
     category: "Suplementos",
-    image: "https://images.unsplash.com/photo-1611926653458-09294b3142bf?auto=format&fit=crop&q=80&w=300",
+    image: "vendor/img/ph-4b3142bf-300.jpg",
     progressivePromo: {
       prices: {
         2: 139.80,
@@ -539,7 +539,7 @@ const SHOP_PRODUCTS = [
     reviews: 89,
     pharmacyId: "paguemenos",
     category: "Vitaminas",
-    image: "https://images.unsplash.com/photo-1628243347853-914954476bbd?auto=format&fit=crop&q=80&w=300"
+    image: "vendor/img/placeholder-produto.svg"
   },
   {
     id: "protetorsolar",
@@ -552,7 +552,7 @@ const SHOP_PRODUCTS = [
     reviews: 210,
     pharmacyId: "drogasil",
     category: "Dermocosméticos",
-    image: "https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&q=80&w=300"
+    image: "vendor/img/ph-fc9aa908-300.jpg"
   },
   {
     id: "colageno",
@@ -565,7 +565,7 @@ const SHOP_PRODUCTS = [
     reviews: 73,
     pharmacyId: "verde",
     category: "Suplementos",
-    image: "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&q=80&w=300"
+    image: "vendor/img/ph-7bb81c04-300.jpg"
   },
   {
     id: "hidratantecera",
@@ -578,7 +578,7 @@ const SHOP_PRODUCTS = [
     reviews: 412,
     pharmacyId: "saopaulo",
     category: "Dermocosméticos",
-    image: "https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=300"
+    image: "vendor/img/ph-7bbbfe19-300.jpg"
   },
   {
     id: "wheyprotein",
@@ -591,7 +591,7 @@ const SHOP_PRODUCTS = [
     reviews: 304,
     pharmacyId: "verde",
     category: "Suplementos",
-    image: "https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&q=80&w=300"
+    image: "vendor/img/ph-7ccdbaba-300.jpg"
   }
 ];
 
@@ -602,27 +602,27 @@ const PRESCRIPTION_PRESETS = {
     medicines: ["dipirona", "losartana", "omeprazol", "atorvastatina", "metformina"],
     doctorName: "Dr. João Silva",
     doctorSpecialty: "Cardiologista",
-    scanImage: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=400"
+    scanImage: "vendor/img/ph-e5d09982-400.jpg"
   },
   preset2: {
     title: "Receita Neurológica Controlada",
     medicines: ["clonazepam", "alprazolam", "diazepam", "sertralina", "ibuprofeno"],
     doctorName: "Dra. Patrícia Helena Reis",
     doctorSpecialty: "Neurologista",
-    scanImage: "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&q=80&w=400"
+    scanImage: "vendor/img/ph-51b55104-400.jpg"
   },
   preset3: {
     title: "Receita Mista de Sintomas",
     medicines: ["pantoprazol", "loratadina", "simeticona", "prednisona", "dorsanol"],
     doctorName: "Dr. Carlos Lima",
     doctorSpecialty: "Clínico Geral",
-    scanImage: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400"
+    scanImage: "vendor/img/ph-dba999ef-400.jpg"
   },
   preset4: {
     title: "Receita Premium Completa",
     medicines: ["dipirona", "losartana", "prednisona", "clonazepam", "omeprazol"],
     doctorName: "Dra. Patrícia Helena Reis",
     doctorSpecialty: "Neurologista & Cardiologista",
-    scanImage: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400"
+    scanImage: "vendor/img/ph-dba999ef-400.jpg"
   }
 };

@@ -5,43 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Mediqia - Cotação &amp; Compra de Medicamentos</title>
   
-  <!-- Google Fonts: Inter & Material Symbols -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-  <!-- Tailwind CSS -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-  <!-- Tailwind Config para Vital Clay -->
-  <script>
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "surface-tint": "#5e5e5e", "background": "#F2F5F3", "primary-container": "#1b1b1b", "tertiary": "#000000", "on-tertiary-fixed": "#1b1b1b", "surface-bright": "#F2F5F3", "on-surface": "#122B1E", "secondary": "#A3E635", "on-tertiary": "#ffffff", "inverse-surface": "#2f3131", "on-error-container": "#93000a", "on-tertiary-fixed-variant": "#474747", "on-secondary-fixed-variant": "#464747", "primary-fixed-dim": "#c6c6c6", "on-surface-variant": "#556B5F", "surface-dim": "#dadada", "on-primary-fixed": "#1b1b1b", "error-container": "#ffdad6", "surface-container-high": "#e8e8e8", "secondary-container": "#e1dfdf", "inverse-on-surface": "#f1f1f1", "surface": "#F2F5F3", "on-primary-fixed-variant": "#474747", "surface-variant": "#e2e2e2", "surface-container": "#eeeeee", "outline": "#B6C2B6", "primary": "#122B1E", "on-primary": "#ffffff", "inverse-primary": "#c6c6c6", "tertiary-container": "#1b1b1b", "surface-container-low": "#f3f3f3", "secondary-fixed": "#e4e2e2", "on-secondary-fixed": "#1b1c1c", "on-background": "#122B1E", "error": "#ba1a1a", "surface-container-lowest": "#ffffff", "tertiary-fixed-dim": "#c6c6c6", "on-tertiary-container": "#848484", "on-secondary": "#122B1E", "surface-container-highest": "#e2e2e2", "on-error": "#ffffff", "on-primary-container": "#848484", "secondary-fixed-dim": "#c7c6c6", "on-secondary-container": "#626262", "primary-fixed": "#e2e2e2", "outline-variant": "rgba(182, 194, 182, 0.3)", "tertiary-fixed": "#e2e2e2"
-          },
-          boxShadow: {
-            'clay-sm': '0 4px 10px rgba(18,43,30,0.05)',
-            'clay-md': '0 10px 20px rgba(18,43,30,0.1)',
-            'clay-lg': '0 20px 40px rgba(18,43,30,0.15)',
-            'clay-inner': 'inset 2px 2px 4px rgba(255,255,255,0.7), inset -2px -2px 4px rgba(18,43,30,0.05)',
-            'clay-inner-btn': 'inset 1px 1px 2px rgba(255,255,255,0.3), inset -1px -1px 2px rgba(0,0,0,0.1)'
-          },
-          spacing: {
-            'xxs': '4px',
-            'xs': '8px',
-            'sm': '12px',
-            'md': '16px',
-            'lg': '24px',
-            'xl': '32px',
-            'xxl': '48px',
-            'gutter': '24px',
-            'container-padding': '24px'
-          }
-        }
-      }
-    }
-  </script>
-  
+  <!-- Dependencias vendorizadas: o app roda sem rede (requisito do PWA) -->
+  <link rel="stylesheet" href="vendor/fonts.css">
+  <link rel="stylesheet" href="vendor/material-symbols.css">
+  <link rel="stylesheet" href="vendor/phosphor-regular.css">
+  <link rel="stylesheet" href="vendor/tailwind.css">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#032518">
+  <link rel="apple-touch-icon" href="vendor/img/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="MediQia">
+
   <link rel="stylesheet" href="style.css">
   <script>
     // Global Error Handler to display JS errors directly on the screen (helpful for WebView debugging)
@@ -130,7 +107,6 @@
       }
     })();
   </script>
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body style="background-color: #0b0f19; color: #eceef0; margin: 0; padding: 0;">
 
@@ -196,7 +172,7 @@
               </span>
               <div class="relative aspect-[2/3] clay-card overflow-hidden group cursor-pointer transition-all hover:shadow-clay-lg w-full max-h-[50vh]">
                 <!-- Sponsor Image -->
-                <img alt="Pharmacy Sponsor" class="w-full h-full object-cover filter brightness-90 group-hover:brightness-100 transition-all duration-300 mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7uqEfXQQKsbq65oSvFwPQnlH8PsbQprDLGfzyqc0W1-6cYk49OEbnlQD1Z-KWf6UCq6uj9nMlbcGbGmjY2P6vFgbRXWEYJjAIh5oC1r_FHmTv8VAtha8R3f677HX7Q3AT7JZLpdcuojSg7kGIGG87lKbvpGSvwC-l2LX-Afsc2BiAMibFGXAqw92JYI_bhSUfNimih3xNAi66cDucW5bqcdvwPoYdn06FWh6YwuXU4M0xFsW0muvtxHBrI95p1SJyGSkPSUi2r9eE">
+                <img alt="Pharmacy Sponsor" class="w-full h-full object-cover filter brightness-90 group-hover:brightness-100 transition-all duration-300 mix-blend-multiply" src="vendor/img/avatar-252528f4.jpg">
                 <!-- Overlay details for wireframe depth -->
                 <div class="absolute inset-0 flex items-center justify-center p-md bg-gradient-to-t from-primary/30 to-transparent">
                   <div class="clay-btn px-xl py-sm font-label-md text-label-md text-primary text-center backdrop-blur-md">
@@ -311,7 +287,6 @@
         <!-- Ação Principal - Bento Card -->
         <div class="primary-card" id="btn-scan-prescription-trigger" style="margin-bottom: 20px;">
           <div class="card-bg-overlay">
-            <img src="https://images.unsplash.com/photo-1530026405186-ed1ea06073e5?auto=format&fit=crop&q=80&w=250" alt="Medtech background">
           </div>
           <div class="primary-card-icon">
             <i class="ph ph-scan "></i>
@@ -428,7 +403,7 @@
         
         <!-- Janela de Visualização da Câmera -->
         <div class="camera-container" id="camera-container-box">
-          <img class="camera-preview-img" id="camera-mock-preview" src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=400" alt="Câmera Preview">
+          <img class="camera-preview-img" id="camera-mock-preview" src="vendor/img/ph-e5d09982-400.jpg" alt="Câmera Preview">
           <div class="camera-guide-box"></div>
           <div class="laser-scanner-line" id="camera-laser-line"></div>
         </div>
@@ -669,7 +644,7 @@
           <div class="relative mb-md">
             <!-- Avatar -->
             <div class="w-28 h-28 rounded-[2rem] clay-surface flex items-center justify-center overflow-hidden border-4 border-white">
-              <img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVNCLteX6XcU7IPd_TngSQ-OiAU74NZVhwP__J1HWB8Wd1gi9pSMKeBa9MzMC7nlfTjUpsQjH4JEwtwoOIqTYlUNQOMbySMx52E8oyOkMaHt8atJjLmuNz7ULShgAFWp2JnyB-kt2KsNbA_aojDwZ0TteLN5LqHyDwnsKBz5OhTZLjD2BhrwuDcKa7an6D7CPxf789ywSwJh7fLfbjEprzlYivM-HgCD0RThY7IDwhOzrpWH3IbcTEK-flg7AIMC3ELRGf2t94LOc5">
+              <img alt="User Avatar" class="w-full h-full object-cover" src="vendor/img/avatar-955977c7.jpg">
             </div>
             <!-- Status indicator -->
             <div class="absolute -bottom-1 -right-1 w-8 h-8 bg-secondary border-4 border-background rounded-full shadow-sm z-10 flex items-center justify-center">
@@ -1535,5 +1510,16 @@
   <!-- Scripts -->
   <script src="database.js"></script>
   <script src="app.js?v=4"></script>
+  <script>
+    // Registro do service worker: caminho relativo para funcionar em subpasta
+    // (GitHub Pages serve o projeto em /Mediqia-App/).
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').catch(function (e) {
+          console.warn('Service worker nao registrado:', e);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
